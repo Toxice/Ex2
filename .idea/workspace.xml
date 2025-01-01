@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Added some more">
-      <change afterPath="$PROJECT_DIR$/src/Util/DependencyParser.java" afterDir="false" />
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Another Try">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/CellEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/CellEntry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
@@ -37,25 +36,25 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Ex2GUI.executor": "Run",
-    "Application.Util.Ex2GUI.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.Ex2Test.computeFormTest.executor": "Run",
-    "JUnit.Ex2Test.isTextTest.executor": "Run",
-    "JUnit.TestClass.computeForm.executor": "Run",
-    "JUnit.TestClass.isFormTest.executor": "Run",
-    "JUnit.TestClass.valueTest.executor": "Debug",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Ex2GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Util.Ex2GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.Ex2Test.computeFormTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.isTextTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.computeForm.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.isFormTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.valueTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
@@ -142,10 +141,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Util.Ex2GUI" />
-        <item itemvalue="JUnit.TestClass.valueTest" />
-        <item itemvalue="JUnit.Ex2Test.isTextTest" />
         <item itemvalue="JUnit.TestClass.isFormTest" />
         <item itemvalue="JUnit.TestClass.computeForm" />
+        <item itemvalue="JUnit.TestClass.valueTest" />
+        <item itemvalue="JUnit.Ex2Test.isTextTest" />
       </list>
     </recent_temporary>
   </component>
@@ -214,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735756802166</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Another Try">
+      <option name="closed" value="true" />
+      <created>1735761373708</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1735761373708</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -225,6 +232,7 @@
     <MESSAGE value="deleted refunded code" />
     <MESSAGE value="Working to some extent" />
     <MESSAGE value="Added some more" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some more" />
+    <MESSAGE value="Another Try" />
+    <option name="LAST_COMMIT_MESSAGE" value="Another Try" />
   </component>
 </project>

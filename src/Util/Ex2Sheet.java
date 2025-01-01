@@ -1,8 +1,6 @@
 package Util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 // Add your documentation below:
 
@@ -123,6 +121,7 @@ public class Ex2Sheet implements Sheet {
         // ///////////////////
     }
 
+
     @Override
     public boolean isIn(int xx, int yy) {
         boolean ans = xx>=0 && yy>=0;
@@ -194,6 +193,7 @@ public class Ex2Sheet implements Sheet {
         visited[x][y] = false; // Unmark the cell after processing
         return maxDepth + 1; // Depth is 1 + max depth of dependencies
     }
+
 
 
 
@@ -300,5 +300,17 @@ public class Ex2Sheet implements Sheet {
 
         return ans; // Return the computed or default value
     }
+
+//    @Override
+//    public String value(int x, int y) {
+//        String ans = Ex2Utils.EMPTY_CELL;
+//        // Add your code here
+//
+//        Cell c = get(x,y);
+//        if(c!=null) {ans = c.toString();}
+//
+//        /////////////////////
+//        return ans;
+//    }
 
 }

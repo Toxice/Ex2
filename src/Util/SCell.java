@@ -118,8 +118,6 @@ public class SCell implements Cell {
         return true;
     }
 
-
-
     /**
      * Computes the numeric value of a string expression.
      * Removes the '=' character at the beginning, if present, and evaluates the expression.
@@ -127,25 +125,6 @@ public class SCell implements Cell {
      * @param text the string representing the formula to compute
      * @return the computed numeric value of the formula
      */
-//    public static double computeForm(String text) {
-//        // Remove the '=' character at the beginning if it exists
-//        if (text.startsWith("=")) {
-//            text = text.substring(1);
-//        }
-//
-//        List<CellEntry> dependencies = DependencyParser.parseDependencies(text);
-//        for (CellEntry dep : dependencies) {
-//            Cell cell = Sheet.get(dep.getX(), dep.getY());
-//            if (cell == null || cell.getData().isEmpty()) {
-//                throw new IllegalArgumentException("Referenced cell " + dep + " is empty or invalid.");
-//            }
-//            text = text.replace(dep.toString(), cell.getData());
-//        }
-//
-//        // Start parsing the expression
-//        return evaluateExpression(text);
-//    }
-
     public static double computeForm(String text) {
         if (text.startsWith("=")) {
             text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
@@ -154,7 +133,6 @@ public class SCell implements Cell {
         // Evaluate the expression
         return evaluateExpression(text); // This function parses and evaluates the formula
     }
-
 
     /**
      * Evaluates a mathematical expression.

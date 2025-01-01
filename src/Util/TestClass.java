@@ -43,6 +43,7 @@ public class TestClass {
         String text = "=(3*2)+2";
         double actual = 8;
         double expected = SCell.computeForm(text);
+        System.out.println(expected);
         assertEquals(expected, actual);
     }
 

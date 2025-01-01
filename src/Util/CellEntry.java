@@ -11,12 +11,6 @@ public class CellEntry  implements Index2D {
         this.y = y;
     }
 
-    public CellEntry(int x, int y, int depth) {
-        this.x = x;
-        this.y = y;
-        this.depth = depth;
-    }
-
     public CellEntry() {
 
     }
