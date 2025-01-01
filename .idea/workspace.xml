@@ -4,29 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex2_New.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/CellEntry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Ex2GUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Ex2Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Index2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Sheet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/StdDrawEx2.java" afterDir="false" />
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Starting Again">
+      <change afterPath="$PROJECT_DIR$/src/Util/TestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,6 +39,8 @@
     "Application.Ex2GUI.executor": "Run",
     "Application.Util.Ex2GUI.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.TestClass.computeForm.executor": "Run",
+    "JUnit.TestClass.isFormTest.executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -60,7 +55,7 @@
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Util.Ex2GUI">
+  <component name="RunManager" selected="JUnit.TestClass.isFormTest">
     <configuration name="Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Ex2GUI" />
       <module name="Ex2_New" />
@@ -81,8 +76,42 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestClass.computeForm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
+      <option name="METHOD_NAME" value="computeForm" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestClass.isFormTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
+      <option name="METHOD_NAME" value="isFormTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestClass.isFormTest" />
+        <item itemvalue="JUnit.TestClass.computeForm" />
         <item itemvalue="Application.Util.Ex2GUI" />
         <item itemvalue="Application.Ex2GUI" />
       </list>
@@ -97,6 +126,19 @@
       <option name="presentableId" value="Default" />
       <updated>1735733463088</updated>
     </task>
+    <task id="LOCAL-00001" summary="Starting Again">
+      <option name="closed" value="true" />
+      <created>1735753220458</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1735753220458</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Starting Again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Starting Again" />
   </component>
 </project>
