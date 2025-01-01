@@ -23,14 +23,41 @@ public class Ex2Sheet implements Sheet {
 
     @Override
     public String value(int x, int y) {
-        String ans = Ex2Utils.EMPTY_CELL;
-        // Add your code here
+        String ans = Ex2Utils.EMPTY_CELL; // Default value for an empty cell
 
-        Cell c = get(x,y);
-        if(c!=null) {ans = c.toString();}
+        // Add your code here
+        if (!isIn(x, y)) {
+            return ans; // Return default if coordinates are invalid
+        }
+
+        Cell c = get(x, y);
+        if (c != null) {
+            // Handle different cell types
+            switch (c.getType()) {
+                case Ex2Utils.NUMBER:
+                case Ex2Utils.TEXT:
+                    ans = c.getData();
+                    break;
+                case Ex2Utils.FORM:
+                    try {
+                        double result = SCell.computeForm(c.getData());
+                        ans = String.valueOf(result);
+                    } catch (Exception e) {
+                        c.setType(Ex2Utils.ERR_FORM_FORMAT);
+                        ans = Ex2Utils.ERR_FORM;
+                    }
+                    break;
+                case Ex2Utils.ERR_FORM_FORMAT:
+                    ans = Ex2Utils.ERR_FORM;
+                    break;
+                case Ex2Utils.ERR_CYCLE_FORM:
+                    ans = Ex2Utils.ERR_CYCLE;
+                    break;
+            }
+        }
 
         /////////////////////
-        return ans;
+        return ans; // Return the computed or default value
     }
 
     @Override
@@ -42,9 +69,28 @@ public class Ex2Sheet implements Sheet {
     public Cell get(String cords) {
         Cell ans = null;
         // Add your code here
-
+        CellEntry entry = parseCellEntry(cords);
+        if (entry != null && entry.isValid()) {
+            ans = get(entry.getX(), entry.getY());
+        }
         /////////////////////
         return ans;
+    }
+
+    private CellEntry parseCellEntry(String coords) {
+        coords = coords.trim().toUpperCase();
+        if (coords.length() < 2) return null;
+
+        char col = coords.charAt(0);
+        int x = col - 'A';
+        int y;
+        try {
+            y = Integer.parseInt(coords.substring(1)) - 1;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        return new CellEntry(x, y);
     }
 
     @Override
@@ -60,8 +106,11 @@ public class Ex2Sheet implements Sheet {
         Cell c = new SCell(s);
         table[x][y] = c;
         // Add your code here
-
-        /////////////////////
+        if (!isIn(x, y)) {
+            throw new IllegalArgumentException("Invalid cell coordinates");
+            ////////////////////
+        }
+        eval();
     }
     @Override
     public void eval() {

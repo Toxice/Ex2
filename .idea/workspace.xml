@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="SCell toString">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/CellEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/CellEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Ex2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="deleted refunded code">
+      <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +38,7 @@
     "Application.Util.Ex2GUI.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.Ex2Test.computeFormTest.executor": "Run",
+    "JUnit.Ex2Test.isTextTest.executor": "Run",
     "JUnit.TestClass.computeForm.executor": "Run",
     "JUnit.TestClass.isFormTest.executor": "Run",
     "Repository.Attach.Annotations": "false",
@@ -57,7 +55,7 @@
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Ex2Test.isTextTest">
+  <component name="RunManager" selected="Application.Util.Ex2GUI">
     <configuration name="Util.Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Util.Ex2GUI" />
       <module name="Ex2_New" />
@@ -137,11 +135,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Util.Ex2GUI" />
         <item itemvalue="JUnit.Ex2Test.isTextTest" />
         <item itemvalue="JUnit.TestClass.isFormTest" />
         <item itemvalue="JUnit.TestClass.computeForm" />
         <item itemvalue="JUnit.Ex2Test.computeFormTest" />
-        <item itemvalue="Application.Util.Ex2GUI" />
       </list>
     </recent_temporary>
   </component>
@@ -178,13 +176,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735754458527</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Changed a Bit">
+      <option name="closed" value="true" />
+      <created>1735755180386</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1735755180386</updated>
+    </task>
+    <task id="LOCAL-00005" summary="deleted refunded code">
+      <option name="closed" value="true" />
+      <created>1735755278511</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1735755278511</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Starting Again" />
     <MESSAGE value="Added a Few" />
     <MESSAGE value="SCell toString" />
-    <option name="LAST_COMMIT_MESSAGE" value="SCell toString" />
+    <MESSAGE value="Changed a Bit" />
+    <MESSAGE value="deleted refunded code" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted refunded code" />
   </component>
 </project>
