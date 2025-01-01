@@ -75,7 +75,9 @@ public class Ex2Sheet implements Sheet {
     public boolean isIn(int xx, int yy) {
         boolean ans = xx>=0 && yy>=0;
         // Add your code here
-
+        if (!(xx <= 25 && yy <= 99)) {
+            ans = false;
+        }
         /////////////////////
         return ans;
     }

@@ -29,6 +29,11 @@ public class CellEntry  implements Index2D {
         return y;
     }
 
+    @Override
+    public String toString() {
+        if (!isValid()) return "Invalid";
+        return Ex2Utils.ABC[x] + (y + 1);
+    }
 
     /**
      * Check's if the given String is made only from Numbers
