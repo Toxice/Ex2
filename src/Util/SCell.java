@@ -1,6 +1,9 @@
 package Util;// Add your documentation below:
 
+import java.util.List;
+
 public class SCell implements Cell {
+    public static Ex2Sheet Sheet;
     private String line;
     private int type;
     // Add your code here
@@ -124,15 +127,34 @@ public class SCell implements Cell {
      * @param text the string representing the formula to compute
      * @return the computed numeric value of the formula
      */
+//    public static double computeForm(String text) {
+//        // Remove the '=' character at the beginning if it exists
+//        if (text.startsWith("=")) {
+//            text = text.substring(1);
+//        }
+//
+//        List<CellEntry> dependencies = DependencyParser.parseDependencies(text);
+//        for (CellEntry dep : dependencies) {
+//            Cell cell = Sheet.get(dep.getX(), dep.getY());
+//            if (cell == null || cell.getData().isEmpty()) {
+//                throw new IllegalArgumentException("Referenced cell " + dep + " is empty or invalid.");
+//            }
+//            text = text.replace(dep.toString(), cell.getData());
+//        }
+//
+//        // Start parsing the expression
+//        return evaluateExpression(text);
+//    }
+
     public static double computeForm(String text) {
-        // Remove the '=' character at the beginning if it exists
         if (text.startsWith("=")) {
-            text = text.substring(1);
+            text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
         }
 
-        // Start parsing the expression
-        return evaluateExpression(text);
+        // Evaluate the expression
+        return evaluateExpression(text); // This function parses and evaluates the formula
     }
+
 
     /**
      * Evaluates a mathematical expression.
@@ -264,7 +286,7 @@ public class SCell implements Cell {
         if (Ex2Utils.Debug) {
             System.out.println("Setting data: " + s);
         }
-        if (s == null || s.isEmpty()) {
+        if (s == null || s.isEmpty() || isText(s)) {
             type = Ex2Utils.TEXT;
         } else if (SCell.isNumber(s)) {
             type = Ex2Utils.NUMBER;
@@ -410,6 +432,27 @@ public class SCell implements Cell {
         }
         return count == 0;
     }
+
+    public double computeForm(String text, Ex2Sheet sheet) {
+        if (text.startsWith("=")) {
+            text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
+        }
+
+        // Parse and replace cell references
+        List<CellEntry> dependencies = DependencyParser.parseDependencies(text);
+        for (CellEntry dep : dependencies) {
+            Cell cell = sheet.get(dep.getX(), dep.getY());
+            if (cell == null || cell.getData().isEmpty()) {
+                throw new IllegalArgumentException("Referenced cell " + dep + " is empty or invalid.");
+            }
+            text = text.replace(dep.toString(), cell.getData());
+        }
+
+        // Evaluate the modified expression
+        return evaluateExpression(text);
     }
+
+
+}
 
 

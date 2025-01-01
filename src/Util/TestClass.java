@@ -52,4 +52,13 @@ public class TestClass {
         boolean ans = sCell.isForm(text);
         assertTrue(ans);
     }
+
+    @Test
+    public void valueTest() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        String text = "=A1";
+        String actual = sheet.value(1,2);
+        System.out.println(actual);
+        System.out.println();
+    }
 }
