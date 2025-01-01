@@ -295,14 +295,6 @@ public class SCell implements Cell {
 
     }
 
-//        public static double computeForm(String text) {
-//            // Remove initial ':=' if present
-//            if (text.startsWith("=")) {
-//                text = text.substring(1);
-//            }
-//            return evaluate(text);
-//        }
-
         private static double evaluate(String expression) {
             return evaluateExpression(expression.replaceAll("\\s+", ""), 0, expression.length());
         }
@@ -353,19 +345,6 @@ public class SCell implements Cell {
                 default: throw new IllegalArgumentException("Invalid operator: " + operator);
             }
         }
-
-//    public boolean isForm(String text) {
-//        // Check if the string starts with '='
-//        if (!text.startsWith("=")) {
-//            return false;
-//        }
-//
-//        // Remove the leading '=' for validation
-//        text = text.substring(1);
-//
-//        // Check if the formula is valid
-//        return isValidFormula(text.replaceAll("\\s+", ""));
-//    }
 
     private static boolean isValidFormula(String expr) {
         // Base case: check if it's a valid number
