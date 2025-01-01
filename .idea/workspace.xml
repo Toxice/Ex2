@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex2_New.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Cell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/CellEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Ex2GUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Ex2Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Index2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Sheet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/StdDrawEx2.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2r1jQn5HVfP3wRuwHfBZ0XIHVti" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Ex2GUI.executor": "Run",
+    "Application.Util.Ex2GUI.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Ariel_Projects\Ex2_New\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Util.Ex2GUI">
+    <configuration name="Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Ex2GUI" />
+      <module name="Ex2_New" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Util.Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2GUI" />
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Util.Ex2GUI" />
+        <item itemvalue="Application.Ex2GUI" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="" />
+      <created>1735733463088</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1735733463088</updated>
+    </task>
+    <servers />
+  </component>
+</project>
