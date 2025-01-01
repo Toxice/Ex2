@@ -156,11 +156,43 @@ public class Ex2Sheet implements Sheet {
 
     @Override
     public String eval(int x, int y) {
-        String ans = null;
-        if(get(x,y)!=null) {ans = get(x,y).toString();}
+        String ans = null; // Initialize as null
+
+        if (get(x, y) != null) {
+            ans = get(x, y).toString(); // Retrieve the string representation of the cell
+        }
+
         // Add your code here
+        if (!isIn(x, y)) {
+            return Ex2Utils.EMPTY_CELL; // Return empty cell if coordinates are invalid
+        }
+
+        Cell cell = get(x, y);
+        if (cell != null) {
+            switch (cell.getType()) {
+                case Ex2Utils.NUMBER:
+                case Ex2Utils.TEXT:
+                    ans = cell.getData(); // Directly return the data for text or number
+                    break;
+                case Ex2Utils.FORM:
+                    try {
+                        double result = SCell.computeForm(cell.getData());
+                        ans = String.valueOf(result); // Evaluate the formula and convert to string
+                    } catch (Exception e) {
+                        cell.setType(Ex2Utils.ERR_FORM_FORMAT); // Handle formula errors
+                        ans = Ex2Utils.ERR_FORM;
+                    }
+                    break;
+                case Ex2Utils.ERR_FORM_FORMAT:
+                    ans = Ex2Utils.ERR_FORM; // Return error message for wrong formula format
+                    break;
+                case Ex2Utils.ERR_CYCLE_FORM:
+                    ans = Ex2Utils.ERR_CYCLE; // Return error message for circular dependency
+                    break;
+            }
+        }
 
         /////////////////////
-        return ans;
-        }
+        return ans; // Return the evaluated or default result
+    }
 }

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="deleted refunded code">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Working to some extent">
       <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -192,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735755278511</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Working to some extent">
+      <option name="closed" value="true" />
+      <created>1735756439659</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1735756439659</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -201,6 +209,7 @@
     <MESSAGE value="SCell toString" />
     <MESSAGE value="Changed a Bit" />
     <MESSAGE value="deleted refunded code" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted refunded code" />
+    <MESSAGE value="Working to some extent" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working to some extent" />
   </component>
 </project>
