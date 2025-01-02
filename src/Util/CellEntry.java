@@ -15,6 +15,10 @@ public class CellEntry  implements Index2D {
 
     }
 
+    public CellEntry(String cellName) {
+
+    }
+
     @Override
     public boolean isValid() {
         //boolean ans = (x >= 0) && (y>= 0) && (y < Ex2Utils.HEIGHT) && (x < Ex2Utils.WIDTH);

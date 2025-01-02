@@ -54,12 +54,36 @@ public class TestClass {
         assertTrue(ans);
     }
 
+//    @Test
+//    public void valueTest() {
+//        Ex2Sheet sheet = new Ex2Sheet();
+//        String text = "=A1";
+//        String actual = sheet.value(1,2);
+//        System.out.println(actual);
+//        System.out.println();
+//    }
+
     @Test
-    public void valueTest() {
+    public void dependencyParserTest() {
+        DependencyParser parser = new DependencyParser();
+        String cell1 = "A11";
+        String cell2 = "B2";
+        Coordinate coordinate1 = parser.parseCell(cell1);
+        Coordinate coordinate2 = parser.parseCell(cell2);
+        assertEquals(coordinate1.x, 0);
+        assertEquals(coordinate1.y, 11);
+        assertEquals(coordinate2.x, 1);
+        assertEquals(coordinate2.y, 2);
+    }
+
+    @Test
+    public void depthTest() {
         Ex2Sheet sheet = new Ex2Sheet();
-        String text = "=A1";
-        String actual = sheet.value(1,2);
-        System.out.println(actual);
+        DependencyParser parser = new DependencyParser();
+        sheet.set(0,0,"5");
+        sheet.set(0,1,"2");
+        sheet.set(0,2,"A0");
+        Coordinate c1 = parser.parseCell(sheet.value(0,0));
         System.out.println();
     }
 }

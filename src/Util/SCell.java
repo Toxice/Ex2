@@ -287,6 +287,15 @@ public class SCell implements Cell {
     @Override
     public void setType(int t) {
         type = t;
+        if (t == 1) {
+            type = Ex2Utils.TEXT;
+        } else if (t == 2) {
+            type = Ex2Utils.NUMBER;
+        } else if (t == 3) {
+            type = Ex2Utils.FORM;
+        } else {
+            type = Ex2Utils.ERR_FORM_FORMAT;
+        }
     }
 
     @Override
@@ -430,7 +439,36 @@ public class SCell implements Cell {
         return evaluateExpression(text);
     }
 
+    public boolean isReference(SCell cell) {
+        String text = cell.getData();
+        boolean flag = false;
+        for (int i =0; i < text.length(); i++) {
+            if (Character.isLetter(text.charAt(i))) {
+                flag = isCellValid(text.substring(i, i+2));
+                if (flag) {
+                    return flag;
+                }
+                flag = isCellValid(text.substring(i, i+1));
+                }
+            }
+        return flag;
+        }
 
+    public static boolean isCellValid(String text) {
+        if (text == null) {
+            return false;
+        }
+        if (text.length() > 3 || text.length() < 2) {
+            return false;
+        }
+        if (Character.isDigit(text.charAt(1)) && Character.isDigit(text.charAt(2))) {
+            return true;
+        }
+        if (text.length() == 3 && Character.isDigit(text.charAt(1)) && Character.isDigit(text.charAt(2))) {
+            return true;
+        }
+        return false;
+    }
 }
 
 

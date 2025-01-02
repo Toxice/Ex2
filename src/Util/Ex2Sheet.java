@@ -62,6 +62,13 @@ public class Ex2Sheet implements Sheet {
 //    }
 
     @Override
+    public String value(int x, int y){
+        String ans = Ex2Utils.EMPTY_CELL;
+        ans = eval(x, y);
+        return ans;
+    }
+
+    @Override
     public Cell get(int x, int y) {
         return table[x][y];
     }
@@ -253,53 +260,53 @@ public class Ex2Sheet implements Sheet {
         return ans; // Return the evaluated or default result
     }
 
-    @Override
-    public String value(int x, int y) {
-        String ans = Ex2Utils.EMPTY_CELL; // Default value for an empty cell
-
-        if (!isIn(x, y)) {
-            return ans; // Return default if coordinates are invalid
-        }
-
-        Cell c = get(x, y);
-        if (c != null) {
-            switch (c.getType()) {
-                case Ex2Utils.NUMBER:
-                case Ex2Utils.TEXT:
-                    ans = c.getData();
-                    break;
-                case Ex2Utils.FORM:
-                    try {
-                        String formula = c.getData().substring(1); // Remove '='
-                        List<CellEntry> dependencies = DependencyParser.parseDependencies(formula);
-
-                        // Replace references with actual values
-                        for (CellEntry dep : dependencies) {
-                            Cell referencedCell = get(dep.getX(), dep.getY());
-                            if (referencedCell == null || referencedCell.getData().isEmpty()) {
-                                throw new IllegalArgumentException("Referenced cell is empty or invalid: " + dep);
-                            }
-                            formula = formula.replace(dep.toString(), referencedCell.getData());
-                        }
-
-                        double result = SCell.computeForm(formula); // Now pass the preprocessed formula
-                        ans = String.valueOf(result);
-                    } catch (Exception e) {
-                        c.setType(Ex2Utils.ERR_FORM_FORMAT); // Handle formula errors
-                        ans = Ex2Utils.ERR_FORM;
-                    }
-                    break;
-                case Ex2Utils.ERR_FORM_FORMAT:
-                    ans = Ex2Utils.ERR_FORM;
-                    break;
-                case Ex2Utils.ERR_CYCLE_FORM:
-                    ans = Ex2Utils.ERR_CYCLE;
-                    break;
-            }
-        }
-
-        return ans; // Return the computed or default value
-    }
+//    @Override
+//    public String value(int x, int y) {
+//        String ans = Ex2Utils.EMPTY_CELL; // Default value for an empty cell
+//
+//        if (!isIn(x, y)) {
+//            return ans; // Return default if coordinates are invalid
+//        }
+//
+//        Cell c = get(x, y);
+//        if (c != null) {
+//            switch (c.getType()) {
+//                case Ex2Utils.NUMBER:
+//                case Ex2Utils.TEXT:
+//                    ans = c.getData();
+//                    break;
+//                case Ex2Utils.FORM:
+//                    try {
+//                        String formula = c.getData().substring(1); // Remove '='
+//                        List<CellEntry> dependencies = DependencyParser.parseDependencies(formula);
+//
+//                        // Replace references with actual values
+//                        for (CellEntry dep : dependencies) {
+//                            Cell referencedCell = get(dep.getX(), dep.getY());
+//                            if (referencedCell == null || referencedCell.getData().isEmpty()) {
+//                                throw new IllegalArgumentException("Referenced cell is empty or invalid: " + dep);
+//                            }
+//                            formula = formula.replace(dep.toString(), referencedCell.getData());
+//                        }
+//
+//                        double result = SCell.computeForm(formula); // Now pass the preprocessed formula
+//                        ans = String.valueOf(result);
+//                    } catch (Exception e) {
+//                        c.setType(Ex2Utils.ERR_FORM_FORMAT); // Handle formula errors
+//                        ans = Ex2Utils.ERR_FORM;
+//                    }
+//                    break;
+//                case Ex2Utils.ERR_FORM_FORMAT:
+//                    ans = Ex2Utils.ERR_FORM;
+//                    break;
+//                case Ex2Utils.ERR_CYCLE_FORM:
+//                    ans = Ex2Utils.ERR_CYCLE;
+//                    break;
+//            }
+//        }
+//
+//        return ans; // Return the computed or default value
+//    }
 
 //    @Override
 //    public String value(int x, int y) {

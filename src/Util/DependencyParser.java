@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DependencyParser {
+    Ex2Sheet sheet = new Ex2Sheet();
+
 
     /**
      * Parses a formula string and extracts all referenced cells.
@@ -32,5 +34,28 @@ public class DependencyParser {
         }
 
         return dependencies;
+    }
+
+    public Coordinate parseCell(String cellName) {
+        int xCord = cell2Num(cellName.charAt(0));
+        String optionalNumber = cellName.substring(1);
+        int yCord = Integer.parseInt(optionalNumber);
+        return new Coordinate(xCord, yCord);
+    }
+
+    public static int cell2Num(char Cell) {
+        return Cell - 'A';
+    }
+
+    public static int char2Int(char letter) {
+        if (letter >= '0' && letter <= '9') {
+            return Character.getNumericValue(letter);
+        }
+        return -1;
+
+    }
+
+    public int valueOf(String s) {
+        return Integer.parseInt(s);
     }
 }
