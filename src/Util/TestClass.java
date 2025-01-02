@@ -2,15 +2,13 @@ package Util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static Util.SCell.isCoordinate;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestClass {
-
-    SCell sCell = new SCell();
-
     @Test
     public void isNumberTest() {
+        SCell sCell = new SCell();
         String text = "1234";
         boolean data = sCell.isNumber(text);
         assertTrue(data);
@@ -25,6 +23,7 @@ public class TestClass {
 
     @Test
     public void removeSpaceTest() {
+        SCell sCell = new SCell();
         String text = "1 + 2 +    3";
         String expected = "1+2+3";
         String actual = sCell.removeSpace(text);
@@ -33,6 +32,7 @@ public class TestClass {
 
     @Test
     public void isFormTest() {
+        SCell sCell = new SCell();
         String[] valid = {"=(3+3) + (5+2)", "=88+5", "=5+4", "=55-4"};
         for (int i = 0; i < valid.length; i++) {
             assertTrue(sCell.isForm(valid[i]));
@@ -48,7 +48,22 @@ public class TestClass {
     }
 
     @Test
+    public void computeFormCellTest() {
+        String text = "=A0";
+        double ans = SCell.computeForm(text);
+    }
+
+    @Test
+    public void evalTest() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"25");
+        sheet.set(0,1,"A0");
+        sheet.eval(0,1);
+    }
+
+    @Test
     public void isFormTest2() {
+        SCell sCell = new SCell();
         String text = "=5+2+8*(3-2)";
         boolean ans = sCell.isForm(text);
         assertTrue(ans);
@@ -83,7 +98,28 @@ public class TestClass {
         sheet.set(0,0,"5");
         sheet.set(0,1,"2");
         sheet.set(0,2,"A0");
-        Coordinate c1 = parser.parseCell(sheet.value(0,0));
+        Coordinate c1 = parser.parseCell(sheet.value(0,2));
         System.out.println();
+    }
+
+    @Test
+    public void isCoordinateTest() {
+        String coordiantes[] = {"A0", "A1","G5", "Z99"};
+        for (int i = 0; i < coordiantes.length; i++) {
+            assertTrue(isCoordinate(coordiantes[i]));
+        }
+    }
+
+    @Test
+    public void isCoordiantesFail() {
+        String cord = "A100";
+        assertFalse(isCoordinate(cord));
+    }
+
+    @Test
+    public void setDataTest() {
+        String s = "A0";
+        SCell cell = new SCell("A0");
+        cell.setData(s);
     }
 }

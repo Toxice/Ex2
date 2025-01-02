@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SCell implements Cell {
     public static Ex2Sheet Sheet;
+    //public static Ex2Sheet Sheet = new Ex2Sheet();
     private String line;
     private int type;
     // Add your code here
@@ -39,11 +40,32 @@ public class SCell implements Cell {
         if (text.startsWith("=")) {
             return false;
         }
-        if (isNumber(text)) {
+        if (isNumber(text) || isCoordinate(text)) {
             return false;
         }
         return true;
     }
+
+    /**
+     * Check's if the given String is a Coordinate (Cell)
+     * @param s a given String
+     * @return true iff the String start's with a Big Letter and the Rest is a number from 0 to 99
+     */
+    public static boolean isCoordinate(String s) { //A00
+        if (Character.isLetter(s.charAt(0))) {
+            String cord = s.substring(1);
+            if (cord.length() >= 3) {
+                return false;
+            }
+            for (char chCord : cord.toCharArray()) {
+                if (!Character.isDigit(chCord)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Validates if the given string is a valid mathematical formula.
      * A valid formula adheres to the following rules:
@@ -181,8 +203,15 @@ public class SCell implements Cell {
 
             // If there's no operator, treat the remaining string as a number
             if (nextOperatorIndex == -1) {
-                result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
-                break;
+                try {
+                    result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
+                    break;
+                } catch (NumberFormatException e) {
+                    //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
+                    Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
+                    String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
+                    evaluateExpression(parsedNum); // try
+                }
             }
 
             // Extract the current number and apply the operator
@@ -268,7 +297,7 @@ public class SCell implements Cell {
             type = Ex2Utils.TEXT;
         } else if (SCell.isNumber(s)) {
             type = Ex2Utils.NUMBER;
-        } else if (SCell.isForm(s)) {
+        } else if (SCell.isForm(s) || SCell.isCoordinate(s)) {
             type = Ex2Utils.FORM;
         } else {
             type = Ex2Utils.ERR_FORM_FORMAT;
