@@ -2,6 +2,7 @@ package Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DependencyParser {
     Ex2Sheet sheet = new Ex2Sheet();
@@ -34,6 +35,23 @@ public class DependencyParser {
         }
 
         return dependencies;
+    }
+
+    /**
+     * Function made for Converting a Cell Reference to Value
+     * @param formula
+     * @return
+     */
+    public static Optional<Coordinate> parseCoordinateValue(String formula) {
+        if (formula == "") { // if the formula is an empty string
+            return Optional.empty();
+        }
+        if (SCell.isCoordinate(formula)) { // if the string is just a reference to a Cell
+                int xCord = cell2Num(formula.charAt(0));
+                int yCord = Integer.parseInt(formula.substring(1));
+                return Optional.of(new Coordinate(xCord, yCord));
+        }
+        return Optional.empty();
     }
 
     public Coordinate parseCell(String cellName) {

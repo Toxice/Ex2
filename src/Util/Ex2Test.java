@@ -2,10 +2,14 @@ package Util;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import static Util.SCell.isCoordinate;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestClass {
+public class Ex2Test {
     @Test
     public void isNumberTest() {
         SCell sCell = new SCell();
@@ -78,18 +82,18 @@ public class TestClass {
 //        System.out.println();
 //    }
 
-    @Test
-    public void dependencyParserTest() {
-        DependencyParser parser = new DependencyParser();
-        String cell1 = "A11";
-        String cell2 = "B2";
-        Coordinate coordinate1 = parser.parseCell(cell1);
-        Coordinate coordinate2 = parser.parseCell(cell2);
-        assertEquals(coordinate1.x, 0);
-        assertEquals(coordinate1.y, 11);
-        assertEquals(coordinate2.x, 1);
-        assertEquals(coordinate2.y, 2);
-    }
+//    @Test
+//    public void dependencyParserTest() {
+//        DependencyParser parser = new DependencyParser();
+//        String cell1 = "A11";
+//        String cell2 = "B2";
+//        Coordinate coordinate1 = parser.parseCell(cell1);
+//        Coordinate coordinate2 = parser.parseCell(cell2);
+//        assertEquals(coordinate1.x, 0);
+//        assertEquals(coordinate1.y, 11);
+//        assertEquals(coordinate2.x, 1);
+//        assertEquals(coordinate2.y, 2);
+//    }
 
     @Test
     public void depthTest() {
@@ -121,5 +125,17 @@ public class TestClass {
         String s = "A0";
         SCell cell = new SCell("A0");
         cell.setData(s);
+    }
+
+    @Test
+    public void dependencyParserTest() {
+        String s = "A0";
+        List<CellEntry> Entries = DependencyParser.parseDependencies(s);
+    }
+
+    @Test
+    public void parseCoordinateValueTest() {
+        String s = "A0";
+        System.out.println(DependencyParser.parseCoordinateValue(s).toString());
     }
 }

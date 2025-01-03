@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Another Commit...">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Tests Working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Coordinate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/TestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/DependencyParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/DependencyParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +40,12 @@
     "Application.Ex2GUI.executor": "Run",
     "Application.Util.Ex2GUI.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.Ex2Test.PatternTest.executor": "Run",
     "JUnit.Ex2Test.computeFormTest.executor": "Run",
+    "JUnit.Ex2Test.dependencyParserTest.executor": "Debug",
     "JUnit.Ex2Test.isTextTest.executor": "Run",
+    "JUnit.Ex2Test.parseCoordinateValueTest.executor": "Run",
+    "JUnit.TestClass.PatternTest.executor": "Run",
     "JUnit.TestClass.computeForm.executor": "Run",
     "JUnit.TestClass.computeFormCellTest.executor": "Debug",
     "JUnit.TestClass.dependencyParserTest.executor": "Run",
@@ -66,9 +70,8 @@
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestClass.depthTest">
-    <configuration name="Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Util.Ex2GUI" />
+  <component name="RunManager" selected="JUnit.Ex2Test.parseCoordinateValueTest">
+    <configuration name="Ex2Test.PatternTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ex2_New" />
       <extension name="coverage">
         <pattern>
@@ -76,6 +79,58 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
+      <option name="METHOD_NAME" value="PatternTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Ex2Test.dependencyParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
+      <option name="METHOD_NAME" value="dependencyParserTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Ex2Test.parseCoordinateValueTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
+      <option name="METHOD_NAME" value="parseCoordinateValueTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestClass.PatternTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
+      <option name="METHOD_NAME" value="PatternTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -96,61 +151,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestClass.isCoordiantesFail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
-      <option name="METHOD_NAME" value="isCoordiantesFail" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestClass.isCoordinateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
-      <option name="METHOD_NAME" value="isCoordinateTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestClass.setDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
-      <option name="METHOD_NAME" value="setDataTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Ex2Test.parseCoordinateValueTest" />
+        <item itemvalue="JUnit.Ex2Test.dependencyParserTest" />
+        <item itemvalue="JUnit.Ex2Test.PatternTest" />
+        <item itemvalue="JUnit.TestClass.PatternTest" />
         <item itemvalue="JUnit.TestClass.depthTest" />
-        <item itemvalue="Application.Ex2GUI" />
-        <item itemvalue="JUnit.TestClass.setDataTest" />
-        <item itemvalue="JUnit.TestClass.isCoordiantesFail" />
-        <item itemvalue="JUnit.TestClass.isCoordinateTest" />
       </list>
     </recent_temporary>
   </component>
@@ -243,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735842974129</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Tests Working">
+      <option name="closed" value="true" />
+      <created>1735851053601</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1735851053601</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -257,13 +272,14 @@
     <MESSAGE value="Another Try" />
     <MESSAGE value="Fixing" />
     <MESSAGE value="Another Commit..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Another Commit..." />
+    <MESSAGE value="Tests Working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tests Working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>52</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
@@ -288,7 +304,7 @@
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>60</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
@@ -328,69 +344,19 @@
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="94" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2GUI.java</url>
           <line>26</line>
           <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>120</line>
-          <option name="timeStamp" value="100" />
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="134" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="110" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>65</line>
-          <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>106</line>
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>107</line>
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/TestClass.java</url>
-          <line>108</line>
-          <option name="timeStamp" value="115" />
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="146" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

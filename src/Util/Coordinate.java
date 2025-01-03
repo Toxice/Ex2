@@ -38,4 +38,9 @@ public class Coordinate {
     public static int cell2Num(char Cell) {
         return Cell - 'A';
     }
+
+    public String toString() {
+
+        return this.x + "," + this.y;
+    }
 }
