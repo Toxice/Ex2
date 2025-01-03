@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Tests Working">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="parseCoordinate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Coordinate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/DependencyParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/DependencyParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Ex2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +41,10 @@
     "Application.Util.Ex2GUI.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.Ex2Test.PatternTest.executor": "Run",
+    "JUnit.Ex2Test.computeFormCell.executor": "Debug",
     "JUnit.Ex2Test.computeFormTest.executor": "Run",
     "JUnit.Ex2Test.dependencyParserTest.executor": "Debug",
+    "JUnit.Ex2Test.isFormCellTest.executor": "Debug",
     "JUnit.Ex2Test.isTextTest.executor": "Run",
     "JUnit.Ex2Test.parseCoordinateValueTest.executor": "Run",
     "JUnit.TestClass.PatternTest.executor": "Run",
@@ -70,8 +72,21 @@
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Ex2Test.parseCoordinateValueTest">
-    <configuration name="Ex2Test.PatternTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.Ex2Test.computeFormCell">
+    <configuration name="Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2GUI" />
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Ex2Test.computeFormCell" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ex2_New" />
       <extension name="coverage">
         <pattern>
@@ -81,7 +96,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="Util" />
       <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
-      <option name="METHOD_NAME" value="PatternTest" />
+      <option name="METHOD_NAME" value="computeFormCell" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -103,6 +118,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Ex2Test.isFormCellTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
+      <option name="METHOD_NAME" value="isFormCellTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Ex2Test.parseCoordinateValueTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ex2_New" />
       <extension name="coverage">
@@ -119,45 +150,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestClass.PatternTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
-      <option name="METHOD_NAME" value="PatternTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestClass.depthTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.TestClass" />
-      <option name="METHOD_NAME" value="depthTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Ex2Test.computeFormCell" />
+        <item itemvalue="Application.Ex2GUI" />
+        <item itemvalue="JUnit.Ex2Test.isFormCellTest" />
         <item itemvalue="JUnit.Ex2Test.parseCoordinateValueTest" />
         <item itemvalue="JUnit.Ex2Test.dependencyParserTest" />
-        <item itemvalue="JUnit.Ex2Test.PatternTest" />
-        <item itemvalue="JUnit.TestClass.PatternTest" />
-        <item itemvalue="JUnit.TestClass.depthTest" />
       </list>
     </recent_temporary>
   </component>
@@ -258,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735851053601</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="parseCoordinate">
+      <option name="closed" value="true" />
+      <created>1735900212831</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1735900212831</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -273,7 +280,8 @@
     <MESSAGE value="Fixing" />
     <MESSAGE value="Another Commit..." />
     <MESSAGE value="Tests Working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tests Working" />
+    <MESSAGE value="parseCoordinate" />
+    <option name="LAST_COMMIT_MESSAGE" value="parseCoordinate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -285,22 +293,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>212</line>
+          <line>221</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>211</line>
+          <line>219</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>210</line>
+          <line>217</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>214</line>
+          <line>223</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -310,32 +318,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>222</line>
+          <line>223</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>224</line>
+          <line>225</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>225</line>
+          <line>226</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>226</line>
+          <line>227</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>228</line>
+          <line>229</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>229</line>
+          <line>230</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -350,13 +358,83 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
-          <line>137</line>
-          <option name="timeStamp" value="134" />
+          <line>146</line>
+          <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="146" />
+          <line>147</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>157</line>
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>157</line>
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>176</line>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>177</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>178</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>181</line>
+          <option name="timeStamp" value="174" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="176" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

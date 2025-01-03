@@ -3,7 +3,7 @@ package Util;// Add your documentation below:
 import java.util.List;
 
 public class SCell implements Cell {
-    public static Ex2Sheet Sheet;
+    public Ex2Sheet Sheet;
     //public static Ex2Sheet Sheet = new Ex2Sheet();
     private String line;
     private int type;
@@ -11,6 +11,11 @@ public class SCell implements Cell {
     private int order;    // The cell's dependency order
     public SCell(String s) {
         // Add your code here
+        setData(s);
+    }
+
+    public SCell(String s, Ex2Sheet sheet) {
+        this.Sheet = sheet;
         setData(s);
     }
 
@@ -91,7 +96,8 @@ public class SCell implements Cell {
         text = text.substring(1).replaceAll("\\s", "");
 
         // Check for invalid characters
-        if (!text.matches("[0-9+\\-*/().]*")) {
+        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
+//        if (!text.matches("[0-9+\\-*/().]*")) {
             return false;
         }
 
@@ -147,7 +153,7 @@ public class SCell implements Cell {
      * @param text the string representing the formula to compute
      * @return the computed numeric value of the formula
      */
-    public static double computeForm(String text) {
+    public double computeForm(String text) {
         if (text.startsWith("=")) {
             text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
         }
@@ -163,7 +169,7 @@ public class SCell implements Cell {
      * @param expression the string representing the mathematical expression
      * @return the evaluated numeric result of the expression
      */
-    private static double evaluateExpression(String expression) {
+    private double evaluateExpression(String expression) {
         // Remove any spaces
         expression = expression.replaceAll("\\s", "");
 
@@ -192,7 +198,7 @@ public class SCell implements Cell {
      * @param expression the string representing the simple mathematical expression
      * @return the evaluated numeric result of the simple expression
      */
-    private static double evaluateSimpleExpression(String expression) {
+    private double evaluateSimpleExpression(String expression) {
         double result = 0.0;
         char operator = '+';
         int currentIndex = 0;
@@ -203,13 +209,16 @@ public class SCell implements Cell {
 
             // If there's no operator, treat the remaining string as a number
             if (nextOperatorIndex == -1) {
-                try {
+                if (expression.substring(currentIndex).matches("[0-9]")) {
                     result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
                     break;
-                } catch (NumberFormatException e) {
+                }
+                if (isCoordinate(expression.substring(currentIndex))) {
                     //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
                     Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
+                    Sheet.eval();
                     String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
+                    int value = Integer.parseInt(Sheet.eval(coordinate.getX(), coordinate.getY()));
                     evaluateExpression(parsedNum); // try
                 }
             }

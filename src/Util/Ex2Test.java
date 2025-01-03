@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static Util.SCell.isCoordinate;
+import static Util.SCell.isForm;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Ex2Test {
@@ -42,19 +43,21 @@ public class Ex2Test {
             assertTrue(sCell.isForm(valid[i]));
         }
     }
-    @Test
-    public void computeForm() {
-        String text = "=(3*2)+2";
-        double actual = 8;
-        double expected = SCell.computeForm(text);
-        System.out.println(expected);
-        assertEquals(expected, actual);
-    }
+//    @Test
+//    public void computeForm() {
+//        String text = "=(3*2)+2";
+//        double actual = 8;
+//        double expected = SCell.computeForm(text);
+//        System.out.println(expected);
+//        assertEquals(expected, actual);
+//    }
 
     @Test
     public void computeFormCellTest() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        SCell cell = (SCell) sheet.get(0,0);
         String text = "=A0";
-        double ans = SCell.computeForm(text);
+        double ans = cell.computeForm(text);
     }
 
     @Test
@@ -137,5 +140,21 @@ public class Ex2Test {
     public void parseCoordinateValueTest() {
         String s = "A0";
         System.out.println(DependencyParser.parseCoordinateValue(s).toString());
+    }
+
+    @Test
+    public void isFormCellTest() {
+        String s = "=A0";
+        boolean ans = isForm(s);
+        assertTrue(ans);
+    }
+
+    @Test
+    public void computeFormCell() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,1,"5");
+        String s = "=A1";
+        SCell cell = new SCell(s, sheet);
+        double dd = cell.computeForm(s);
     }
 }

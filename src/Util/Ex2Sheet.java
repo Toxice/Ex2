@@ -13,7 +13,7 @@ public class Ex2Sheet implements Sheet {
         table = new SCell[x][y];
         for(int i=0;i<x;i=i+1) {
             for(int j=0;j<y;j=j+1) {
-                table[i][j] = new SCell("");
+                table[i][j] = new SCell("", this);
             }
         }
         eval();
@@ -118,6 +118,7 @@ public class Ex2Sheet implements Sheet {
             throw new IllegalArgumentException("Invalid cell coordinates");
             ////////////////////
         }
+        c.setData(s); // try
         eval();
     }
     @Override
@@ -231,7 +232,7 @@ public class Ex2Sheet implements Sheet {
             return Ex2Utils.EMPTY_CELL; // Return empty cell if coordinates are invalid
         }
 
-        Cell cell = get(x, y);
+        SCell cell = (SCell) get(x, y);
         if (cell != null) {
             switch (cell.getType()) {
                 case Ex2Utils.NUMBER:
@@ -240,7 +241,7 @@ public class Ex2Sheet implements Sheet {
                     break;
                 case Ex2Utils.FORM:
                     try {
-                        double result = SCell.computeForm(cell.getData());
+                        double result = cell.computeForm(cell.getData());
                         ans = String.valueOf(result); // Evaluate the formula and convert to string
                     } catch (Exception e) {
                         cell.setType(Ex2Utils.ERR_FORM_FORMAT); // Handle formula errors
