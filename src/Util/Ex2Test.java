@@ -209,4 +209,33 @@ public class Ex2Test {
             assertEquals(expected[i], isCoord(test[i]));
         }
     }
+
+    @Test
+    public void scanFormulaTest() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        SCell cell1 = new SCell("=5",sheet);
+        SCell cell2 = new SCell("=A0", sheet);
+        String cell2Value = cell2.getData();
+        sheet.set(0,0,"=5");
+        sheet.set(0,1, cell2Value);
+        String referenceFormula = "=1.0+A0";
+        double computedFormula = cell2.computeForm(referenceFormula);
+        System.out.println(computedFormula);
+    }
+
+    @Test
+    public void CellValue_Test() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        SCell cell1 = new SCell("=5", sheet);
+        SCell cell2 = new SCell("=A0", sheet);
+        sheet.set(0,0, cell1.getData());
+        sheet.set(0,1,cell2.getData());
+        double ans_Cell1 = cell1.computeForm(cell1.getData());
+        double ans_Cell2 = cell2.computeForm(cell2.getData());
+        String ans = "=A0";
+        double ans2 = cell2.computeForm(ans);
+        System.out.println(ans_Cell1);
+        System.out.println(ans_Cell2);
+
+    }
 }

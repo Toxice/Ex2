@@ -49,7 +49,11 @@ public class Coordinate {
         return new Coordinate(xCord, yCord);
     }
 
-
+    /**
+     * Return the value of
+     * @param Cell
+     * @return
+     */
     public static int cell2Num(char Cell) {
         return Cell - 'A';
     }

@@ -154,30 +154,98 @@ public class SCell implements Cell {
     }
 
     /**
-     * Computes the numeric value of a string expression.
-     * Removes the '=' character at the beginning, if present, and evaluates the expression.
-     *
-     * @param text the string representing the formula to compute
-     * @return the computed numeric value of the formula
+     * Processes a formula by replacing cell references with their values
+     * @param formula The formula string (e.g., "=1+A0")
+     * @return The processed formula with cell references replaced by their values
      */
-    public double computeForm(String text) {
-        if (text.startsWith("=")) {
-            text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
+    public String processFormula(String formula) {
+        if (formula.startsWith("=")) {
+            formula = formula.substring(1).trim();
         }
 
+        StringBuilder processedFormula = new StringBuilder();
+        StringBuilder currentToken = new StringBuilder();
+
+        for (int i = 0; i < formula.length(); i++) {
+            char c = formula.charAt(i);
+
+            if (Character.isLetter(c)) {
+                // Start of a potential cell reference
+                currentToken.append(c);
+                // Look ahead for numbers that complete the cell reference
+                while (i + 1 < formula.length() && Character.isDigit(formula.charAt(i + 1))) {
+                    currentToken.append(formula.charAt(i + 1));
+                    i++;
+                }
+
+                // Check if it's a valid cell reference
+                String token = currentToken.toString();
+                if (isCoordinate(token)) {
+                    // Convert cell reference to coordinate
+                    Coordinate coord = Coordinate.parseCell(token);
+                    // Get value from the referenced cell
+                    String cellValue = Sheet.eval(coord.getX(), coord.getY());
+                    processedFormula.append(cellValue);
+                } else {
+                    processedFormula.append(token);
+                }
+                currentToken.setLength(0);
+            } else {
+                // For operators and numbers, just append them
+                processedFormula.append(c);
+            }
+        }
+
+        return processedFormula.toString();
+    }
+
+//    /**
+//     * Computes the numeric value of a string expression.
+//     * Removes the '=' character at the beginning, if present, and evaluates the expression.
+//     *
+//     * @param text the string representing the formula to compute
+//     * @return the computed numeric value of the formula
+//     */
+//    public double computeForm(String text) {
+//        if (text.startsWith("=")) {
+//            text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
+//        }
+//
+//        // If it's a cell reference like "A0"
+//        if (isCoordinate(text)) {
+//            Coordinate coord = Coordinate.parseCell(text);
+//            // Get the referenced cell's value
+//            String value = Sheet.eval(coord.getX(), coord.getY());
+//            // Convert to number and return
+//            return Double.parseDouble(value);
+//        }
+//
+//        // Evaluate the expression
+//        return evaluateExpression(text); // This function parses and evaluates the formula
+//    }
+
+    /**
+     * Computes the result of a formula, handling both cell references and direct numbers
+     * @param text The formula text
+     * @return The computed result
+     */
+    public double computeForm(String text) {
         // If it's a cell reference like "A0"
-        if (isCoordinate(text)) {
-            Coordinate coord = Coordinate.parseCell(text);
+        if (isCoordinate(text.substring(1))) {
+            Coordinate coord = Coordinate.parseCell(text.substring(1));
             // Get the referenced cell's value
             String value = Sheet.eval(coord.getX(), coord.getY());
             // Convert to number and return
             return Double.parseDouble(value);
         }
+        // Process the formula first to replace cell references
+        String processedFormula = processFormula(text);
 
-
-        // Evaluate the expression
-        return evaluateExpression(text); // This function parses and evaluates the formula
+        // Now evaluate the processed formula which contains only numbers and operators
+        return evaluateExpression(processedFormula);
     }
+
+
 
     /**
      * Evaluates a mathematical expression.
@@ -227,7 +295,8 @@ public class SCell implements Cell {
 
             // If there's no operator, treat the remaining string as a number
             if (nextOperatorIndex == -1) {
-                if (expression.substring(currentIndex).matches("[0-9]")) {
+                //if (expression.substring(currentIndex).matches("[0-9]")) {
+                if (expression.substring(currentIndex).matches("\\d+(\\.\\d+)?")) {
                     result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
                     break;
                 }

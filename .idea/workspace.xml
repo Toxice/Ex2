@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Trying through Testing">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Able to get value of a Cell">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Coordinate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Ex2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
     </list>
@@ -41,6 +41,7 @@
     "Application.Ex2GUI.executor": "Run",
     "Application.Util.Ex2GUI.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.Ex2Test.CellValue_Test.executor": "Run",
     "JUnit.Ex2Test.PatternTest.executor": "Run",
     "JUnit.Ex2Test.computeFormCell.executor": "Debug",
     "JUnit.Ex2Test.computeFormTest.executor": "Run",
@@ -48,11 +49,12 @@
     "JUnit.Ex2Test.depthTest.executor": "Debug",
     "JUnit.Ex2Test.evalTest.executor": "Debug",
     "JUnit.Ex2Test.evalTest2.executor": "Debug",
-    "JUnit.Ex2Test.evalTest3.executor": "Run",
+    "JUnit.Ex2Test.evalTest3.executor": "Debug",
     "JUnit.Ex2Test.isCoordTest.executor": "Debug",
     "JUnit.Ex2Test.isFormCellTest.executor": "Debug",
     "JUnit.Ex2Test.isTextTest.executor": "Run",
     "JUnit.Ex2Test.parseCoordinateValueTest.executor": "Run",
+    "JUnit.Ex2Test.scanFormulaTest.executor": "Debug",
     "JUnit.Ex2Test.setDataTest.executor": "Debug",
     "JUnit.TestClass.PatternTest.executor": "Run",
     "JUnit.TestClass.computeForm.executor": "Run",
@@ -80,7 +82,7 @@
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Ex2Test.evalTest3">
+  <component name="RunManager" selected="Application.Ex2GUI">
     <configuration name="Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Util.Ex2GUI" />
       <module name="Ex2_New" />
@@ -94,7 +96,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Ex2Test.evalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Ex2Test.CellValue_Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ex2_New" />
       <extension name="coverage">
         <pattern>
@@ -104,23 +106,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="Util" />
       <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
-      <option name="METHOD_NAME" value="evalTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Ex2Test.evalTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
-      <option name="METHOD_NAME" value="evalTest2" />
+      <option name="METHOD_NAME" value="CellValue_Test" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -158,13 +144,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Ex2Test.scanFormulaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
+      <option name="METHOD_NAME" value="scanFormulaTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Ex2Test.evalTest3" />
         <item itemvalue="Application.Ex2GUI" />
+        <item itemvalue="JUnit.Ex2Test.CellValue_Test" />
+        <item itemvalue="JUnit.Ex2Test.evalTest3" />
+        <item itemvalue="JUnit.Ex2Test.scanFormulaTest" />
         <item itemvalue="JUnit.Ex2Test.isCoordTest" />
-        <item itemvalue="JUnit.Ex2Test.evalTest2" />
-        <item itemvalue="JUnit.Ex2Test.evalTest" />
       </list>
     </recent_temporary>
   </component>
@@ -289,7 +291,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736089145911</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Able to get value of a Cell">
+      <option name="closed" value="true" />
+      <created>1736098155043</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1736098155043</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -318,7 +328,8 @@
     <MESSAGE value="parseCoordinate" />
     <MESSAGE value="Try''ll and Error on computeForm" />
     <MESSAGE value="Trying through Testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trying through Testing" />
+    <MESSAGE value="Able to get value of a Cell" />
+    <option name="LAST_COMMIT_MESSAGE" value="Able to get value of a Cell" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -347,16 +358,6 @@
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>147</line>
           <option name="timeStamp" value="150" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>163</line>
-          <option name="timeStamp" value="164" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>164</line>
-          <option name="timeStamp" value="165" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
@@ -400,62 +401,62 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>225</line>
+          <line>293</line>
           <option name="timeStamp" value="191" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>228</line>
+          <line>296</line>
           <option name="timeStamp" value="192" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>229</line>
+          <line>297</line>
           <option name="timeStamp" value="193" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>231</line>
+          <line>300</line>
           <option name="timeStamp" value="194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>233</line>
+          <line>302</line>
           <option name="timeStamp" value="195" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>234</line>
+          <line>303</line>
           <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>235</line>
+          <line>304</line>
           <option name="timeStamp" value="197" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>236</line>
+          <line>305</line>
           <option name="timeStamp" value="198" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>237</line>
+          <line>306</line>
           <option name="timeStamp" value="200" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>238</line>
+          <line>307</line>
           <option name="timeStamp" value="201" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>239</line>
+          <line>308</line>
           <option name="timeStamp" value="202" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>241</line>
+          <line>310</line>
           <option name="timeStamp" value="203" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -475,7 +476,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>318</line>
+          <line>387</line>
           <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -585,7 +586,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>336</line>
+          <line>405</line>
           <option name="timeStamp" value="272" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -602,16 +603,6 @@
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>193</line>
           <option name="timeStamp" value="275" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
-          <line>197</line>
-          <option name="timeStamp" value="276" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
-          <line>198</line>
-          <option name="timeStamp" value="277" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
@@ -664,9 +655,229 @@
           <option name="timeStamp" value="287" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>161</line>
+          <option name="timeStamp" value="308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="309" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>165</line>
+          <option name="timeStamp" value="311" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>166</line>
+          <option name="timeStamp" value="312" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>168</line>
+          <option name="timeStamp" value="313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>169</line>
+          <option name="timeStamp" value="314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="315" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>174</line>
+          <option name="timeStamp" value="318" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="319" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>176</line>
+          <option name="timeStamp" value="320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>177</line>
+          <option name="timeStamp" value="321" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="322" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>181</line>
+          <option name="timeStamp" value="323" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>182</line>
+          <option name="timeStamp" value="324" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>183</line>
+          <option name="timeStamp" value="325" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="326" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="327" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="328" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>187</line>
+          <option name="timeStamp" value="329" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="330" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="331" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="332" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="333" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>192</line>
+          <option name="timeStamp" value="334" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="335" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>195</line>
+          <option name="timeStamp" value="336" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>194</line>
+          <option name="timeStamp" value="337" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>198</line>
+          <option name="timeStamp" value="338" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>232</line>
+          <option name="timeStamp" value="343" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>233</line>
+          <option name="timeStamp" value="344" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>234</line>
+          <option name="timeStamp" value="345" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="346" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>236</line>
+          <option name="timeStamp" value="347" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>237</line>
+          <option name="timeStamp" value="348" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
+          <line>238</line>
+          <option name="timeStamp" value="349" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
-          <line>206</line>
-          <option name="timeStamp" value="301" />
+          <line>228</line>
+          <option name="timeStamp" value="350" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>229</line>
+          <option name="timeStamp" value="351" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>230</line>
+          <option name="timeStamp" value="353" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="354" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>232</line>
+          <option name="timeStamp" value="355" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>233</line>
+          <option name="timeStamp" value="356" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>234</line>
+          <option name="timeStamp" value="357" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="358" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
