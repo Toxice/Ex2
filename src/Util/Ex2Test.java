@@ -233,9 +233,30 @@ public class Ex2Test {
         double ans_Cell1 = cell1.computeForm(cell1.getData());
         double ans_Cell2 = cell2.computeForm(cell2.getData());
         String ans = "=A0";
+        String ans3 = "=A0+1";
         double ans2 = cell2.computeForm(ans);
         System.out.println(ans_Cell1);
         System.out.println(ans_Cell2);
+        System.out.println(ans3);
+    }
 
+    @Test
+    public void new_computeForm_Test() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        SCell cellNum = new SCell("=5", sheet);
+        SCell cellReference = new SCell("=A0", sheet);
+        SCell cellAll = new SCell("=1+A0", sheet);
+        sheet.set(0,0,cellNum.getData());
+        sheet.set(0,1,cellReference.getData());
+        sheet.set(0,2,cellAll.getData());
+        String onlyNumber = "=5";
+        String onlyReference = "=A0";
+        String numberAndReference = "=1+A0";
+        double number = cellNum.computeForm(cellNum.getData());
+        double reference = cellReference.computeForm(cellReference.getData());
+        double All = cellAll.computeForm(cellAll.getData());
+        System.out.println(number);
+        System.out.println(reference);
+        System.out.println(All);
     }
 }

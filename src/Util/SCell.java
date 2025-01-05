@@ -224,25 +224,100 @@ public class SCell implements Cell {
 //        return evaluateExpression(text); // This function parses and evaluates the formula
 //    }
 
-    /**
-     * Computes the result of a formula, handling both cell references and direct numbers
-     * @param text The formula text
-     * @return The computed result
-     */
-    public double computeForm(String text) {
-        // If it's a cell reference like "A0"
-        if (isCoordinate(text.substring(1))) {
-            Coordinate coord = Coordinate.parseCell(text.substring(1));
-            // Get the referenced cell's value
-            String value = Sheet.eval(coord.getX(), coord.getY());
-            // Convert to number and return
-            return Double.parseDouble(value);
-        }
-        // Process the formula first to replace cell references
-        String processedFormula = processFormula(text);
+//    /**
+//     * Computes the result of a formula, handling both cell references and direct numbers
+//     * @param text The formula text
+//     * @return The computed result
+//     */
+//    public double computeForm(String text) {
+//        // If it's a cell reference like "A0"
+//        if (isCoordinate(text.substring(1))) {
+//            Coordinate coord = Coordinate.parseCell(text.substring(1));
+//            // Get the referenced cell's value
+//            String value = Sheet.eval(coord.getX(), coord.getY());
+//            // Convert to number and return
+//            return Double.parseDouble(value);
+//        }
+//        // Process the formula first to replace cell references
+//        String processedFormula = processFormula(text);
+//
+//        // Now evaluate the processed formula which contains only numbers and operators
+//        return evaluateExpression(processedFormula);
+//    }
 
-        // Now evaluate the processed formula which contains only numbers and operators
-        return evaluateExpression(processedFormula);
+    public double computeForm(String text) {
+        // If it's just a number after the equals sign, return it directly
+        if (text.startsWith("=") && isNumber(text.substring(1))) {
+            return Double.parseDouble(text.substring(1));
+        }
+
+        // Process formula by replacing cell references with their actual values
+        String processedFormula = text;
+        if (text.startsWith("=")) {
+            processedFormula = text.substring(1).trim();
+        }
+
+        // If it's a single cell reference (like "A0")
+        if (isCoordinate(processedFormula)) {
+            Coordinate coord = Coordinate.parseCell(processedFormula);
+            Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
+
+            // Get the raw data from the referenced cell
+            String cellData = referencedCell.getData();
+
+            // If the referenced cell contains a number, return it
+            if (isNumber(cellData)) {
+                return Double.parseDouble(cellData);
+            }
+            // If the referenced cell contains a formula, evaluate it
+            else if (cellData.startsWith("=")) {
+                // Create a new SCell to evaluate the formula to avoid recursion
+                SCell tempCell = new SCell(cellData, Sheet);
+                return tempCell.computeForm(cellData);
+            }
+            throw new IllegalArgumentException("Referenced cell does not contain a numeric value");
+        }
+
+        // For complex formulas containing cell references and operators
+        StringBuilder processedExpr = new StringBuilder();
+        StringBuilder currentToken = new StringBuilder();
+
+        for (int i = 0; i < processedFormula.length(); i++) {
+            char c = processedFormula.charAt(i);
+
+            if (Character.isLetter(c)) {
+                // Start of potential cell reference
+                currentToken.append(c);
+                while (i + 1 < processedFormula.length() && Character.isDigit(processedFormula.charAt(i + 1))) {
+                    currentToken.append(processedFormula.charAt(++i));
+                }
+
+                String token = currentToken.toString();
+                if (isCoordinate(token)) {
+                    Coordinate coord = Coordinate.parseCell(token);
+                    Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
+                    String cellValue = referencedCell.getData();
+
+                    if (isNumber(cellValue)) {
+                        processedExpr.append(cellValue);
+                    } else if (cellValue.startsWith("=")) {
+                        // Create a new SCell to evaluate the formula
+                        SCell tempCell = new SCell(cellValue, Sheet);
+                        processedExpr.append(tempCell.computeForm(cellValue));
+                    } else {
+                        throw new IllegalArgumentException("Referenced cell does not contain a numeric value");
+                    }
+                } else {
+                    processedExpr.append(token);
+                }
+                currentToken.setLength(0);
+            } else {
+                processedExpr.append(c);
+            }
+        }
+
+        // Evaluate the processed expression
+        return evaluateExpression(processedExpr.toString());
     }
 
 
