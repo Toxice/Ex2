@@ -216,10 +216,12 @@ public class SCell implements Cell {
                 if (isCoordinate(expression.substring(currentIndex))) {
                     //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
                     Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
-                    Sheet.eval();
+                    //Sheet.eval(); remove the //
                     String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
-                    int value = Integer.parseInt(Sheet.eval(coordinate.getX(), coordinate.getY()));
-                    evaluateExpression(parsedNum); // try
+                    double value = Double.parseDouble(Sheet.eval(coordinate.getX(), coordinate.getY()));
+                    //evaluateExpression(parsedNum); // try
+                    result = value;
+                    break;
                 }
             }
 

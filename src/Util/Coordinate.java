@@ -28,12 +28,27 @@ public class Coordinate {
         this.y = y;
     }
 
+//    public static Coordinate parseCell(String cellName) {
+//        int xCord = cell2Num(cellName.charAt(0));
+//        String optionalNumber = cellName.substring(1);
+//        int yCord = Integer.parseInt(optionalNumber);
+//        return new Coordinate(xCord, yCord);
+//    }
+
+
+    /**
+     * Function made to Return a Coordinate in the [x,y] Place
+     * for Example: "A5" -> Coordinate[0,5]
+     * @param cellName the name of the Cell, a Letter and a Number Between 0~99
+     * @return a Coordinate in the [x][y] Place
+     */
     public static Coordinate parseCell(String cellName) {
-        int xCord = cell2Num(cellName.charAt(0));
         String optionalNumber = cellName.substring(1);
+        int xCord =  cell2Num(cellName.charAt(0));
         int yCord = Integer.parseInt(optionalNumber);
         return new Coordinate(xCord, yCord);
     }
+
 
     public static int cell2Num(char Cell) {
         return Cell - 'A';
@@ -44,3 +59,10 @@ public class Coordinate {
         return this.x + "," + this.y;
     }
 }
+
+
+/*
+
+'0' '1' '2' ' 3' '4'
+
+ */

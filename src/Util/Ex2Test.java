@@ -60,13 +60,13 @@ public class Ex2Test {
         double ans = cell.computeForm(text);
     }
 
-    @Test
-    public void evalTest() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"25");
-        sheet.set(0,1,"A0");
-        sheet.eval(0,1);
-    }
+//    @Test
+//    public void evalTest() {
+//        Ex2Sheet sheet = new Ex2Sheet();
+//        sheet.set(0,0,"25");
+//        sheet.set(0,1,"A0");
+//        sheet.eval(0,1);
+//    }
 
     @Test
     public void isFormTest2() {
@@ -104,7 +104,7 @@ public class Ex2Test {
         DependencyParser parser = new DependencyParser();
         sheet.set(0,0,"5");
         sheet.set(0,1,"2");
-        sheet.set(0,2,"A0");
+        sheet.set(2,0,"A0");
         Coordinate c1 = parser.parseCell(sheet.value(0,2));
         System.out.println();
     }
@@ -156,5 +156,19 @@ public class Ex2Test {
         String s = "=A1";
         SCell cell = new SCell(s, sheet);
         double dd = cell.computeForm(s);
+        System.out.println(dd);
+    }
+
+    @Test
+    public void evalTest() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"=5");
+        SCell cell1 = new SCell("=A0", sheet);
+        sheet.set(0,1,"=A0");
+        String ans = sheet.eval(0,0);
+        System.out.println(ans);
+        String ans1 = sheet.eval(0,1);
+        System.out.println(ans1);
+
     }
 }
