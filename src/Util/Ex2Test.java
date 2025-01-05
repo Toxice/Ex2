@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static Util.SCell.isCoordinate;
-import static Util.SCell.isForm;
+import static Util.SCell.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Ex2Test {
@@ -163,12 +162,51 @@ public class Ex2Test {
     public void evalTest() {
         Ex2Sheet sheet = new Ex2Sheet();
         sheet.set(0,0,"=5");
-        SCell cell1 = new SCell("=A0", sheet);
         sheet.set(0,1,"=A0");
-        String ans = sheet.eval(0,0);
-        System.out.println(ans);
-        String ans1 = sheet.eval(0,1);
-        System.out.println(ans1);
+        SCell cell1 = new SCell("=5", sheet);
+        SCell cell2 = new SCell("=A0", sheet);
+        String ans1 = cell1.toString();
+        String ans2 = cell2.toString();
+        sheet.set(0,0,ans1);
+        sheet.set(0,1,ans2);
+        System.out.println(sheet.eval(0,0));
+        System.out.println(sheet.eval(0,1));
+//        String ans = sheet.eval(0,0);
+//        System.out.println(ans);
+//        String ans1 = sheet.eval(0,1);
+//        System.out.println(ans1);
 
+    }
+
+    @Test
+    public void evalTest2() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"=5");
+        sheet.set(0,1,"=A0");
+        assertEquals("5.0", sheet.eval(0,0));  // Should return "5"
+        assertEquals("5.0", sheet.eval(0,1));  // Should also return "5"
+    }
+
+    @Test
+    public void evalTest3() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"=5");    // Cell A0 = 5
+        sheet.set(0,1,"=A0");   // Cell A1 = value of A0
+
+        String[] evals = {sheet.eval(0,0), sheet.eval(0,1)};
+
+        assertEquals("5.0", evals[0]);  // A0 should evaluate to 5
+        assertEquals("5.0", evals[1]);  // A1 should also evaluate to 5
+        System.out.println("A0 = " + evals[0]);
+        System.out.println("A1 = " + evals[1]);
+    }
+
+    @Test
+    public void isCoordTest() {
+        String[] test = {"A0", "A12", "B101", "5"};
+        boolean[] expected = {true, true, false, false};
+        for (int i = 0; i < test.length; i++) {
+            assertEquals(expected[i], isCoord(test[i]));
+        }
     }
 }

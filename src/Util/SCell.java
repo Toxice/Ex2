@@ -57,16 +57,23 @@ public class SCell implements Cell {
      * @return true iff the String start's with a Big Letter and the Rest is a number from 0 to 99
      */
     public static boolean isCoordinate(String s) { //A00
-        if (Character.isLetter(s.charAt(0))) {
-            String cord = s.substring(1);
-            if (cord.length() >= 3) {
-                return false;
-            }
-            for (char chCord : cord.toCharArray()) {
-                if (!Character.isDigit(chCord)) {
-                    return false;
-                }
-            }
+        if (isNumber(s)) {
+            return false;
+        }
+        String nums = s.substring(1); // number from 0~99
+        if (!Character.isLetter(s.charAt(0)) || nums.length() > 2) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isCoord(String s) {
+        if (isNumber(s)) {
+            return false;
+        }
+        String nums = s.substring(1); // number from 0~99
+        if (!Character.isLetter(s.charAt(0)) || nums.length() > 2) {
+            return false;
         }
         return true;
     }
@@ -158,6 +165,16 @@ public class SCell implements Cell {
             text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
         }
 
+        // If it's a cell reference like "A0"
+        if (isCoordinate(text)) {
+            Coordinate coord = Coordinate.parseCell(text);
+            // Get the referenced cell's value
+            String value = Sheet.eval(coord.getX(), coord.getY());
+            // Convert to number and return
+            return Double.parseDouble(value);
+        }
+
+
         // Evaluate the expression
         return evaluateExpression(text); // This function parses and evaluates the formula
     }
@@ -199,6 +216,7 @@ public class SCell implements Cell {
      * @return the evaluated numeric result of the simple expression
      */
     private double evaluateSimpleExpression(String expression) {
+        Sheet = new Ex2Sheet(); //remove later
         double result = 0.0;
         char operator = '+';
         int currentIndex = 0;
@@ -216,7 +234,7 @@ public class SCell implements Cell {
                 if (isCoordinate(expression.substring(currentIndex))) {
                     //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
                     Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
-                    //Sheet.eval(); remove the //
+                    Sheet.eval();
                     String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
                     double value = Double.parseDouble(Sheet.eval(coordinate.getX(), coordinate.getY()));
                     //evaluateExpression(parsedNum); // try

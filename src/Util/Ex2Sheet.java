@@ -111,14 +111,16 @@ public class Ex2Sheet implements Sheet {
     }
     @Override
     public void set(int x, int y, String s) {
-        Cell c = new SCell(s);
-        table[x][y] = c;
+      //  Cell c = new SCell(s);
+       // table[x][y] = c;
         // Add your code here
         if (!isIn(x, y)) {
             throw new IllegalArgumentException("Invalid cell coordinates");
             ////////////////////
         }
-        c.setData(s); // try
+//        c.setData(s); // try
+        table[x][y] = new SCell(s, this);  // Pass 'this' as the sheet reference
+       // eval();  // Re-evaluate the sheet after setting a new value
         eval();
     }
     @Override
@@ -219,47 +221,99 @@ public class Ex2Sheet implements Sheet {
         /////////////////////
     }
 
+//    @Override
+//    public String eval(int x, int y) {
+//        String ans = null; // Initialize as null
+//        SCell cell1 = (SCell) get(x,y); //
+//
+//        if (get(x, y) != null) {
+//           // ans = get(x, y).toString(); // Retrieve the string representation of the cell
+//            ans = cell1.toString();
+//        }
+//
+//        // Add your code here
+//        if (!isIn(x, y)) {
+//            return Ex2Utils.EMPTY_CELL; // Return empty cell if coordinates are invalid
+//        }
+//
+//        SCell cell = (SCell) get(x, y);
+//        if (cell != null) {
+//            switch (cell.getType()) {
+//                case Ex2Utils.NUMBER:
+//                case Ex2Utils.TEXT:
+//                    ans = cell.getData(); // Directly return the data for text or number
+//                    break;
+//                case Ex2Utils.FORM:
+//                    try {
+//                        double result = cell.computeForm(cell.getData());
+//                        ans = String.valueOf(result); // Evaluate the formula and convert to string
+//                    } catch (Exception e) {
+//                        cell.setType(Ex2Utils.ERR_FORM_FORMAT); // Handle formula errors
+//                        ans = Ex2Utils.ERR_FORM;
+//                    }
+//                    break;
+//                case Ex2Utils.ERR_FORM_FORMAT:
+//                    ans = Ex2Utils.ERR_FORM; // Return error message for wrong formula format
+//                    break;
+//                case Ex2Utils.ERR_CYCLE_FORM:
+//                    ans = Ex2Utils.ERR_CYCLE; // Return error message for circular dependency
+//                    break;
+//            }
+//        }
+//
+//        /////////////////////
+//        return ans; // Return the evaluated or default result
+//    }
+
+
+//    @Override
+//    public String eval(int x, int y) {
+//        if (!isIn(x, y)) {
+//            return Ex2Utils.EMPTY_CELL;
+//        }
+//
+//        SCell cell = (SCell) get(x, y);
+//        if (cell == null) {
+//            return Ex2Utils.EMPTY_CELL;
+//        }
+//
+//        switch (cell.getType()) {
+//            case Ex2Utils.NUMBER:
+//            case Ex2Utils.TEXT:
+//                return cell.getData();
+//            case Ex2Utils.FORM:
+//                try {
+//                    double result = cell.computeForm(cell.getData());
+//                    return String.valueOf(result);
+//                } catch (Exception e) {
+//                    cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+//                    return Ex2Utils.ERR_FORM;
+//                }
+//            default:
+//                return Ex2Utils.EMPTY_CELL;
+//        }
+//    }
+
+
     @Override
     public String eval(int x, int y) {
-        String ans = null; // Initialize as null
+        SCell cell = (SCell) get(x,y);  // Get cell A1
 
-        if (get(x, y) != null) {
-            ans = get(x, y).toString(); // Retrieve the string representation of the cell
-        }
-
-        // Add your code here
-        if (!isIn(x, y)) {
-            return Ex2Utils.EMPTY_CELL; // Return empty cell if coordinates are invalid
-        }
-
-        SCell cell = (SCell) get(x, y);
-        if (cell != null) {
-            switch (cell.getType()) {
-                case Ex2Utils.NUMBER:
-                case Ex2Utils.TEXT:
-                    ans = cell.getData(); // Directly return the data for text or number
-                    break;
-                case Ex2Utils.FORM:
-                    try {
-                        double result = cell.computeForm(cell.getData());
-                        ans = String.valueOf(result); // Evaluate the formula and convert to string
-                    } catch (Exception e) {
-                        cell.setType(Ex2Utils.ERR_FORM_FORMAT); // Handle formula errors
-                        ans = Ex2Utils.ERR_FORM;
-                    }
-                    break;
-                case Ex2Utils.ERR_FORM_FORMAT:
-                    ans = Ex2Utils.ERR_FORM; // Return error message for wrong formula format
-                    break;
-                case Ex2Utils.ERR_CYCLE_FORM:
-                    ans = Ex2Utils.ERR_CYCLE; // Return error message for circular dependency
-                    break;
+        if (cell.getType() == Ex2Utils.FORM) {
+            String formula = cell.getData();  // Gets "=A0"
+            try {
+                double result = cell.computeForm(formula);  // This should:
+                // 1. Parse "=A0" to know it needs value from [0,0]
+                // 2. Get value from cell [0,0] (which is 5)
+                // 3. Return 5.0
+                return String.valueOf(result);
+            } catch (Exception e) {
+                return Ex2Utils.ERR_FORM;
             }
         }
-
-        /////////////////////
-        return ans; // Return the evaluated or default result
+        return cell.getData();
     }
+
 
 //    @Override
 //    public String value(int x, int y) {
