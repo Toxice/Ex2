@@ -246,6 +246,10 @@ public class Ex2Test {
         SCell cellNum = new SCell("=5", sheet);
         SCell cellReference = new SCell("=A0", sheet);
         SCell cellAll = new SCell("=1+A0", sheet);
+        int[] types = {cellNum.getType(), cellReference.getType(), cellAll.getType()};
+        for (int i = 0; i < types.length; i++) {
+            System.out.println(types[i]);
+        }
         sheet.set(0,0,cellNum.getData());
         sheet.set(0,1,cellReference.getData());
         sheet.set(0,2,cellAll.getData());
@@ -258,5 +262,34 @@ public class Ex2Test {
         System.out.println(number);
         System.out.println(reference);
         System.out.println(All);
+    }
+
+    @Test
+    public void cus_emek(){
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"=5");
+        sheet.set(0,1,"=A0");
+        sheet.set(0,2,"=1+A0");
+        SCell cell1 = new SCell(sheet.get(0,0).getData(), sheet);
+        SCell cell2 = new SCell(sheet.get(0,1).getData(), sheet);
+        SCell cell3 = new SCell(sheet.get(0,2).getData(), sheet);
+        cell1.setData(sheet.get(0,0).getData());
+        cell2.setData(sheet.get(0,1).getData());
+        cell3.setData(sheet.get(0,2).getData());
+        double d1 = cell1.computeForm("=5");
+        double d2 = cell2.computeForm("=A0");
+        double d3 = cell3.computeForm("=1+A0");
+        double[] dd = {d1, d2, d3};
+        for (int i = 0; i < 3; i++) {
+            System.out.println(dd[i]);
+        }
+    }
+
+    @Test
+    public void isFormTest1() {
+        String[] ans = {"=1+3", "=A0", "=4+5"};
+        for (int i = 0; i < ans.length; i++) {
+            assertTrue(isForm(ans[i]));
+        }
     }
 }

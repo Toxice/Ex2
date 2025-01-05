@@ -78,17 +78,83 @@ public class SCell implements Cell {
         return true;
     }
 
-    /**
-     * Validates if the given string is a valid mathematical formula.
-     * A valid formula adheres to the following rules:
-     * - The formula must start with '='.
-     * - Every operator (+, -, *, /) must have a number or parentheses on either side.
-     * - Parentheses must be balanced and cannot be empty (e.g., "()").
-     * - The formula must not contain invalid characters.
-     *
-     * @param text the string to validate
-     * @return true if the string is a valid formula, false otherwise
-     */
+//    /**
+//     * Validates if the given string is a valid mathematical formula.
+//     * A valid formula adheres to the following rules:
+//     * - The formula must start with '='.
+//     * - Every operator (+, -, *, /) must have a number or parentheses on either side.
+//     * - Parentheses must be balanced and cannot be empty (e.g., "()").
+//     * - The formula must not contain invalid characters.
+//     *
+//     * @param text the string to validate
+//     * @return true if the string is a valid formula, false otherwise
+//     */
+//    public static boolean isForm(String text) {
+//        if (text == null || text.isEmpty()) {
+//            return false;
+//        }
+//
+//        // Check that the formula starts with '='
+//        if (!text.startsWith("=")) {
+//            return false;
+//        }
+//
+//
+//
+//        // Remove the '=' character at the beginning for further checks
+//        text = text.substring(1).replaceAll("\\s", "");
+//
+//        // Check for invalid characters
+//        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
+////        if (!text.matches("[0-9+\\-*/().]*")) {
+//            return false;
+//        }
+//
+//        // Check for balanced parentheses and non-empty parentheses
+//        int parenthesesBalance = 0;
+//        for (int i = 0; i < text.length(); i++) {
+//            char c = text.charAt(i);
+//
+//            if (c == '(') {
+//                parenthesesBalance++;
+//                // Ensure the next character after '(' is valid
+//                if (i == text.length() - 1 || (text.charAt(i + 1) == ')')) {
+//                    return false; // Empty parentheses
+//                }
+//            } else if (c == ')') {
+//                parenthesesBalance--;
+//            }
+//
+//            // Unbalanced if closing parentheses appear before an opening one
+//            if (parenthesesBalance < 0) {
+//                return false;
+//            }
+//        }
+//        if (parenthesesBalance != 0) {
+//            return false;
+//        }
+//
+//        // Check that operators have valid operands on either side
+//        for (int i = 0; i < text.length(); i++) {
+//            char current = text.charAt(i);
+//
+//            // If the current character is an operator
+//            if (current == '+' || current == '-' || current == '*' || current == '/') {
+//                // Check the character before the operator
+//                if (i == 0 || (!Character.isDigit(text.charAt(i - 1)) && text.charAt(i - 1) != ')')) {
+//                    return false;
+//                }
+//
+//                // Check the character after the operator
+//                if (i == text.length() - 1 || (!Character.isDigit(text.charAt(i + 1)) && text.charAt(i + 1) != '(')) {
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
+//    }
+
     public static boolean isForm(String text) {
         if (text == null || text.isEmpty()) {
             return false;
@@ -104,7 +170,6 @@ public class SCell implements Cell {
 
         // Check for invalid characters
         if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
-//        if (!text.matches("[0-9+\\-*/().]*")) {
             return false;
         }
 
@@ -116,7 +181,7 @@ public class SCell implements Cell {
             if (c == '(') {
                 parenthesesBalance++;
                 // Ensure the next character after '(' is valid
-                if (i == text.length() - 1 || (text.charAt(i + 1) == ')')) {
+                if (i == text.length() - 1 || text.charAt(i + 1) == ')') {
                     return false; // Empty parentheses
                 }
             } else if (c == ')') {
@@ -132,25 +197,32 @@ public class SCell implements Cell {
             return false;
         }
 
-        // Check that operators have valid operands on either side
-        for (int i = 0; i < text.length(); i++) {
-            char current = text.charAt(i);
+        // Split the formula into tokens for validation
+        String[] tokens = text.split("(?=[+\\-*/()])|(?<=[+\\-*/()])");
+        boolean expectingOperand = true;
 
-            // If the current character is an operator
-            if (current == '+' || current == '-' || current == '*' || current == '/') {
-                // Check the character before the operator
-                if (i == 0 || (!Character.isDigit(text.charAt(i - 1)) && text.charAt(i - 1) != ')')) {
-                    return false;
+        for (String token : tokens) {
+            if (token.isEmpty()) {
+                continue;
+            }
+
+            if (expectingOperand) {
+                if (token.matches("\\d+") || isCoordinate(token) || token.equals("(")) {
+                    expectingOperand = false; // After an operand, expect an operator
+                } else {
+                    return false; // Invalid operand
                 }
-
-                // Check the character after the operator
-                if (i == text.length() - 1 || (!Character.isDigit(text.charAt(i + 1)) && text.charAt(i + 1) != '(')) {
-                    return false;
+            } else {
+                if (token.matches("[+\\-*/]") || token.equals(")")) {
+                    expectingOperand = true; // After an operator, expect an operand
+                } else {
+                    return false; // Invalid operator
                 }
             }
         }
 
-        return true;
+        // Ensure the formula ends with a valid operand
+        return !expectingOperand;
     }
 
     /**
