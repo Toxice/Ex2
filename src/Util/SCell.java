@@ -79,153 +79,6 @@ public class SCell implements Cell {
         return true;
     }
 
-//    /**
-//     * Validates if the given string is a valid mathematical formula.
-//     * A valid formula adheres to the following rules:
-//     * - The formula must start with '='.
-//     * - Every operator (+, -, *, /) must have a number or parentheses on either side.
-//     * - Parentheses must be balanced and cannot be empty (e.g., "()").
-//     * - The formula must not contain invalid characters.
-//     *
-//     * @param text the string to validate
-//     * @return true if the string is a valid formula, false otherwise
-//     */
-//    public static boolean isForm(String text) {
-//        if (text == null || text.isEmpty()) {
-//            return false;
-//        }
-//
-//        // Check that the formula starts with '='
-//        if (!text.startsWith("=")) {
-//            return false;
-//        }
-//
-//
-//
-//        // Remove the '=' character at the beginning for further checks
-//        text = text.substring(1).replaceAll("\\s", "");
-//
-//        // Check for invalid characters
-//        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
-////        if (!text.matches("[0-9+\\-*/().]*")) {
-//            return false;
-//        }
-//
-//        // Check for balanced parentheses and non-empty parentheses
-//        int parenthesesBalance = 0;
-//        for (int i = 0; i < text.length(); i++) {
-//            char c = text.charAt(i);
-//
-//            if (c == '(') {
-//                parenthesesBalance++;
-//                // Ensure the next character after '(' is valid
-//                if (i == text.length() - 1 || (text.charAt(i + 1) == ')')) {
-//                    return false; // Empty parentheses
-//                }
-//            } else if (c == ')') {
-//                parenthesesBalance--;
-//            }
-//
-//            // Unbalanced if closing parentheses appear before an opening one
-//            if (parenthesesBalance < 0) {
-//                return false;
-//            }
-//        }
-//        if (parenthesesBalance != 0) {
-//            return false;
-//        }
-//
-//        // Check that operators have valid operands on either side
-//        for (int i = 0; i < text.length(); i++) {
-//            char current = text.charAt(i);
-//
-//            // If the current character is an operator
-//            if (current == '+' || current == '-' || current == '*' || current == '/') {
-//                // Check the character before the operator
-//                if (i == 0 || (!Character.isDigit(text.charAt(i - 1)) && text.charAt(i - 1) != ')')) {
-//                    return false;
-//                }
-//
-//                // Check the character after the operator
-//                if (i == text.length() - 1 || (!Character.isDigit(text.charAt(i + 1)) && text.charAt(i + 1) != '(')) {
-//                    return false;
-//                }
-//            }
-//        }
-//
-//        return true;
-//    }
-
-//    public static boolean isForm(String text) {
-//        if (text == null || text.isEmpty()) {
-//            return false;
-//        }
-//
-//        // Check that the formula starts with '='
-//        if (!text.startsWith("=")) {
-//            return false;
-//        }
-//
-//        // Remove the '=' character at the beginning for further checks
-//        text = text.substring(1).replaceAll("\\s", "");
-//
-//        // Check for invalid characters
-//        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
-//            return false;
-//        }
-//
-//        // Check for balanced parentheses and non-empty parentheses
-//        int parenthesesBalance = 0;
-//        for (int i = 0; i < text.length(); i++) {
-//            char c = text.charAt(i);
-//
-//            if (c == '(') {
-//                parenthesesBalance++;
-//                // Ensure the next character after '(' is valid
-//                if (i == text.length() - 1 || text.charAt(i + 1) == ')') {
-//                    return false; // Empty parentheses
-//                }
-//            } else if (c == ')') {
-//                parenthesesBalance--;
-//            }
-//
-//            // Unbalanced if closing parentheses appear before an opening one
-//            if (parenthesesBalance < 0) {
-//                return false;
-//            }
-//        }
-//        if (parenthesesBalance != 0) {
-//            return false;
-//        }
-//
-//        // Split the formula into tokens for validation
-//        String[] tokens = text.split("(?=[+\\-*/()])|(?<=[+\\-*/()])");
-//        boolean expectingOperand = true;
-//
-//        for (String token : tokens) {
-//            if (token.isEmpty()) {
-//                continue;
-//            }
-//
-//            if (expectingOperand) {
-//                if (token.matches("\\d+") || isCoordinate(token) || token.equals("(")) {
-//                    expectingOperand = false; // After an operand, expect an operator
-//                } else {
-//                    return false; // Invalid operand
-//                }
-//            } else {
-//                if (token.matches("[+\\-*/]") || token.equals(")")) {
-//                    expectingOperand = true; // After an operator, expect an operand
-//                } else {
-//                    return false; // Invalid operator
-//                }
-//            }
-//        }
-//
-//        // Ensure the formula ends with a valid operand
-//        return !expectingOperand;
-//    }
-
     public static boolean isForm(String text) {
         if (text == null || text.isEmpty()) {
             return false;
@@ -329,52 +182,6 @@ public class SCell implements Cell {
 
         return processedFormula.toString();
     }
-
-//    /**
-//     * Computes the numeric value of a string expression.
-//     * Removes the '=' character at the beginning, if present, and evaluates the expression.
-//     *
-//     * @param text the string representing the formula to compute
-//     * @return the computed numeric value of the formula
-//     */
-//    public double computeForm(String text) {
-//        if (text.startsWith("=")) {
-//            text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
-//        }
-//
-//        // If it's a cell reference like "A0"
-//        if (isCoordinate(text)) {
-//            Coordinate coord = Coordinate.parseCell(text);
-//            // Get the referenced cell's value
-//            String value = Sheet.eval(coord.getX(), coord.getY());
-//            // Convert to number and return
-//            return Double.parseDouble(value);
-//        }
-//
-//        // Evaluate the expression
-//        return evaluateExpression(text); // This function parses and evaluates the formula
-//    }
-
-//    /**
-//     * Computes the result of a formula, handling both cell references and direct numbers
-//     * @param text The formula text
-//     * @return The computed result
-//     */
-//    public double computeForm(String text) {
-//        // If it's a cell reference like "A0"
-//        if (isCoordinate(text.substring(1))) {
-//            Coordinate coord = Coordinate.parseCell(text.substring(1));
-//            // Get the referenced cell's value
-//            String value = Sheet.eval(coord.getX(), coord.getY());
-//            // Convert to number and return
-//            return Double.parseDouble(value);
-//        }
-//        // Process the formula first to replace cell references
-//        String processedFormula = processFormula(text);
-//
-//        // Now evaluate the processed formula which contains only numbers and operators
-//        return evaluateExpression(processedFormula);
-//    }
 
     public double computeForm(String text) {
         // If it's just a number after the equals sign, return it directly
@@ -482,99 +289,6 @@ public class SCell implements Cell {
         return evaluateSimpleExpression(expression);
     }
 
-//    /**
-//     * Evaluates a simple mathematical expression without parentheses.
-//     * Performs operations in sequence based on the presence of arithmetic operators.
-//     *
-//     * @param expression the string representing the simple mathematical expression
-//     * @return the evaluated numeric result of the simple expression
-//     */
-//    private double evaluateSimpleExpression(String expression) {
-//        Sheet = new Ex2Sheet(); //remove later
-//        double result = 0.0;
-//        char operator = '+';
-//        int currentIndex = 0;
-//
-//        while (currentIndex < expression.length()) {
-//            // Find the next operator
-//            int nextOperatorIndex = findNextOperator(expression, currentIndex);
-//
-//            // If there's no operator, treat the remaining string as a number
-//            if (nextOperatorIndex == -1) {
-//                //if (expression.substring(currentIndex).matches("[0-9]")) {
-//                if (expression.substring(currentIndex).matches("\\d+(\\.\\d+)?")) {
-//                    result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
-//                    break;
-//                }
-//                if (isCoordinate(expression.substring(currentIndex))) {
-//                    //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
-//                    Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
-//                    Sheet.eval();
-//                    String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
-//                    double value = Double.parseDouble(Sheet.eval(coordinate.getX(), coordinate.getY()));
-//                    //evaluateExpression(parsedNum); // try
-//                    result = value;
-//                    break;
-//                }
-//            }
-//
-//            // Extract the current number and apply the operator
-//            String numberString = expression.substring(currentIndex, nextOperatorIndex).trim();
-//            double number = Double.parseDouble(numberString);
-//            result = applyOperator(result, operator, number);
-//
-//            // Move to the next operator
-//            operator = expression.charAt(nextOperatorIndex);
-//            currentIndex = nextOperatorIndex + 1;
-//        }
-//
-//        return result;
-//    }
-
-//    private double evaluateSimpleExpression(String expression) {
-//        double result = 0.0;
-//        char operator = '+';
-//        int currentIndex = 0;
-//
-//        while (currentIndex < expression.length()) {
-//            // Find the next operator
-//            int nextOperatorIndex = findNextOperator(expression, currentIndex);
-//            String currentToken;
-//
-//            if (nextOperatorIndex == -1) {
-//                currentToken = expression.substring(currentIndex).trim();
-//            } else {
-//                currentToken = expression.substring(currentIndex, nextOperatorIndex).trim();
-//            }
-//
-//            // Process the current token (either a number or cell reference)
-//            double value;
-//            if (currentToken.matches("\\d+(\\.\\d+)?")) {
-//                // Direct number
-//                value = Double.parseDouble(currentToken);
-//            } else if (isCoordinate(currentToken)) {
-//                // Cell reference
-//                Coordinate coordinate = Coordinate.parseCell(currentToken);
-//                String cellValue = Sheet.eval(coordinate.getX(), coordinate.getY());
-//                value = Double.parseDouble(cellValue);
-//            } else {
-//                throw new IllegalArgumentException("Invalid token: " + currentToken);
-//            }
-//
-//            // Apply the operator
-//            result = applyOperator(result, operator, value);
-//
-//            // Break if we've reached the end
-//            if (nextOperatorIndex == -1) break;
-//
-//            // Move to the next operator
-//            operator = expression.charAt(nextOperatorIndex);
-//            currentIndex = nextOperatorIndex + 1;
-//        }
-//
-//        return result;
-//    }
-
     private double evaluateSimpleExpression(String expression) {
         // First split on addition and subtraction
         List<String> terms = new ArrayList<>();
@@ -654,46 +368,6 @@ public class SCell implements Cell {
         return result;
     }
 
-    /**
-     * Finds the index of the next arithmetic operator (+, -, *, /) in the given expression.
-     *
-     * @param expression the string containing the mathematical expression
-     * @param startIndex the starting index to search for an operator
-     * @return the index of the next operator, or -1 if no operator is found
-     */
-    private static int findNextOperator(String expression, int startIndex) {
-        for (int i = startIndex; i < expression.length(); i++) {
-            char ch = expression.charAt(i);
-            if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
-                return i;
-            }
-        }
-        return -1; // No operator found
-    }
-
-    /**
-     * Applies a given arithmetic operator to two numeric values.
-     *
-     * @param result the current result
-     * @param operator the operator to apply (+, -, *, /)
-     * @param number the numeric value to apply the operator with
-     * @return the result after applying the operator
-     * @throws IllegalArgumentException if the operator is invalid
-     */
-    private static double applyOperator(double result, char operator, double number) {
-        switch (operator) {
-            case '+':
-                return result + number;
-            case '-':
-                return result - number;
-            case '*':
-                return result * number;
-            case '/':
-                return result / number;
-            default:
-                throw new IllegalArgumentException("Invalid operator: " + operator);
-        }
-    }
     public String removeSpace(String text) {
         return text.replaceAll(" ", "");
     }
@@ -715,66 +389,24 @@ public class SCell implements Cell {
         else {
             return getData();
         }
-        //return getData();
     }
-
-//    @Override
-//    public void setData(String s) {
-//        // Add your code here
-//        line = s;
-//        /////////////////////
-//        if (Ex2Utils.Debug) {
-//            System.out.println("Setting data: " + s);
-//        }
-//        if (s == null || s.isEmpty() || isText(s)) {
-//            type = Ex2Utils.TEXT;
-//        } else if (SCell.isNumber(s)) {
-//            type = Ex2Utils.NUMBER;
-//        } else if (SCell.isForm(s) || SCell.isCoordinate(s)) {
-//            type = Ex2Utils.FORM;
-//        } else {
-//            type = Ex2Utils.ERR_FORM_FORMAT;
-//        }
-//    }
-
-//    @Override
-//    public void setData(String s) {
-//        line = s;
-//        if (Ex2Utils.Debug) {
-//            System.out.println("Setting data: " + s);
-//        }
-//
-//        if (s == null || s.isEmpty() || isText(s)) {
-//            type = Ex2Utils.TEXT;
-//        } else if (SCell.isNumber(s)) {
-//            type = Ex2Utils.NUMBER;
-//        } else if (s.startsWith("=")) {
-//            // If it starts with = but isn't a valid formula, it's an error
-//            if (SCell.isForm(s)) {
-//                type = Ex2Utils.FORM;
-//            } else {
-//                type = Ex2Utils.ERR_FORM_FORMAT;
-//            }
-//        } else {
-//            type = Ex2Utils.ERR_FORM_FORMAT;
-//        }
-//    }
 
     @Override
     public void setData(String s) {
         line = s;
-        if (Ex2Utils.Debug) {
-            System.out.println("Setting data: " + s);
-        }
 
-        // Handle null or empty string
         if (s == null || s.isEmpty()) {
             type = Ex2Utils.TEXT;
             return;
         }
 
-        // Handle formulas (starts with '=')
         if (s.startsWith("=")) {
+            // Check if it's a simple self-reference
+            if (s.length() > 1 && s.substring(1).trim().equals(getData())) {
+                type = Ex2Utils.ERR_CYCLE_FORM;
+                return;
+            }
+
             if (SCell.isForm(s)) {
                 type = Ex2Utils.FORM;
             } else {
@@ -783,13 +415,11 @@ public class SCell implements Cell {
             return;
         }
 
-        // Handle numbers
         if (SCell.isNumber(s)) {
             type = Ex2Utils.NUMBER;
             return;
         }
 
-        // Everything else is text
         type = Ex2Utils.TEXT;
     }
     @Override
@@ -915,14 +545,6 @@ public class SCell implements Cell {
         return isValidFormula(left) && isValidFormula(right);
     }
 
-//    private static boolean isNumber(String str) {
-//        try {
-//            Double.parseDouble(str);
-//            return true;
-//        } catch (NumberFormatException e) {
-//            return false;
-//        }
-//    }
     private static boolean hasBalancedParentheses(String expr) {
         int count = 0;
         for (char ch : expr.toCharArray()) {
@@ -936,56 +558,6 @@ public class SCell implements Cell {
             }
         }
         return count == 0;
-    }
-
-    public double computeForm(String text, Ex2Sheet sheet) {
-        if (text.startsWith("=")) {
-            text = text.substring(1).replaceAll("\\s", ""); // Remove '=' and whitespace
-        }
-
-        // Parse and replace cell references
-        List<CellEntry> dependencies = DependencyParser.parseDependencies(text);
-        for (CellEntry dep : dependencies) {
-            Cell cell = sheet.get(dep.getX(), dep.getY());
-            if (cell == null || cell.getData().isEmpty()) {
-                throw new IllegalArgumentException("Referenced cell " + dep + " is empty or invalid.");
-            }
-            text = text.replace(dep.toString(), cell.getData());
-        }
-
-        // Evaluate the modified expression
-        return evaluateExpression(text);
-    }
-
-    public boolean isReference(SCell cell) {
-        String text = cell.getData();
-        boolean flag = false;
-        for (int i =0; i < text.length(); i++) {
-            if (Character.isLetter(text.charAt(i))) {
-                flag = isCellValid(text.substring(i, i+2));
-                if (flag) {
-                    return flag;
-                }
-                flag = isCellValid(text.substring(i, i+1));
-                }
-            }
-        return flag;
-        }
-
-    public static boolean isCellValid(String text) {
-        if (text == null) {
-            return false;
-        }
-        if (text.length() > 3 || text.length() < 2) {
-            return false;
-        }
-        if (Character.isDigit(text.charAt(1)) && Character.isDigit(text.charAt(2))) {
-            return true;
-        }
-        if (text.length() == 3 && Character.isDigit(text.charAt(1)) && Character.isDigit(text.charAt(2))) {
-            return true;
-        }
-        return false;
     }
 }
 

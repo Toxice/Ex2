@@ -28,14 +28,6 @@ public class Coordinate {
         this.y = y;
     }
 
-//    public static Coordinate parseCell(String cellName) {
-//        int xCord = cell2Num(cellName.charAt(0));
-//        String optionalNumber = cellName.substring(1);
-//        int yCord = Integer.parseInt(optionalNumber);
-//        return new Coordinate(xCord, yCord);
-//    }
-
-
     /**
      * Function made to Return a Coordinate in the [x,y] Place
      * for Example: "A5" -> Coordinate[0,5]

@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Ahh finally!">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Load and Save">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Coordinate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,57 +37,57 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Ex2GUI.executor": "Run",
-    "Application.Util.Ex2GUI.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.Ex2Test.CellValue_Test.executor": "Run",
-    "JUnit.Ex2Test.PatternTest.executor": "Run",
-    "JUnit.Ex2Test.computeFormCell.executor": "Debug",
-    "JUnit.Ex2Test.computeFormTest.executor": "Run",
-    "JUnit.Ex2Test.cus_emek.executor": "Debug",
-    "JUnit.Ex2Test.dependencyParserTest.executor": "Debug",
-    "JUnit.Ex2Test.depthTest.executor": "Debug",
-    "JUnit.Ex2Test.evalTest.executor": "Debug",
-    "JUnit.Ex2Test.evalTest2.executor": "Debug",
-    "JUnit.Ex2Test.evalTest3.executor": "Debug",
-    "JUnit.Ex2Test.inputCellTest.executor": "Run",
-    "JUnit.Ex2Test.inputCellsTest.executor": "Debug",
-    "JUnit.Ex2Test.isCoordTest.executor": "Debug",
-    "JUnit.Ex2Test.isCoordiantesFail.executor": "Run",
-    "JUnit.Ex2Test.isCoordinateTest.executor": "Run",
-    "JUnit.Ex2Test.isFormCellTest.executor": "Debug",
-    "JUnit.Ex2Test.isFormTest1.executor": "Run",
-    "JUnit.Ex2Test.isTextTest.executor": "Run",
-    "JUnit.Ex2Test.new_computeForm_Test.executor": "Debug",
-    "JUnit.Ex2Test.parseCoordinateValueTest.executor": "Run",
-    "JUnit.Ex2Test.scanFormulaTest.executor": "Debug",
-    "JUnit.Ex2Test.setDataFailedTest.executor": "Debug",
-    "JUnit.Ex2Test.setDataTest.executor": "Debug",
-    "JUnit.Ex2Test.testDependencyDepth.executor": "Run",
-    "JUnit.Ex2Test.toStringTest.executor": "Debug",
-    "JUnit.TestClass.PatternTest.executor": "Run",
-    "JUnit.TestClass.computeForm.executor": "Run",
-    "JUnit.TestClass.computeFormCellTest.executor": "Debug",
-    "JUnit.TestClass.dependencyParserTest.executor": "Run",
-    "JUnit.TestClass.depthTest.executor": "Run",
-    "JUnit.TestClass.evalTest.executor": "Debug",
-    "JUnit.TestClass.isCoordiantesFail.executor": "Debug",
-    "JUnit.TestClass.isCoordinateTest.executor": "Debug",
-    "JUnit.TestClass.isFormTest.executor": "Run",
-    "JUnit.TestClass.setDataTest.executor": "Debug",
-    "JUnit.TestClass.valueTest.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "kotlin-language-version-configured": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Ex2GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Util.Ex2GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.Ex2Test.CellValue_Test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.PatternTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.computeFormCell.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.computeFormTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.cus_emek.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.dependencyParserTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.depthTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.evalTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.evalTest2.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.evalTest3.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.inputCellTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.inputCellsTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.isCoordTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.isCoordiantesFail.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.isCoordinateTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.isFormCellTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.isFormTest1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.isTextTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.new_computeForm_Test.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.parseCoordinateValueTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.scanFormulaTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.setDataFailedTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.setDataTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Ex2Test.testDependencyDepth.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Ex2Test.toStringTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TestClass.PatternTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.computeForm.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.computeFormCellTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TestClass.dependencyParserTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.depthTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.evalTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TestClass.isCoordiantesFail.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TestClass.isCoordinateTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TestClass.isFormTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestClass.setDataTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TestClass.valueTest.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
@@ -363,7 +366,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736162170661</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Load and Save">
+      <option name="closed" value="true" />
+      <created>1736163215259</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1736163215260</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -399,7 +410,8 @@
     <MESSAGE value="updated isForm" />
     <MESSAGE value="fixed some things" />
     <MESSAGE value="Ahh finally!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ahh finally!" />
+    <MESSAGE value="Load and Save" />
+    <option name="LAST_COMMIT_MESSAGE" value="Load and Save" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -486,22 +498,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Coordinate.java</url>
-          <line>45</line>
+          <line>37</line>
           <option name="timeStamp" value="243" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Coordinate.java</url>
-          <line>46</line>
+          <line>38</line>
           <option name="timeStamp" value="244" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Coordinate.java</url>
-          <line>47</line>
+          <line>39</line>
           <option name="timeStamp" value="245" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Coordinate.java</url>
-          <line>48</line>
+          <line>40</line>
           <option name="timeStamp" value="246" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -585,11 +597,6 @@
           <option name="timeStamp" value="269" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>594</line>
-          <option name="timeStamp" value="271" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>191</line>
           <option name="timeStamp" value="273" />
@@ -603,56 +610,6 @@
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>193</line>
           <option name="timeStamp" value="275" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>608</line>
-          <option name="timeStamp" value="278" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>610</line>
-          <option name="timeStamp" value="279" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>611</line>
-          <option name="timeStamp" value="280" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>613</line>
-          <option name="timeStamp" value="281" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>614</line>
-          <option name="timeStamp" value="282" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>615</line>
-          <option name="timeStamp" value="283" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>616</line>
-          <option name="timeStamp" value="284" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>617</line>
-          <option name="timeStamp" value="285" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>618</line>
-          <option name="timeStamp" value="286" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>619</line>
-          <option name="timeStamp" value="287" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
@@ -818,41 +775,6 @@
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
           <line>272</line>
           <option name="timeStamp" value="462" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>754</line>
-          <option name="timeStamp" value="464" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>752</line>
-          <option name="timeStamp" value="465" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>753</line>
-          <option name="timeStamp" value="466" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>755</line>
-          <option name="timeStamp" value="467" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>756</line>
-          <option name="timeStamp" value="468" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>757</line>
-          <option name="timeStamp" value="469" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
-          <line>758</line>
-          <option name="timeStamp" value="470" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
