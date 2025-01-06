@@ -1,7 +1,10 @@
 package Util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 // Add your documentation below:
 
 public class Ex2Sheet implements Sheet {
@@ -123,26 +126,191 @@ public class Ex2Sheet implements Sheet {
     public int height() {
         return table[0].length;
     }
+//    @Override
+//    public void set(int x, int y, String s) {
+//      //  Cell c = new SCell(s);
+//       // table[x][y] = c;
+//        // Add your code here
+//        if (!isIn(x, y)) {
+//            throw new IllegalArgumentException("Invalid cell coordinates");
+//            ////////////////////
+//        }
+////        c.setData(s); // try
+//        table[x][y] = new SCell(s, this);  // Pass 'this' as the sheet reference
+//       // eval();  // Re-evaluate the sheet after setting a new value
+//        eval();
+//    }
+
     @Override
     public void set(int x, int y, String s) {
-      //  Cell c = new SCell(s);
-       // table[x][y] = c;
-        // Add your code here
         if (!isIn(x, y)) {
             throw new IllegalArgumentException("Invalid cell coordinates");
-            ////////////////////
         }
-//        c.setData(s); // try
-        table[x][y] = new SCell(s, this);  // Pass 'this' as the sheet reference
-       // eval();  // Re-evaluate the sheet after setting a new value
+
+        table[x][y] = new SCell(s, this);
+        // Calculate depth and check for cycles
+        int[][] depths = depth();
+        if (depths[x][y] == Ex2Utils.ERR) {
+            table[x][y].setType(Ex2Utils.ERR_CYCLE_FORM);
+        }
         eval();
     }
+//    @Override
+//    public void eval() {
+//        int[][] dd = depth();
+//        // Add your code here
+//
+//        // ///////////////////
+//    }
+
+//    @Override
+//    public void eval() {
+//        int[][] dd = depth();
+//
+//        // Create a list of cells ordered by their depth
+//        List<Cell[][]> depthLevels = new ArrayList<>();
+//        int maxDepth = 0;
+//
+//        // Find maximum depth
+//        for (int x = 0; x < width(); x++) {
+//            for (int y = 0; y < height(); y++) {
+//                if (dd[x][y] > maxDepth) {
+//                    maxDepth = dd[x][y];
+//                }
+//            }
+//        }
+//
+//        // Initialize depth levels array
+//        for (int i = 0; i <= maxDepth; i++) {
+//            depthLevels.add(new Cell[width()][height()]);
+//        }
+//
+//        // Sort cells by their depth and also track error cells
+//        Set<String> updatedCells = new HashSet<>();
+//        List<CellEntry> errorDependents = new ArrayList<>();
+//
+//        for (int x = 0; x < width(); x++) {
+//            for (int y = 0; y < height(); y++) {
+//                Cell cell = get(x, y);
+//                if (cell.getType() == Ex2Utils.ERR_FORM_FORMAT || cell.getType() == Ex2Utils.ERR_CYCLE_FORM) {
+//                    // Find all cells that depend on this error cell
+//                    findDependentCells(x, y, errorDependents);
+//                }
+//                else if (dd[x][y] >= 0 && cell.getType() == Ex2Utils.FORM) {
+//                    depthLevels.get(dd[x][y])[x][y] = cell;
+//                }
+//            }
+//        }
+//
+//        // First handle cells with errors
+//        for (CellEntry dep : errorDependents) {
+//            eval(dep.getX(), dep.getY());
+//            updatedCells.add(dep.getX() + "," + dep.getY());
+//        }
+//
+//        // Then evaluate other cells in order of dependency depth
+//        for (int d = 0; d <= maxDepth; d++) {
+//            Cell[][] level = depthLevels.get(d);
+//            for (int x = 0; x < width(); x++) {
+//                for (int y = 0; y < height(); y++) {
+//                    String cellKey = x + "," + y;
+//                    if (level[x][y] != null && !updatedCells.contains(cellKey)) {
+//                        eval(x, y);
+//                    }
+//                }
+//            }
+//        }
+//    }
+
     @Override
     public void eval() {
         int[][] dd = depth();
-        // Add your code here
+        int maxDepth = 0;
 
-        // ///////////////////
+        // First pass: Find maximum depth and reset error states
+        for (int x = 0; x < width(); x++) {
+            for (int y = 0; y < height(); y++) {
+                if (dd[x][y] > maxDepth) {
+                    maxDepth = dd[x][y];
+                }
+                Cell cell = get(x, y);
+                // Reset error states to allow for re-evaluation
+                if (cell.getType() == Ex2Utils.ERR_FORM_FORMAT) {
+                    cell.setType(Ex2Utils.FORM);
+                }
+            }
+        }
+
+        // Create an array to store cells at each depth level
+        List<List<CellEntry>> depthLevels = new ArrayList<>();
+        for (int i = 0; i <= maxDepth; i++) {
+            depthLevels.add(new ArrayList<>());
+        }
+
+        // Second pass: Categorize cells by depth
+        for (int x = 0; x < width(); x++) {
+            for (int y = 0; y < height(); y++) {
+                Cell cell = get(x, y);
+                if (cell.getType() == Ex2Utils.FORM && dd[x][y] >= 0) {
+                    depthLevels.get(dd[x][y]).add(new CellEntry(x, y));
+                }
+            }
+        }
+
+        // Third pass: Evaluate cells in order of dependency depth
+        Set<String> evaluatedCells = new HashSet<>();
+
+        // Start with depth 0 (cells with no dependencies)
+        for (int depth = 0; depth <= maxDepth; depth++) {
+            for (CellEntry entry : depthLevels.get(depth)) {
+                String cellKey = entry.getX() + "," + entry.getY();
+                if (!evaluatedCells.contains(cellKey)) {
+                    try {
+                        // Evaluate the cell
+                        String result = eval(entry.getX(), entry.getY());
+                        // If evaluation fails, mark as error and propagate
+                        if (result.equals(Ex2Utils.ERR_FORM)) {
+                            Cell cell = get(entry.getX(), entry.getY());
+                            cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+                            propagateError(entry.getX(), entry.getY());
+                        }
+                    } catch (Exception e) {
+                        // Handle any evaluation errors
+                        Cell cell = get(entry.getX(), entry.getY());
+                        cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+                        propagateError(entry.getX(), entry.getY());
+                    }
+                    evaluatedCells.add(cellKey);
+                }
+            }
+        }
+    }
+
+    private void propagateError(int x, int y) {
+        List<CellEntry> dependents = new ArrayList<>();
+        findDependentCells(x, y, dependents);
+        for (CellEntry dep : dependents) {
+            Cell cell = get(dep.getX(), dep.getY());
+            cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+        }
+    }
+
+    private void findDependentCells(int x, int y, List<CellEntry> dependents) {
+        for (int i = 0; i < width(); i++) {
+            for (int j = 0; j < height(); j++) {
+                Cell cell = get(i, j);
+                if (cell != null && cell.getType() == Ex2Utils.FORM) {
+                    List<CellEntry> deps = DependencyParser.parseDependencies(cell.getData());
+                    for (CellEntry dep : deps) {
+                        if (dep.getX() == x && dep.getY() == y) {
+                            dependents.add(new CellEntry(i, j));
+                            findDependentCells(i, j, dependents); // Recursive call for transitive dependencies
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -166,56 +334,124 @@ public class Ex2Sheet implements Sheet {
 //        return ans;
 //    }
 
+//    @Override
+//    public int[][] depth() {
+//        int[][] depths = new int[width()][height()]; // Initialize the depth array
+//
+//        for (int x = 0; x < width(); x++) {
+//            for (int y = 0; y < height(); y++) {
+//                depths[x][y] = calculateDepth(x, y, new boolean[width()][height()]); // Track visited cells to prevent cycles
+//            }
+//        }
+//
+//        return depths;
+//    }
+
     @Override
     public int[][] depth() {
         int[][] depths = new int[width()][height()]; // Initialize the depth array
+        boolean[][] visited = new boolean[width()][height()]; // Track visited cells globally
 
+        // First, mark all cells as unvisited
         for (int x = 0; x < width(); x++) {
             for (int y = 0; y < height(); y++) {
-                depths[x][y] = calculateDepth(x, y, new boolean[width()][height()]); // Track visited cells to prevent cycles
+                Cell cell = get(x, y);
+                // First reset any previous cycle errors
+                if (cell.getType() == Ex2Utils.ERR_CYCLE_FORM) {
+                    cell.setType(Ex2Utils.FORM);
+                }
+            }
+        }
+
+        // Calculate depths for all cells
+        for (int x = 0; x < width(); x++) {
+            for (int y = 0; y < height(); y++) {
+                depths[x][y] = calculateDepth(x, y, visited);
             }
         }
 
         return depths;
     }
 
-    /**
-     * Recursively calculates the depth of a cell.
-     *
-     * @param x        The x-coordinate of the cell.
-     * @param y        The y-coordinate of the cell.
-     * @param visited  A 2D boolean array to track visited cells (to detect cycles).
-     * @return The depth of the cell or -1 if a circular dependency is detected.
-     */
+//    /**
+//     * Recursively calculates the depth of a cell.
+//     *
+//     * @param x        The x-coordinate of the cell.
+//     * @param y        The y-coordinate of the cell.
+//     * @param visited  A 2D boolean array to track visited cells (to detect cycles).
+//     * @return The depth of the cell or -1 if a circular dependency is detected.
+//     */
+//    private int calculateDepth(int x, int y, boolean[][] visited) {
+//        if (!isIn(x, y)) {
+//            return 0; // Return 0 for invalid cells
+//        }
+//
+//        Cell cell = get(x, y);
+//        if (cell == null || cell.getType() != Ex2Utils.FORM) {
+//            return 0; // Non-form cells have a depth of 0
+//        }
+//
+//        if (visited[x][y]) {
+//            cell.setType(Ex2Utils.ERR_CYCLE_FORM); // Mark as a circular dependency
+//            return -1; // Return -1 for circular dependencies
+//        }
+//
+//        visited[x][y] = true; // Mark the cell as visited
+//
+//        List<CellEntry> dependencies = DependencyParser.parseDependencies(cell.getData()); // Parse dependencies
+//        int maxDepth = 0;
+//        for (CellEntry dep : dependencies) {
+//            int depDepth = calculateDepth(dep.getX(), dep.getY(), visited); // Recursive depth calculation
+//            if (depDepth == -1) {
+//                return -1; // Propagate circular dependency detection
+//            }
+//            maxDepth = Math.max(maxDepth, depDepth);
+//        }
+//
+//        visited[x][y] = false; // Unmark the cell after processing
+//        return maxDepth + 1; // Depth is 1 + max depth of dependencies
+//    }
+
     private int calculateDepth(int x, int y, boolean[][] visited) {
         if (!isIn(x, y)) {
-            return 0; // Return 0 for invalid cells
+            return 0;
         }
 
         Cell cell = get(x, y);
-        if (cell == null || cell.getType() != Ex2Utils.FORM) {
-            return 0; // Non-form cells have a depth of 0
+        // If not a formula or empty cell, depth is 0
+        if (cell == null || cell.getData().isEmpty() || cell.getType() != Ex2Utils.FORM) {
+            return 0;
         }
 
+        // If we've seen this cell before in current path, it's a cycle
         if (visited[x][y]) {
-            cell.setType(Ex2Utils.ERR_CYCLE_FORM); // Mark as a circular dependency
-            return -1; // Return -1 for circular dependencies
+            cell.setType(Ex2Utils.ERR_CYCLE_FORM);
+            return Ex2Utils.ERR;
         }
 
-        visited[x][y] = true; // Mark the cell as visited
+        visited[x][y] = true; // Mark as visited
 
-        List<CellEntry> dependencies = DependencyParser.parseDependencies(cell.getData()); // Parse dependencies
-        int maxDepth = 0;
-        for (CellEntry dep : dependencies) {
-            int depDepth = calculateDepth(dep.getX(), dep.getY(), visited); // Recursive depth calculation
-            if (depDepth == -1) {
-                return -1; // Propagate circular dependency detection
+        try {
+            List<CellEntry> dependencies = DependencyParser.parseDependencies(cell.getData());
+            int maxDepth = 0;
+
+            for (CellEntry dep : dependencies) {
+                if (!dep.isValid()) continue;
+
+                int depDepth = calculateDepth(dep.getX(), dep.getY(), visited);
+                if (depDepth == Ex2Utils.ERR) {
+                    // Propagate cycle error
+                    cell.setType(Ex2Utils.ERR_CYCLE_FORM);
+                    return Ex2Utils.ERR;
+                }
+                maxDepth = Math.max(maxDepth, depDepth);
             }
-            maxDepth = Math.max(maxDepth, depDepth);
-        }
 
-        visited[x][y] = false; // Unmark the cell after processing
-        return maxDepth + 1; // Depth is 1 + max depth of dependencies
+            // Depth is 1 + max depth of dependencies
+            return maxDepth + 1;
+        } finally {
+            visited[x][y] = false; // Unmark before returning
+        }
     }
 
 

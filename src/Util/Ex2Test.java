@@ -347,5 +347,23 @@ public class Ex2Test {
         table.set(0,0,cell.toString());
         System.out.println("cell is: " + cell.toString());
     }
+
+    @Test
+    public void testDependencyDepth() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"5");         // A0 = 5 (depth 0)
+        sheet.set(0,1,"=1+A0");     // A1 = 1+A0 (depth 1)
+        sheet.set(0,2,"=1+A1");     // A2 = 1+A1 (depth 2)
+        sheet.set(0,3,"=A3");       // A3 = A3 (should be ERR_CYCLE_FORM)
+
+        int[][] depths = sheet.depth();
+        assertEquals(0, depths[0][0]);  // A0 depth should be 0
+        assertEquals(1, depths[0][1]);  // A1 depth should be 1
+        assertEquals(2, depths[0][2]);  // A2 depth should be 2
+        assertEquals(-1, depths[0][3]); // A3 depth should be -1 (cycle)
+
+        assertEquals(Ex2Utils.ERR_CYCLE_FORM, sheet.get(0,3).getType());
+    }
+
     }
 

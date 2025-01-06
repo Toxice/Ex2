@@ -1,5 +1,6 @@
 package Util;// Add your documentation below:
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SCell implements Cell {
@@ -530,45 +531,124 @@ public class SCell implements Cell {
 //        return result;
 //    }
 
+//    private double evaluateSimpleExpression(String expression) {
+//        double result = 0.0;
+//        char operator = '+';
+//        int currentIndex = 0;
+//
+//        while (currentIndex < expression.length()) {
+//            // Find the next operator
+//            int nextOperatorIndex = findNextOperator(expression, currentIndex);
+//            String currentToken;
+//
+//            if (nextOperatorIndex == -1) {
+//                currentToken = expression.substring(currentIndex).trim();
+//            } else {
+//                currentToken = expression.substring(currentIndex, nextOperatorIndex).trim();
+//            }
+//
+//            // Process the current token (either a number or cell reference)
+//            double value;
+//            if (currentToken.matches("\\d+(\\.\\d+)?")) {
+//                // Direct number
+//                value = Double.parseDouble(currentToken);
+//            } else if (isCoordinate(currentToken)) {
+//                // Cell reference
+//                Coordinate coordinate = Coordinate.parseCell(currentToken);
+//                String cellValue = Sheet.eval(coordinate.getX(), coordinate.getY());
+//                value = Double.parseDouble(cellValue);
+//            } else {
+//                throw new IllegalArgumentException("Invalid token: " + currentToken);
+//            }
+//
+//            // Apply the operator
+//            result = applyOperator(result, operator, value);
+//
+//            // Break if we've reached the end
+//            if (nextOperatorIndex == -1) break;
+//
+//            // Move to the next operator
+//            operator = expression.charAt(nextOperatorIndex);
+//            currentIndex = nextOperatorIndex + 1;
+//        }
+//
+//        return result;
+//    }
+
     private double evaluateSimpleExpression(String expression) {
-        double result = 0.0;
-        char operator = '+';
-        int currentIndex = 0;
+        // First split on addition and subtraction
+        List<String> terms = new ArrayList<>();
+        List<Character> operators = new ArrayList<>();
 
-        while (currentIndex < expression.length()) {
-            // Find the next operator
-            int nextOperatorIndex = findNextOperator(expression, currentIndex);
-            String currentToken;
-
-            if (nextOperatorIndex == -1) {
-                currentToken = expression.substring(currentIndex).trim();
-            } else {
-                currentToken = expression.substring(currentIndex, nextOperatorIndex).trim();
+        int start = 0;
+        for (int i = 0; i < expression.length(); i++) {
+            if (expression.charAt(i) == '+' || expression.charAt(i) == '-') {
+                terms.add(expression.substring(start, i));
+                operators.add(expression.charAt(i));
+                start = i + 1;
             }
+        }
+        terms.add(expression.substring(start)); // Add last term
 
-            // Process the current token (either a number or cell reference)
-            double value;
-            if (currentToken.matches("\\d+(\\.\\d+)?")) {
-                // Direct number
-                value = Double.parseDouble(currentToken);
-            } else if (isCoordinate(currentToken)) {
-                // Cell reference
-                Coordinate coordinate = Coordinate.parseCell(currentToken);
+        // Evaluate each term (handling multiplication and division first)
+        List<Double> evaluatedTerms = new ArrayList<>();
+        for (String term : terms) {
+            evaluatedTerms.add(evaluateMultiplicationChain(term));
+        }
+
+        // Now do addition and subtraction
+        double result = evaluatedTerms.get(0);
+        for (int i = 0; i < operators.size(); i++) {
+            double nextTerm = evaluatedTerms.get(i + 1);
+            if (operators.get(i) == '+') {
+                result += nextTerm;
+            } else if (operators.get(i) == '-') {
+                result -= nextTerm;
+            }
+        }
+
+        return result;
+    }
+
+    private double evaluateMultiplicationChain(String expression) {
+        // Split on multiplication and division
+        List<String> factors = new ArrayList<>();
+        List<Character> operators = new ArrayList<>();
+
+        int start = 0;
+        for (int i = 0; i < expression.length(); i++) {
+            if (expression.charAt(i) == '*' || expression.charAt(i) == '/') {
+                factors.add(expression.substring(start, i));
+                operators.add(expression.charAt(i));
+                start = i + 1;
+            }
+        }
+        factors.add(expression.substring(start)); // Add last factor
+
+        // Evaluate each factor (it might be a number or cell reference)
+        List<Double> evaluatedFactors = new ArrayList<>();
+        for (String factor : factors) {
+            factor = factor.trim();
+            if (factor.matches("\\d+(\\.\\d+)?")) {
+                evaluatedFactors.add(Double.parseDouble(factor));
+            } else if (isCoordinate(factor)) {
+                Coordinate coordinate = Coordinate.parseCell(factor);
                 String cellValue = Sheet.eval(coordinate.getX(), coordinate.getY());
-                value = Double.parseDouble(cellValue);
+                evaluatedFactors.add(Double.parseDouble(cellValue));
             } else {
-                throw new IllegalArgumentException("Invalid token: " + currentToken);
+                throw new IllegalArgumentException("Invalid token: " + factor);
             }
+        }
 
-            // Apply the operator
-            result = applyOperator(result, operator, value);
-
-            // Break if we've reached the end
-            if (nextOperatorIndex == -1) break;
-
-            // Move to the next operator
-            operator = expression.charAt(nextOperatorIndex);
-            currentIndex = nextOperatorIndex + 1;
+        // Now do multiplication and division
+        double result = evaluatedFactors.get(0);
+        for (int i = 0; i < operators.size(); i++) {
+            double nextFactor = evaluatedFactors.get(i + 1);
+            if (operators.get(i) == '*') {
+                result *= nextFactor;
+            } else if (operators.get(i) == '/') {
+                result /= nextFactor;
+            }
         }
 
         return result;
@@ -657,6 +737,29 @@ public class SCell implements Cell {
 //        }
 //    }
 
+//    @Override
+//    public void setData(String s) {
+//        line = s;
+//        if (Ex2Utils.Debug) {
+//            System.out.println("Setting data: " + s);
+//        }
+//
+//        if (s == null || s.isEmpty() || isText(s)) {
+//            type = Ex2Utils.TEXT;
+//        } else if (SCell.isNumber(s)) {
+//            type = Ex2Utils.NUMBER;
+//        } else if (s.startsWith("=")) {
+//            // If it starts with = but isn't a valid formula, it's an error
+//            if (SCell.isForm(s)) {
+//                type = Ex2Utils.FORM;
+//            } else {
+//                type = Ex2Utils.ERR_FORM_FORMAT;
+//            }
+//        } else {
+//            type = Ex2Utils.ERR_FORM_FORMAT;
+//        }
+//    }
+
     @Override
     public void setData(String s) {
         line = s;
@@ -664,20 +767,30 @@ public class SCell implements Cell {
             System.out.println("Setting data: " + s);
         }
 
-        if (s == null || s.isEmpty() || isText(s)) {
+        // Handle null or empty string
+        if (s == null || s.isEmpty()) {
             type = Ex2Utils.TEXT;
-        } else if (SCell.isNumber(s)) {
-            type = Ex2Utils.NUMBER;
-        } else if (s.startsWith("=")) {
-            // If it starts with = but isn't a valid formula, it's an error
+            return;
+        }
+
+        // Handle formulas (starts with '=')
+        if (s.startsWith("=")) {
             if (SCell.isForm(s)) {
                 type = Ex2Utils.FORM;
             } else {
                 type = Ex2Utils.ERR_FORM_FORMAT;
             }
-        } else {
-            type = Ex2Utils.ERR_FORM_FORMAT;
+            return;
         }
+
+        // Handle numbers
+        if (SCell.isNumber(s)) {
+            type = Ex2Utils.NUMBER;
+            return;
+        }
+
+        // Everything else is text
+        type = Ex2Utils.TEXT;
     }
     @Override
     public String getData() {
