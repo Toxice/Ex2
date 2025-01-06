@@ -295,19 +295,42 @@ public class Ex2Sheet implements Sheet {
 //    }
 
 
+//    @Override
+//    public String eval(int x, int y) {
+//        SCell cell = (SCell) get(x,y);  // Get cell A1
+//
+//        if (cell.getType() == Ex2Utils.FORM) {
+//            String formula = cell.getData();  // Gets "=A0"
+//            try {
+//                double result = cell.computeForm(formula);  // This should:
+//                // 1. Parse "=A0" to know it needs value from [0,0]
+//                // 2. Get value from cell [0,0] (which is 5)
+//                // 3. Return 5.0
+//                return String.valueOf(result);
+//            } catch (Exception e) {
+//                return Ex2Utils.ERR_FORM;
+//            }
+//        }
+//        return cell.getData();
+//    }
+
     @Override
     public String eval(int x, int y) {
-        SCell cell = (SCell) get(x,y);  // Get cell A1
+        SCell cell = (SCell) get(x,y);
 
         if (cell.getType() == Ex2Utils.FORM) {
-            String formula = cell.getData();  // Gets "=A0"
+            String formula = cell.getData();
             try {
-                double result = cell.computeForm(formula);  // This should:
-                // 1. Parse "=A0" to know it needs value from [0,0]
-                // 2. Get value from cell [0,0] (which is 5)
-                // 3. Return 5.0
+                // First validate if the formula is valid
+                if (!SCell.isForm(formula) && !SCell.isCoordinate(formula.substring(1))) {
+                    cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+                    return Ex2Utils.ERR_FORM;
+                }
+
+                double result = cell.computeForm(formula);
                 return String.valueOf(result);
             } catch (Exception e) {
+                cell.setType(Ex2Utils.ERR_FORM_FORMAT);
                 return Ex2Utils.ERR_FORM;
             }
         }

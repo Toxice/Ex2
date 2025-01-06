@@ -61,7 +61,7 @@ public class SCell implements Cell {
             return false;
         }
         String nums = s.substring(1); // number from 0~99
-        if (!Character.isLetter(s.charAt(0)) || nums.length() > 2) {
+        if (!Character.isLetter(s.charAt(0)) || nums.length() > 2 || nums.length() != 1) {
             return false;
         }
         return true;
@@ -155,6 +155,76 @@ public class SCell implements Cell {
 //        return true;
 //    }
 
+//    public static boolean isForm(String text) {
+//        if (text == null || text.isEmpty()) {
+//            return false;
+//        }
+//
+//        // Check that the formula starts with '='
+//        if (!text.startsWith("=")) {
+//            return false;
+//        }
+//
+//        // Remove the '=' character at the beginning for further checks
+//        text = text.substring(1).replaceAll("\\s", "");
+//
+//        // Check for invalid characters
+//        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
+//            return false;
+//        }
+//
+//        // Check for balanced parentheses and non-empty parentheses
+//        int parenthesesBalance = 0;
+//        for (int i = 0; i < text.length(); i++) {
+//            char c = text.charAt(i);
+//
+//            if (c == '(') {
+//                parenthesesBalance++;
+//                // Ensure the next character after '(' is valid
+//                if (i == text.length() - 1 || text.charAt(i + 1) == ')') {
+//                    return false; // Empty parentheses
+//                }
+//            } else if (c == ')') {
+//                parenthesesBalance--;
+//            }
+//
+//            // Unbalanced if closing parentheses appear before an opening one
+//            if (parenthesesBalance < 0) {
+//                return false;
+//            }
+//        }
+//        if (parenthesesBalance != 0) {
+//            return false;
+//        }
+//
+//        // Split the formula into tokens for validation
+//        String[] tokens = text.split("(?=[+\\-*/()])|(?<=[+\\-*/()])");
+//        boolean expectingOperand = true;
+//
+//        for (String token : tokens) {
+//            if (token.isEmpty()) {
+//                continue;
+//            }
+//
+//            if (expectingOperand) {
+//                if (token.matches("\\d+") || isCoordinate(token) || token.equals("(")) {
+//                    expectingOperand = false; // After an operand, expect an operator
+//                } else {
+//                    return false; // Invalid operand
+//                }
+//            } else {
+//                if (token.matches("[+\\-*/]") || token.equals(")")) {
+//                    expectingOperand = true; // After an operator, expect an operand
+//                } else {
+//                    return false; // Invalid operator
+//                }
+//            }
+//        }
+//
+//        // Ensure the formula ends with a valid operand
+//        return !expectingOperand;
+//    }
+
     public static boolean isForm(String text) {
         if (text == null || text.isEmpty()) {
             return false;
@@ -168,32 +238,18 @@ public class SCell implements Cell {
         // Remove the '=' character at the beginning for further checks
         text = text.substring(1).replaceAll("\\s", "");
 
-        // Check for invalid characters
-        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
+        // Check if it's a single cell reference (like "A0")
+        if (isCoordinate(text)) {
+            return true;
+        }
+
+        // If it's just a single letter without a number (like "A"), it's invalid
+        if (text.length() == 1 && Character.isLetter(text.charAt(0))) {
             return false;
         }
 
-        // Check for balanced parentheses and non-empty parentheses
-        int parenthesesBalance = 0;
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-
-            if (c == '(') {
-                parenthesesBalance++;
-                // Ensure the next character after '(' is valid
-                if (i == text.length() - 1 || text.charAt(i + 1) == ')') {
-                    return false; // Empty parentheses
-                }
-            } else if (c == ')') {
-                parenthesesBalance--;
-            }
-
-            // Unbalanced if closing parentheses appear before an opening one
-            if (parenthesesBalance < 0) {
-                return false;
-            }
-        }
-        if (parenthesesBalance != 0) {
+        // Check for invalid characters
+        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
             return false;
         }
 
@@ -207,21 +263,23 @@ public class SCell implements Cell {
             }
 
             if (expectingOperand) {
-                if (token.matches("\\d+") || isCoordinate(token) || token.equals("(")) {
-                    expectingOperand = false; // After an operand, expect an operator
+                // For operands, check if it's a number, valid cell reference, or opening parenthesis
+                if (token.matches("\\d+") ||
+                        (isCoordinate(token)) ||
+                        token.equals("(")) {
+                    expectingOperand = false;
                 } else {
-                    return false; // Invalid operand
+                    return false;
                 }
             } else {
                 if (token.matches("[+\\-*/]") || token.equals(")")) {
-                    expectingOperand = true; // After an operator, expect an operand
+                    expectingOperand = true;
                 } else {
-                    return false; // Invalid operator
+                    return false;
                 }
             }
         }
 
-        // Ensure the formula ends with a valid operand
         return !expectingOperand;
     }
 

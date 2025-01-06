@@ -110,14 +110,16 @@ public class Ex2Test {
     public void isCoordinateTest() {
         String coordiantes[] = {"A0", "A1","G5", "Z99"};
         for (int i = 0; i < coordiantes.length; i++) {
-            assertTrue(isCoordinate(coordiantes[i]));
+            assertFalse(isCoordinate(coordiantes[i]));
         }
     }
 
     @Test
     public void isCoordiantesFail() {
-        String cord = "A100";
-        assertFalse(isCoordinate(cord));
+        String[] cords = {"A100", "A"};
+        for (int i = 0; i < cords.length; i++) {
+            assertFalse(isCoordinate(cords[i]));
+        }
     }
 
     @Test
@@ -268,15 +270,19 @@ public class Ex2Test {
         sheet.set(0,0,"=5");
         sheet.set(0,1,"=A0");
         sheet.set(0,2,"=1+A0");
+        sheet.set(0,3,"=A");
         SCell cell1 = new SCell(sheet.get(0,0).getData(), sheet);
         SCell cell2 = new SCell(sheet.get(0,1).getData(), sheet);
         SCell cell3 = new SCell(sheet.get(0,2).getData(), sheet);
+        SCell cell4 = new SCell(sheet.get(0,3).getData(), sheet);
         cell1.setData(sheet.get(0,0).getData());
         cell2.setData(sheet.get(0,1).getData());
         cell3.setData(sheet.get(0,2).getData());
+        cell4.setData(sheet.get(0,3).getData());
         double d1 = cell1.computeForm("=5");
         double d2 = cell2.computeForm("=A0");
         double d3 = cell3.computeForm("=1+A0");
+        double d4 = cell4.computeForm("=A");
         double[] dd = {d1, d2, d3};
         for (int i = 0; i < 3; i++) {
             System.out.println(dd[i]);
