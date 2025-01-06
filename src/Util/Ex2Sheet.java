@@ -1,6 +1,6 @@
 package Util;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -457,17 +457,76 @@ public class Ex2Sheet implements Sheet {
 
 
 
+//    @Override
+//    public void load(String fileName) throws IOException {
+//        // Add your code here
+//
+//        /////////////////////
+//    }
+
     @Override
     public void load(String fileName) throws IOException {
-        // Add your code here
+        // Clear existing data by creating new empty cells
+        table = new SCell[width()][height()];
+        for (int i = 0; i < width(); i++) {
+            for (int j = 0; j < height(); j++) {
+                table[i][j] = new SCell("", this);
+            }
+        }
 
-        /////////////////////
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            // Skip header line
+            reader.readLine();
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split line by comma, but limit to 3 parts to handle optional remarks
+                String[] parts = line.split(",", 3);
+
+                // Verify line format
+                if (parts.length < 3) {
+                    continue; // Skip invalid lines
+                }
+
+                try {
+                    int x = Integer.parseInt(parts[0].trim());
+                    int y = Integer.parseInt(parts[1].trim());
+                    String data = parts[2].trim();
+
+                    // Verify coordinates are valid
+                    if (isIn(x, y)) {
+                        set(x, y, data);
+                    }
+                } catch (NumberFormatException e) {
+                    // Skip lines with invalid number format
+                    continue;
+                }
+            }
+        }
+
+        // Re-evaluate the entire sheet after loading
+        eval();
     }
 
     @Override
     public void save(String fileName) throws IOException {
         // Add your code here
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            // Write header
+            writer.write("I2CS ArielU: SpreadSheet (Ex2) assignment\n");
 
+            // Iterate through all cells
+            for (int x = 0; x < width(); x++) {
+                for (int y = 0; y < height(); y++) {
+                    Cell cell = get(x, y);
+                    // Only save non-empty cells
+                    if (cell != null && !cell.getData().isEmpty()) {
+                        // Format: x,y,cellData
+                        writer.write(String.format("%d,%d,%s\n", x, y, cell.getData()));
+                    }
+                }
+            }
+        }
         /////////////////////
     }
 
