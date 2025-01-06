@@ -2,9 +2,7 @@ package Util;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static Util.SCell.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -292,4 +290,47 @@ public class Ex2Test {
             assertTrue(isForm(ans[i]));
         }
     }
-}
+
+    @Test
+    public void inputCellTest() {
+        Ex2Sheet table = new Ex2Sheet();
+        table.set(0,0,"=5");
+        table.set(0,1,"=A0");
+        table.set(0,2,"=1+A0");
+        int xx = 0;
+        int yy = 0;
+        CellEntry cord = new CellEntry(xx, yy);
+        CellEntry cord1 = new CellEntry(xx,yy+1);
+        CellEntry cord2 = new CellEntry(xx,yy+2);
+        if(table.isIn(xx,yy)) {
+            Cell cc = table.get(xx,yy);
+            String ww = cord+": "+cc.toString()+" : ";
+            if(Ex2Utils.Debug) {System.out.println(ww);}
+            String c = cc.getData();
+            String s1 = table.get(xx,yy).getData();
+            if(c==null) {
+                table.set(xx,yy,s1);
+            }
+            else {
+                table.set(xx, yy, c);
+                int[][] calc_d = table.depth();
+                if (calc_d[xx][yy] == Ex2Utils.ERR) {
+                    table.get(xx,yy).setType(Ex2Utils.ERR_CYCLE_FORM);
+                }
+            }
+            table.eval();
+            StdDrawEx2.resetXY();
+
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void toStringTest() {
+        Ex2Sheet table = new Ex2Sheet();
+        SCell cell = new SCell("=5", table);
+        table.set(0,0,cell.toString());
+        System.out.println("cell is: " + cell.toString());
+    }
+    }
+

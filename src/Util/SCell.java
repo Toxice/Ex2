@@ -423,15 +423,56 @@ public class SCell implements Cell {
         return evaluateSimpleExpression(expression);
     }
 
-    /**
-     * Evaluates a simple mathematical expression without parentheses.
-     * Performs operations in sequence based on the presence of arithmetic operators.
-     *
-     * @param expression the string representing the simple mathematical expression
-     * @return the evaluated numeric result of the simple expression
-     */
+//    /**
+//     * Evaluates a simple mathematical expression without parentheses.
+//     * Performs operations in sequence based on the presence of arithmetic operators.
+//     *
+//     * @param expression the string representing the simple mathematical expression
+//     * @return the evaluated numeric result of the simple expression
+//     */
+//    private double evaluateSimpleExpression(String expression) {
+//        Sheet = new Ex2Sheet(); //remove later
+//        double result = 0.0;
+//        char operator = '+';
+//        int currentIndex = 0;
+//
+//        while (currentIndex < expression.length()) {
+//            // Find the next operator
+//            int nextOperatorIndex = findNextOperator(expression, currentIndex);
+//
+//            // If there's no operator, treat the remaining string as a number
+//            if (nextOperatorIndex == -1) {
+//                //if (expression.substring(currentIndex).matches("[0-9]")) {
+//                if (expression.substring(currentIndex).matches("\\d+(\\.\\d+)?")) {
+//                    result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
+//                    break;
+//                }
+//                if (isCoordinate(expression.substring(currentIndex))) {
+//                    //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
+//                    Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
+//                    Sheet.eval();
+//                    String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
+//                    double value = Double.parseDouble(Sheet.eval(coordinate.getX(), coordinate.getY()));
+//                    //evaluateExpression(parsedNum); // try
+//                    result = value;
+//                    break;
+//                }
+//            }
+//
+//            // Extract the current number and apply the operator
+//            String numberString = expression.substring(currentIndex, nextOperatorIndex).trim();
+//            double number = Double.parseDouble(numberString);
+//            result = applyOperator(result, operator, number);
+//
+//            // Move to the next operator
+//            operator = expression.charAt(nextOperatorIndex);
+//            currentIndex = nextOperatorIndex + 1;
+//        }
+//
+//        return result;
+//    }
+
     private double evaluateSimpleExpression(String expression) {
-        Sheet = new Ex2Sheet(); //remove later
         double result = 0.0;
         char operator = '+';
         int currentIndex = 0;
@@ -439,30 +480,33 @@ public class SCell implements Cell {
         while (currentIndex < expression.length()) {
             // Find the next operator
             int nextOperatorIndex = findNextOperator(expression, currentIndex);
+            String currentToken;
 
-            // If there's no operator, treat the remaining string as a number
             if (nextOperatorIndex == -1) {
-                //if (expression.substring(currentIndex).matches("[0-9]")) {
-                if (expression.substring(currentIndex).matches("\\d+(\\.\\d+)?")) {
-                    result = applyOperator(result, operator, Double.parseDouble(expression.substring(currentIndex)));
-                    break;
-                }
-                if (isCoordinate(expression.substring(currentIndex))) {
-                    //Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex));
-                    Coordinate coordinate = Coordinate.parseCell(expression.substring(currentIndex)); // try
-                    Sheet.eval();
-                    String parsedNum = Sheet.eval(coordinate.getX(), coordinate.getY()); // try
-                    double value = Double.parseDouble(Sheet.eval(coordinate.getX(), coordinate.getY()));
-                    //evaluateExpression(parsedNum); // try
-                    result = value;
-                    break;
-                }
+                currentToken = expression.substring(currentIndex).trim();
+            } else {
+                currentToken = expression.substring(currentIndex, nextOperatorIndex).trim();
             }
 
-            // Extract the current number and apply the operator
-            String numberString = expression.substring(currentIndex, nextOperatorIndex).trim();
-            double number = Double.parseDouble(numberString);
-            result = applyOperator(result, operator, number);
+            // Process the current token (either a number or cell reference)
+            double value;
+            if (currentToken.matches("\\d+(\\.\\d+)?")) {
+                // Direct number
+                value = Double.parseDouble(currentToken);
+            } else if (isCoordinate(currentToken)) {
+                // Cell reference
+                Coordinate coordinate = Coordinate.parseCell(currentToken);
+                String cellValue = Sheet.eval(coordinate.getX(), coordinate.getY());
+                value = Double.parseDouble(cellValue);
+            } else {
+                throw new IllegalArgumentException("Invalid token: " + currentToken);
+            }
+
+            // Apply the operator
+            result = applyOperator(result, operator, value);
+
+            // Break if we've reached the end
+            if (nextOperatorIndex == -1) break;
 
             // Move to the next operator
             operator = expression.charAt(nextOperatorIndex);
@@ -527,7 +571,13 @@ public class SCell implements Cell {
     //@Override
     @Override
     public String toString() {
-        return getData();
+        if (getData().startsWith("=")) {
+            return getData().substring(1);
+        }
+        else {
+            return getData();
+        }
+        //return getData();
     }
 
     @Override

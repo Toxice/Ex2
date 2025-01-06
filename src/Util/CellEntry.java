@@ -21,8 +21,8 @@ public class CellEntry  implements Index2D {
 
     @Override
     public boolean isValid() {
-        //boolean ans = (x >= 0) && (y>= 0) && (y < Ex2Utils.HEIGHT) && (x < Ex2Utils.WIDTH);
-        boolean ans = ((x >= 0) && (y <= 0) && (x >= 25) && (y <= 99));
+        boolean ans = (x >= 0) && (y>= 0) && (y < Ex2Utils.HEIGHT) && (x < Ex2Utils.WIDTH);
+        //boolean ans = ((x >= 0) && (y <= 0) && (x >= 25) && (y <= 99));
         return ans;
     }
 
