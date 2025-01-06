@@ -638,20 +638,43 @@ public class SCell implements Cell {
         //return getData();
     }
 
+//    @Override
+//    public void setData(String s) {
+//        // Add your code here
+//        line = s;
+//        /////////////////////
+//        if (Ex2Utils.Debug) {
+//            System.out.println("Setting data: " + s);
+//        }
+//        if (s == null || s.isEmpty() || isText(s)) {
+//            type = Ex2Utils.TEXT;
+//        } else if (SCell.isNumber(s)) {
+//            type = Ex2Utils.NUMBER;
+//        } else if (SCell.isForm(s) || SCell.isCoordinate(s)) {
+//            type = Ex2Utils.FORM;
+//        } else {
+//            type = Ex2Utils.ERR_FORM_FORMAT;
+//        }
+//    }
+
     @Override
     public void setData(String s) {
-        // Add your code here
         line = s;
-        /////////////////////
         if (Ex2Utils.Debug) {
             System.out.println("Setting data: " + s);
         }
+
         if (s == null || s.isEmpty() || isText(s)) {
             type = Ex2Utils.TEXT;
         } else if (SCell.isNumber(s)) {
             type = Ex2Utils.NUMBER;
-        } else if (SCell.isForm(s) || SCell.isCoordinate(s)) {
-            type = Ex2Utils.FORM;
+        } else if (s.startsWith("=")) {
+            // If it starts with = but isn't a valid formula, it's an error
+            if (SCell.isForm(s)) {
+                type = Ex2Utils.FORM;
+            } else {
+                type = Ex2Utils.ERR_FORM_FORMAT;
+            }
         } else {
             type = Ex2Utils.ERR_FORM_FORMAT;
         }

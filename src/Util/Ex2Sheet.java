@@ -61,10 +61,24 @@ public class Ex2Sheet implements Sheet {
 //        return ans; // Return the computed or default value
 //    }
 
+//    @Override
+//    public String value(int x, int y){
+//        String ans = Ex2Utils.EMPTY_CELL;
+//        ans = eval(x, y);
+//        return ans;
+//    }
+
     @Override
-    public String value(int x, int y){
+    public String value(int x, int y) {
         String ans = Ex2Utils.EMPTY_CELL;
-        ans = eval(x, y);
+        Cell cell = get(x, y);
+
+        if (cell != null) {
+            if (cell.getType() == Ex2Utils.ERR_FORM_FORMAT) {
+                return Ex2Utils.ERR_FORM;
+            }
+            ans = eval(x, y);
+        }
         return ans;
     }
 
@@ -314,19 +328,41 @@ public class Ex2Sheet implements Sheet {
 //        return cell.getData();
 //    }
 
+//    @Override
+//    public String eval(int x, int y) {
+//        SCell cell = (SCell) get(x,y);
+//
+//        if (cell.getType() == Ex2Utils.FORM) {
+//            String formula = cell.getData();
+//            try {
+//                // First validate if the formula is valid
+//                if (!SCell.isForm(formula) && !SCell.isCoordinate(formula.substring(1))) {
+//                    cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+//                    return Ex2Utils.ERR_FORM;
+//                }
+//
+//                double result = cell.computeForm(formula);
+//                return String.valueOf(result);
+//            } catch (Exception e) {
+//                cell.setType(Ex2Utils.ERR_FORM_FORMAT);
+//                return Ex2Utils.ERR_FORM;
+//            }
+//        }
+//        return cell.getData();
+//    }
+
     @Override
     public String eval(int x, int y) {
         SCell cell = (SCell) get(x,y);
 
+        // First check for error type
+        if (cell.getType() == Ex2Utils.ERR_FORM_FORMAT) {
+            return Ex2Utils.ERR_FORM;
+        }
+
         if (cell.getType() == Ex2Utils.FORM) {
             String formula = cell.getData();
             try {
-                // First validate if the formula is valid
-                if (!SCell.isForm(formula) && !SCell.isCoordinate(formula.substring(1))) {
-                    cell.setType(Ex2Utils.ERR_FORM_FORMAT);
-                    return Ex2Utils.ERR_FORM;
-                }
-
                 double result = cell.computeForm(formula);
                 return String.valueOf(result);
             } catch (Exception e) {

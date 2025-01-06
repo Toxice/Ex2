@@ -290,6 +290,15 @@ public class Ex2Test {
     }
 
     @Test
+    public void setDataFailedTest() {
+        Ex2Sheet sheet = new Ex2Sheet();
+        sheet.set(0,0,"=A");
+        SCell cell = new SCell(sheet.get(0,0).getData());
+        cell.setData(sheet.get(0,0).getData());
+        double dd = cell.computeForm("=A");
+    }
+
+    @Test
     public void isFormTest1() {
         String[] ans = {"=1+3", "=A0", "=4+5"};
         for (int i = 0; i < ans.length; i++) {
