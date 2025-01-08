@@ -85,7 +85,8 @@ public class Ex2Test {
      */
     @Test
     public void computeFormTest() {
-        SCell cell = new SCell();
+        Ex2Sheet sheet = new Ex2Sheet();
+        SCell cell = new SCell("", sheet);
         String[] forms = {"=(3*2)+2", "=5+50", "=6*(1+2)*2", "1+1+1+1+1+(2+8)+(4*3)"};
         double[] expected = {8, 55, 36, 27};
         for (int i = 0; i < forms.length; i++) {

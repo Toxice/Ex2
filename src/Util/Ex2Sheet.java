@@ -22,6 +22,15 @@ public class Ex2Sheet implements Sheet {
         this(Ex2Utils.WIDTH, Ex2Utils.HEIGHT);
     }
 
+    /**
+     * Retrieves the value that should be displayed for a cell at the specified coordinates.
+     * Returns an empty cell value if the coordinates are invalid or the cell is null.
+     * For error cells, returns the appropriate error message.
+     *
+     * @param x the x-coordinate of the cell
+     * @param y the y-coordinate of the cell
+     * @return the display value of the cell as a String
+     */
     @Override
     public String value(int x, int y) {
         String ans = Ex2Utils.EMPTY_CELL;
@@ -36,11 +45,25 @@ public class Ex2Sheet implements Sheet {
         return ans;
     }
 
+
+    /**
+     * Retrieves the cell at the specified coordinates.
+     *
+     * @param x the x-coordinate of the cell
+     * @param y the y-coordinate of the cell
+     * @return the Cell object at the specified coordinates
+     */
     @Override
     public Cell get(int x, int y) {
         return table[x][y];
     }
 
+    /**
+     * Retrieves a cell using string coordinates (e.g., "A1", "B2").
+     *
+     * @param cords the string coordinates of the cell (e.g., "A1")
+     * @return the Cell object at the specified coordinates, or null if invalid
+     */
     @Override
     public Cell get(String cords) {
         Cell ans = null;

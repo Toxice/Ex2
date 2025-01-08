@@ -39,12 +39,6 @@ public class CellEntry  implements Index2D {
         return depth;
     }
 
-//    @Override
-//    public String toString() {
-//        if (!isValid()) return "Invalid";
-//        return Ex2Utils.ABC[x] + (y + 1);
-//    }
-
     @Override
     public String toString() {
         if (!isValid()) return "Invalid";

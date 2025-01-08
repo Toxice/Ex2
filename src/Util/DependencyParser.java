@@ -33,21 +33,4 @@ public class DependencyParser {
 
         return dependencies;
     }
-
-    /**
-     * Function made for Converting a Cell Reference to Value
-     * @param formula
-     * @return
-     */
-    public static Optional<Coordinate> parseCoordinateValue(String formula) {
-        if (formula == "") { // if the formula is an empty string
-            return Optional.empty();
-        }
-        if (SCell.isCoordinate(formula)) { // if the string is just a reference to a Cell
-                int xCord = Coordinate.cell2Num(formula.charAt(0));
-                int yCord = Integer.parseInt(formula.substring(1));
-                return Optional.of(new Coordinate(xCord, yCord));
-        }
-        return Optional.empty();
-    }
 }
