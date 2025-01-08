@@ -22,7 +22,6 @@ public class CellEntry  implements Index2D {
     @Override
     public boolean isValid() {
         boolean ans = (x >= 0) && (y>= 0) && (y < Ex2Utils.HEIGHT) && (x < Ex2Utils.WIDTH);
-        //boolean ans = ((x >= 0) && (y <= 0) && (x >= 25) && (y <= 99));
         return ans;
     }
 
@@ -40,9 +39,15 @@ public class CellEntry  implements Index2D {
         return depth;
     }
 
+//    @Override
+//    public String toString() {
+//        if (!isValid()) return "Invalid";
+//        return Ex2Utils.ABC[x] + (y + 1);
+//    }
+
     @Override
     public String toString() {
         if (!isValid()) return "Invalid";
-        return Ex2Utils.ABC[x] + (y + 1);
+        return Ex2Utils.ABC[x] + y;
     }
 }

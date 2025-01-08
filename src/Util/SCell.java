@@ -10,11 +10,20 @@ public class SCell implements Cell {
     private int type;
     // Add your code here
     private int order;    // The cell's dependency order
+
+    /**
+     * Creates a new cell with the specified content.
+     * @param s The initial content of the cell
+     */
     public SCell(String s) {
-        // Add your code here
         setData(s);
     }
 
+    /**
+     * Creates a new cell with the specified content and parent sheet.
+     * @param s The initial content of the cell
+     * @param sheet The parent spreadsheet containing this cell
+     */
     public SCell(String s, Ex2Sheet sheet) {
         this.Sheet = sheet;
         setData(s);
@@ -22,6 +31,12 @@ public class SCell implements Cell {
 
     public SCell() {
         this(Ex2Utils.EMPTY_CELL);
+    }
+
+    public SCell(int x, int y, Ex2Sheet sheet) {
+        this.Sheet = sheet;
+        String data = Sheet.get(x,y).getData();
+        setData(data);
     }
 
     /**
@@ -62,127 +77,131 @@ public class SCell implements Cell {
             return false;
         }
         String nums = s.substring(1); // number from 0~99
-        if (!Character.isLetter(s.charAt(0)) || nums.length() > 2 || nums.length() != 1) {
+        if (!Character.isLetter(s.charAt(0)) || nums.length() >= 3 || nums.length() < 1) {
             return false;
         }
         return true;
     }
 
-    public static boolean isCoord(String s) {
-        if (isNumber(s)) {
-            return false;
-        }
-        String nums = s.substring(1); // number from 0~99
-        if (!Character.isLetter(s.charAt(0)) || nums.length() > 2) {
-            return false;
-        }
-        return true;
-    }
-
+    /**
+     * Validates if a string represents a valid formula.
+     * A valid formula must:
+     * - Start with '='
+     * - Contain valid cell references, numbers, operators (+,-,*,/), and/or balanced parentheses
+     * - Not end with an operator
+     * - Have valid syntax for mathematical expressions
+     *
+     * @param text The string to validate
+     * @return true if the string is a valid formula, false otherwise
+     */
     public static boolean isForm(String text) {
+        // Basic null and empty checks
         if (text == null || text.isEmpty()) {
             return false;
         }
 
-        // Check that the formula starts with '='
+        // Must start with '='
         if (!text.startsWith("=")) {
             return false;
         }
 
-        // Remove the '=' character at the beginning for further checks
-        text = text.substring(1).replaceAll("\\s", "");
+        // Remove '=' and trim spaces
+        String formula = text.substring(1).replaceAll("\\s+", "");
 
-        // Check if it's a single cell reference (like "A0")
-        if (isCoordinate(text)) {
+        // Formula can't be empty after '='
+        if (formula.isEmpty()) {
+            return false;
+        }
+
+        // If it's just a number after =, that's valid
+        if (isNumber(formula)) {
             return true;
         }
 
-        // If it's just a single letter without a number (like "A"), it's invalid
-        if (text.length() == 1 && Character.isLetter(text.charAt(0))) {
+        // If it's just a cell reference after =, that's valid
+        if (isCoordinate(formula)) {
+            return true;
+        }
+
+        // Single letter without number is invalid
+        if (formula.length() == 1 && Character.isLetter(formula.charAt(0))) {
             return false;
         }
 
-        // Check for invalid characters
-        if (!text.matches("[0-9a-zA-Z+\\-*/().]*")) {
+        // Check for balanced parentheses
+        if (!hasBalancedParentheses(formula)) {
             return false;
         }
 
-        // Split the formula into tokens for validation
-        String[] tokens = text.split("(?=[+\\-*/()])|(?<=[+\\-*/()])");
+        // Check formula structure
+        return validateFormula(formula);
+    }
+
+    private static boolean validateFormula(String formula) {
+        // Split into tokens preserving operators
+        String[] tokens = formula.split("(?<=[-+*/()])|(?=[-+*/()])");
         boolean expectingOperand = true;
+        int parenthesesCount = 0;
 
         for (String token : tokens) {
-            if (token.isEmpty()) {
-                continue;
-            }
+            token = token.trim();
+            if (token.isEmpty()) continue;
 
             if (expectingOperand) {
-                // For operands, check if it's a number, valid cell reference, or opening parenthesis
-                if (token.matches("\\d+") ||
-                        (isCoordinate(token)) ||
-                        token.equals("(")) {
+                // Valid operands: numbers, cell references, or open parenthesis
+                if (isNumber(token) || isCoordinate(token) || token.equals("(")) {
+                    expectingOperand = false;
+                    if (token.equals("(")) {
+                        parenthesesCount++;
+                        expectingOperand = true;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                // Valid operators: +, -, *, /, or close parenthesis
+                if (token.matches("[-+*/]")) {
+                    expectingOperand = true;
+                } else if (token.equals(")")) {
+                    parenthesesCount--;
                     expectingOperand = false;
                 } else {
                     return false;
                 }
-            } else {
-                if (token.matches("[+\\-*/]") || token.equals(")")) {
-                    expectingOperand = true;
-                } else {
+            }
+        }
+
+        // Formula shouldn't end with an operator or open parenthesis
+        return !expectingOperand && parenthesesCount == 0;
+    }
+
+    private static boolean hasBalancedParentheses(String expr) {
+        int count = 0;
+        for (char c : expr.toCharArray()) {
+            if (c == '(') {
+                count++;
+            } else if (c == ')') {
+                count--;
+                if (count < 0) {
                     return false;
                 }
             }
         }
-
-        return !expectingOperand;
+        return count == 0;
     }
 
     /**
-     * Processes a formula by replacing cell references with their values
-     * @param formula The formula string (e.g., "=1+A0")
-     * @return The processed formula with cell references replaced by their values
+     * Evaluates a formula and returns its numeric result.
+     * Handles:
+     * - Simple numbers (e.g., "=5")
+     * - Cell references (e.g., "=A1")
+     * - Mathematical expressions (e.g., "=5+3*2")
+     * - Nested cell references (e.g., "=A1+B2*C3")
+     *
+     * @param text The formula to evaluate
+     * @return The numeric result of evaluating the formula
+     * @throws IllegalArgumentException if the formula is invalid or references contain non-numeric values
      */
-    public String processFormula(String formula) {
-        if (formula.startsWith("=")) {
-            formula = formula.substring(1).trim();
-        }
-
-        StringBuilder processedFormula = new StringBuilder();
-        StringBuilder currentToken = new StringBuilder();
-
-        for (int i = 0; i < formula.length(); i++) {
-            char c = formula.charAt(i);
-
-            if (Character.isLetter(c)) {
-                // Start of a potential cell reference
-                currentToken.append(c);
-                // Look ahead for numbers that complete the cell reference
-                while (i + 1 < formula.length() && Character.isDigit(formula.charAt(i + 1))) {
-                    currentToken.append(formula.charAt(i + 1));
-                    i++;
-                }
-
-                // Check if it's a valid cell reference
-                String token = currentToken.toString();
-                if (isCoordinate(token)) {
-                    // Convert cell reference to coordinate
-                    Coordinate coord = Coordinate.parseCell(token);
-                    // Get value from the referenced cell
-                    String cellValue = Sheet.eval(coord.getX(), coord.getY());
-                    processedFormula.append(cellValue);
-                } else {
-                    processedFormula.append(token);
-                }
-                currentToken.setLength(0);
-            } else {
-                // For operators and numbers, just append them
-                processedFormula.append(c);
-            }
-        }
-
-        return processedFormula.toString();
-    }
-
     public double computeForm(String text) {
         // If it's just a number after the equals sign, return it directly
         if (text.startsWith("=") && isNumber(text.substring(1))) {
@@ -372,15 +391,88 @@ public class SCell implements Cell {
         return text.replaceAll(" ", "");
     }
 
+
+//    /**
+//     * Computes the natural order (dependency depth) of this cell.
+//     * - Returns 0 for number or text cells
+//     * - Returns -1 for error cells
+//     * - For formula cells, returns 1 + the maximum order of any cells it depends on
+//     *
+//     * @return The dependency order of this cell
+//     */
+//    @Override
+//    public int getOrder() {
+//        // If not a formula, order is 0
+//        if (type != Ex2Utils.FORM) {
+//            return 0;
+//        }
+//
+//        // If it's an error cell, return -1
+//        if (type == Ex2Utils.ERR_CYCLE_FORM || type == Ex2Utils.ERR_FORM_FORMAT) {
+//            return -1;
+//        }
+//
+//        // For formulas, calculate order based on dependencies
+//        if (getData().startsWith("=")) {
+//            List<CellEntry> dependencies = DependencyParser.parseDependencies(getData());
+//            int maxDepth = 0;
+//
+//            // Find the maximum order of all dependencies
+//            for (CellEntry dep : dependencies) {
+//                if (!dep.isValid()) continue;
+//
+//                Cell depCell = Sheet.get(dep.getX(), dep.getY());
+//                maxDepth = Math.max(maxDepth, depCell.getOrder());
+//            }
+//
+//            // Order is 1 + maximum order of dependencies
+//            order = maxDepth + 1;
+//        }
+//
+//        return order;
+//    }
+
+    /**
+     * Computes the natural order (dependency depth) of this cell.
+     * - Returns 0 for regular numbers/text (without "=")
+     * - Returns -1 for error cells
+     * - Returns 1 for formulas that only contain numbers (like "=5" or "=2+3")
+     * - For formulas with cell references, returns 1 + the maximum depth of referenced cells
+     *
+     * @return The dependency order of this cell
+     */
     @Override
     public int getOrder() {
-        // Add your code here
+        // If it's an error cell, return -1
+        if (type == Ex2Utils.ERR_CYCLE_FORM || type == Ex2Utils.ERR_FORM_FORMAT) {
+            return -1;
+        }
 
-        return 0;
-        // ///////////////////
+        // If it's a regular number or text (without "="), depth is 0
+        if (!getData().startsWith("=")) {
+            return 0;
+        }
+
+        // At this point, we know it's a formula (starts with "=")
+        List<CellEntry> dependencies = DependencyParser.parseDependencies(getData());
+
+        // If no dependencies (like "=5" or "=2+3"), return 1
+        if (dependencies.isEmpty()) {
+            return 1;
+        }
+
+        // For formulas with cell references, find maximum depth of dependencies
+        int maxDepth = 0;
+        for (CellEntry dep : dependencies) {
+            if (!dep.isValid()) continue;
+            Cell depCell = Sheet.get(dep.getX(), dep.getY());
+            maxDepth = Math.max(maxDepth, depCell.getOrder());
+        }
+
+        // Return 1 + maximum depth of dependencies
+        return 1 + maxDepth;
     }
 
-    //@Override
     @Override
     public String toString() {
         if (getData().startsWith("=")) {
@@ -391,6 +483,11 @@ public class SCell implements Cell {
         }
     }
 
+    /**
+     * Sets the data content of this cell and updates its type accordingly.
+     *
+     * @param s The new content for the cell
+     */
     @Override
     public void setData(String s) {
         line = s;
@@ -401,10 +498,30 @@ public class SCell implements Cell {
         }
 
         if (s.startsWith("=")) {
-            // Check if it's a simple self-reference
-            if (s.length() > 1 && s.substring(1).trim().equals(getData())) {
-                type = Ex2Utils.ERR_CYCLE_FORM;
-                return;
+            String formula = s.substring(1).trim();
+            // Check for direct self-reference (e.g., "=A0" in cell A0)
+            if (formula.equals(formula.toUpperCase())) { // ensure case-insensitive comparison
+                if (isCoordinate(formula)) {
+                    // If this is a coordinate, check if it refers to itself
+                    Coordinate coord = Coordinate.parseCell(formula);
+                    if (Sheet != null && coord != null) {
+                        CellEntry currentCell = null;
+                        for (int x = 0; x < Sheet.width(); x++) {
+                            for (int y = 0; y < Sheet.height(); y++) {
+                                if (Sheet.get(x, y) == this) {
+                                    currentCell = new CellEntry(x, y);
+                                    break;
+                                }
+                            }
+                            if (currentCell != null) break;
+                        }
+                        if (currentCell != null && coord.getX() == currentCell.getX() &&
+                                coord.getY() == currentCell.getY()) {
+                            type = Ex2Utils.ERR_CYCLE_FORM;
+                            return;
+                        }
+                    }
+                }
             }
 
             if (SCell.isForm(s)) {
@@ -432,6 +549,7 @@ public class SCell implements Cell {
         return type;
     }
 
+
     @Override
     public void setType(int t) {
         type = t;
@@ -448,13 +566,17 @@ public class SCell implements Cell {
 
     @Override
     public void setOrder(int t) {
-        // Add your code here
-
+        // Set the order based on input parameter t
+        // If cell is in error state, force order to be -1
+        if (type == Ex2Utils.ERR_CYCLE_FORM || type == Ex2Utils.ERR_FORM_FORMAT) {
+            this.order = -1;
+        }
+        // Otherwise, set to specified order
+        else {
+            this.order = t;
+        }
     }
 
-        private static double evaluate(String expression) {
-            return evaluateExpression(expression.replaceAll("\\s+", ""), 0, expression.length());
-        }
 
         private static double evaluateExpression(String expr, int start, int end) {
             int lastOperator = -1;
@@ -545,20 +667,6 @@ public class SCell implements Cell {
         return isValidFormula(left) && isValidFormula(right);
     }
 
-    private static boolean hasBalancedParentheses(String expr) {
-        int count = 0;
-        for (char ch : expr.toCharArray()) {
-            if (ch == '(') {
-                count++;
-            } else if (ch == ')') {
-                count--;
-                if (count < 0) {
-                    return false;
-                }
-            }
-        }
-        return count == 0;
-    }
 }
 
 

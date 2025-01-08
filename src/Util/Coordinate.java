@@ -42,9 +42,11 @@ public class Coordinate {
     }
 
     /**
-     * Return the value of
-     * @param Cell
-     * @return
+     * Return the value of the Cell
+     * @param Cell char representing the Letter coordinate of the Cell (A~Z)
+     * @return the X Value of the Cell
+     * Example:
+     * A -> 0, B -> 1
      */
     public static int cell2Num(char Cell) {
         return Cell - 'A';
@@ -55,10 +57,3 @@ public class Coordinate {
         return this.x + "," + this.y;
     }
 }
-
-
-/*
-
-'0' '1' '2' ' 3' '4'
-
- */

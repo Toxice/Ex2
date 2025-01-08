@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class DependencyParser {
-    Ex2Sheet sheet = new Ex2Sheet();
-
-
     /**
      * Parses a formula string and extracts all referenced cells.
      * @param formula The formula string (e.g., "=A1+B2").
@@ -47,33 +44,10 @@ public class DependencyParser {
             return Optional.empty();
         }
         if (SCell.isCoordinate(formula)) { // if the string is just a reference to a Cell
-                int xCord = cell2Num(formula.charAt(0));
+                int xCord = Coordinate.cell2Num(formula.charAt(0));
                 int yCord = Integer.parseInt(formula.substring(1));
                 return Optional.of(new Coordinate(xCord, yCord));
         }
         return Optional.empty();
-    }
-
-    public Coordinate parseCell(String cellName) {
-        int xCord = cell2Num(cellName.charAt(0));
-        String optionalNumber = cellName.substring(1);
-        int yCord = Integer.parseInt(optionalNumber);
-        return new Coordinate(xCord, yCord);
-    }
-
-    public static int cell2Num(char Cell) {
-        return Cell - 'A';
-    }
-
-    public static int char2Int(char letter) {
-        if (letter >= '0' && letter <= '9') {
-            return Character.getNumericValue(letter);
-        }
-        return -1;
-
-    }
-
-    public int valueOf(String s) {
-        return Integer.parseInt(s);
     }
 }

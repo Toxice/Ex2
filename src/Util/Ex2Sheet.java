@@ -87,10 +87,18 @@ public class Ex2Sheet implements Sheet {
             throw new IllegalArgumentException("Invalid cell coordinates");
         }
 
+        // Handle null input
+        if (s == null) {
+            s = "";
+        }
+
         // First check for direct self-reference
         if (s.startsWith("=")) {
-            String cellRef = String.format("%s%d", Ex2Utils.ABC[x], y + 1);
-            if (s.substring(1).trim().equals(cellRef)) {
+            // Get the cell reference in the correct format (e.g., "A0")
+            String cellRef = String.format("%s%d", Ex2Utils.ABC[x], y);
+            // Extract the formula part after '=' and compare with current cell reference
+            String formula = s.substring(1).trim().toUpperCase();
+            if (formula.equals(cellRef)) {
                 SCell newCell = new SCell(s, this);
                 newCell.setType(Ex2Utils.ERR_CYCLE_FORM);
                 table[x][y] = newCell;
@@ -98,11 +106,17 @@ public class Ex2Sheet implements Sheet {
             }
         }
 
-        table[x][y] = new SCell(s, this);
+        // Create new cell and assign data
+        SCell newCell = new SCell(s, this);
+        table[x][y] = newCell;
+
+        // Check for circular dependencies
         int[][] depths = depth();
         if (depths[x][y] == Ex2Utils.ERR) {
             table[x][y].setType(Ex2Utils.ERR_CYCLE_FORM);
         }
+
+        // Re-evaluate the entire sheet
         eval();
     }
 
@@ -213,7 +227,6 @@ public class Ex2Sheet implements Sheet {
         }
     }
 
-
     @Override
     public boolean isIn(int xx, int yy) {
         boolean ans = xx>=0 && yy>=0;
@@ -227,24 +240,39 @@ public class Ex2Sheet implements Sheet {
 
     @Override
     public int[][] depth() {
-        int[][] depths = new int[width()][height()]; // Initialize the depth array
-        boolean[][] visited = new boolean[width()][height()]; // Track visited cells globally
+        int[][] depths = new int[width()][height()];
+        boolean[][] visited = new boolean[width()][height()];
 
-        // First, mark all cells as unvisited
+        // First pass: Clear any previous cycle errors
         for (int x = 0; x < width(); x++) {
             for (int y = 0; y < height(); y++) {
+                depths[x][y] = 0;
                 Cell cell = get(x, y);
-                // First reset any previous cycle errors
-                if (cell.getType() == Ex2Utils.ERR_CYCLE_FORM) {
+                if (cell != null && cell.getType() == Ex2Utils.ERR_CYCLE_FORM) {
                     cell.setType(Ex2Utils.FORM);
                 }
             }
         }
 
-        // Calculate depths for all cells
+        // Second pass: Calculate depths and detect cycles
         for (int x = 0; x < width(); x++) {
             for (int y = 0; y < height(); y++) {
-                depths[x][y] = calculateDepth(x, y, visited);
+                if (get(x, y).getType() == Ex2Utils.FORM) {
+                    depths[x][y] = calculateDepth(x, y, visited);
+                    // If we found a cycle, make sure all cells in the cycle are marked
+                    if (depths[x][y] == Ex2Utils.ERR) {
+                        markCyclicCells(get(x, y).getData());
+                    }
+                }
+            }
+        }
+
+        // Final pass: Ensure all cyclic cells are marked with ERR
+        for (int x = 0; x < width(); x++) {
+            for (int y = 0; y < height(); y++) {
+                if (get(x, y).getType() == Ex2Utils.ERR_CYCLE_FORM) {
+                    depths[x][y] = Ex2Utils.ERR;
+                }
             }
         }
 
@@ -262,48 +290,53 @@ public class Ex2Sheet implements Sheet {
             return 0;
         }
 
-        // Check for self-reference first
-        String cellData = cell.getData();
-        String cellRef = String.format("%s%d", Ex2Utils.ABC[x], y + 1);
-        if (cellData.startsWith("=") && cellData.substring(1).trim().equals(cellRef)) {
-            cell.setType(Ex2Utils.ERR_CYCLE_FORM);
-            return Ex2Utils.ERR;
-        }
-
-        // Check for existing dependencies in the current path
+        // If we've seen this cell before in current path, we found a cycle
         if (visited[x][y]) {
+            markCyclicCells(cell.getData());
             cell.setType(Ex2Utils.ERR_CYCLE_FORM);
             return Ex2Utils.ERR;
         }
 
-        visited[x][y] = true; // Mark as visited
+        visited[x][y] = true;
 
         try {
             List<CellEntry> dependencies = DependencyParser.parseDependencies(cell.getData());
             int maxDepth = 0;
+            boolean hasCycle = false;
 
             for (CellEntry dep : dependencies) {
                 if (!dep.isValid()) continue;
 
-                // Check if dependency is a self-reference
-                if (dep.getX() == x && dep.getY() == y) {
-                    cell.setType(Ex2Utils.ERR_CYCLE_FORM);
-                    return Ex2Utils.ERR;
-                }
-
                 int depDepth = calculateDepth(dep.getX(), dep.getY(), visited);
                 if (depDepth == Ex2Utils.ERR) {
-                    // Propagate cycle error
-                    cell.setType(Ex2Utils.ERR_CYCLE_FORM);
-                    return Ex2Utils.ERR;
+                    hasCycle = true;
+                    break;
                 }
                 maxDepth = Math.max(maxDepth, depDepth);
             }
 
-            // Depth is 1 + max depth of dependencies
+            if (hasCycle) {
+                cell.setType(Ex2Utils.ERR_CYCLE_FORM);
+                return Ex2Utils.ERR;
+            }
+
             return maxDepth + 1;
         } finally {
-            visited[x][y] = false; // Unmark before returning
+            visited[x][y] = false;
+        }
+    }
+
+    // Helper method to mark all cells in a cycle
+    private void markCyclicCells(String startFormula) {
+        List<CellEntry> dependencies = DependencyParser.parseDependencies(startFormula);
+        for (CellEntry dep : dependencies) {
+            if (dep.isValid()) {
+                Cell depCell = get(dep.getX(), dep.getY());
+                depCell.setType(Ex2Utils.ERR_CYCLE_FORM);
+                if (depCell.getType() == Ex2Utils.FORM) {
+                    markCyclicCells(depCell.getData());
+                }
+            }
         }
     }
 

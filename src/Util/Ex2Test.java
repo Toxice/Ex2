@@ -8,19 +8,46 @@ import static Util.SCell.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Ex2Test {
+    /**
+     * Validates the isForm Function
+     * true iff the given String
+     */
     @Test
     public void isNumberTest() {
         SCell sCell = new SCell();
-        String text = "1234";
-        boolean data = sCell.isNumber(text);
-        assertTrue(data);
+        String[] numbers = {"1234", "5748524", "215495645", "7894566123","111111111", "45464"};
+        for (int i = 0; i < numbers.length; i++) {
+            boolean data = sCell.isNumber(numbers[i]);
+            assertTrue(data);
+        }
+    }
+
+    @Test
+    public void isNotNumberTest() {
+        SCell sCell = new SCell();
+        String[] numbers = {"dsdsdsd", "=6458455", "2154a95645", "789gffgf4566123", "111111ttrr111", "=45464"};
+        for (int i = 0; i < numbers.length; i++) {
+            boolean data = sCell.isNumber(numbers[i]);
+            assertFalse(data);
+        }
     }
 
     @Test
     public void isTextTest() {
-        String text = "agbc";
-        boolean data = SCell.isText(text);
-        assertTrue(data);
+        String[] texts = {"agbc", "dgdfdfdgdfdsfte", "yruiffhdhfusdhsdhsfhdu", "fdfdfdjfhj!@$%^", "hfjdfhhdfhsidjsdsurefjdhdjfhfj", "fgdjfdjdjf473643784"};
+        for (int i = 0; i < texts.length; i++) {
+            boolean data = SCell.isText(texts[i]);
+            assertTrue(data);
+        }
+    }
+
+    @Test
+    public void isNotTextTest() {
+        String[] texts = {"=agbc", "=dgdfdfdgdfdsfte", "5525", "=fdfdfdjfhj!@$%^", "=hfjdfhhdfhsidjsdsurefjdhdjfhfj", "=A0"};
+        for (int i = 0; i < texts.length; i++) {
+            boolean data = SCell.isText(texts[i]);
+            assertFalse(data);
+        }
     }
 
     @Test
@@ -35,178 +62,75 @@ public class Ex2Test {
     @Test
     public void isFormTest() {
         SCell sCell = new SCell();
-        String[] valid = {"=(3+3) + (5+2)", "=88+5", "=5+4", "=55-4"};
+        String[] valid = {"=(3+3) + (5+2)","=(1*8)+5", "=4+7/8*88"};
         for (int i = 0; i < valid.length; i++) {
             assertTrue(sCell.isForm(valid[i]));
         }
     }
-//    @Test
-//    public void computeForm() {
-//        String text = "=(3*2)+2";
-//        double actual = 8;
-//        double expected = SCell.computeForm(text);
-//        System.out.println(expected);
-//        assertEquals(expected, actual);
-//    }
 
     @Test
-    public void computeFormCellTest() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        SCell cell = (SCell) sheet.get(0,0);
-        String text = "=A0";
-        double ans = cell.computeForm(text);
-    }
-
-//    @Test
-//    public void evalTest() {
-//        Ex2Sheet sheet = new Ex2Sheet();
-//        sheet.set(0,0,"25");
-//        sheet.set(0,1,"A0");
-//        sheet.eval(0,1);
-//    }
-
-    @Test
-    public void isFormTest2() {
-        SCell sCell = new SCell();
-        String text = "=5+2+8*(3-2)";
-        boolean ans = sCell.isForm(text);
-        assertTrue(ans);
-    }
-
-//    @Test
-//    public void valueTest() {
-//        Ex2Sheet sheet = new Ex2Sheet();
-//        String text = "=A1";
-//        String actual = sheet.value(1,2);
-//        System.out.println(actual);
-//        System.out.println();
-//    }
-
-//    @Test
-//    public void dependencyParserTest() {
-//        DependencyParser parser = new DependencyParser();
-//        String cell1 = "A11";
-//        String cell2 = "B2";
-//        Coordinate coordinate1 = parser.parseCell(cell1);
-//        Coordinate coordinate2 = parser.parseCell(cell2);
-//        assertEquals(coordinate1.x, 0);
-//        assertEquals(coordinate1.y, 11);
-//        assertEquals(coordinate2.x, 1);
-//        assertEquals(coordinate2.y, 2);
-//    }
-
-    @Test
-    public void depthTest() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        DependencyParser parser = new DependencyParser();
-        sheet.set(0,0,"5");
-        sheet.set(0,1,"2");
-        sheet.set(2,0,"A0");
-        Coordinate c1 = parser.parseCell(sheet.value(0,2));
-        System.out.println();
-    }
-
-    @Test
-    public void isCoordinateTest() {
-        String coordiantes[] = {"A0", "A1","G5", "Z99"};
-        for (int i = 0; i < coordiantes.length; i++) {
-            assertFalse(isCoordinate(coordiantes[i]));
+    public void computeFormTest() {
+        SCell cell = new SCell();
+        String[] forms = {"=(3*2)+2", "=5+50", "=6*(1+2)*2", "1+1+1+1+1+(2+8)+(4*3)"};
+        double[] expected = {8, 55, 36, 27};
+        for (int i = 0; i < forms.length; i++) {
+            double actual = cell.computeForm(forms[i]);
+            assertEquals(expected[i], actual);
         }
     }
 
     @Test
-    public void isCoordiantesFail() {
-        String[] cords = {"A100", "A"};
+    public void computeForm_CellTest() {
+        Ex2Sheet sheet = new Ex2Sheet(20,20);
+        SCell[] cells = new SCell[20];
+        int[] values = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+
+        for (int i = 0; i < values.length; i++) {
+            sheet.set(0, i, String.valueOf(i));
+            cells[i] = (SCell) sheet.get(0, i); // Cell A0 ~ A19
+        }
+
+        for (int j = 0; j < values.length; j++) {
+            assertEquals(String.valueOf(values[j]), cells[j].getData());
+        }
+    }
+    @Test
+    public void isCoordinate_Pass_Test() {
+        String coordiantes[] = {"A0", "A1","G5", "Z99"};
+        for (int i = 0; i < coordiantes.length; i++) {
+            assertTrue(isCoordinate(coordiantes[i]));
+        }
+    }
+
+    @Test
+    public void isCoordiantes_Fail_Test() {
+        String[] cords = {"A100", "A", "B", "G455"};
         for (int i = 0; i < cords.length; i++) {
             assertFalse(isCoordinate(cords[i]));
         }
     }
 
     @Test
-    public void setDataTest() {
-        String s = "A0";
-        SCell cell = new SCell("A0");
-        cell.setData(s);
-    }
-
-    @Test
-    public void dependencyParserTest() {
-        String s = "A0";
-        List<CellEntry> Entries = DependencyParser.parseDependencies(s);
-    }
-
-    @Test
-    public void parseCoordinateValueTest() {
-        String s = "A0";
-        System.out.println(DependencyParser.parseCoordinateValue(s).toString());
-    }
-
-    @Test
-    public void isFormCellTest() {
-        String s = "=A0";
-        boolean ans = isForm(s);
-        assertTrue(ans);
-    }
-
-    @Test
-    public void computeFormCell() {
+    public void computeForm_From_Cell_Test() {
         Ex2Sheet sheet = new Ex2Sheet();
         sheet.set(0,1,"5");
         String s = "=A1";
         SCell cell = new SCell(s, sheet);
         double dd = cell.computeForm(s);
-        System.out.println(dd);
+
     }
 
     @Test
     public void evalTest() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"=5");
-        sheet.set(0,1,"=A0");
-        SCell cell1 = new SCell("=5", sheet);
-        SCell cell2 = new SCell("=A0", sheet);
-        String ans1 = cell1.toString();
-        String ans2 = cell2.toString();
-        sheet.set(0,0,ans1);
-        sheet.set(0,1,ans2);
-        System.out.println(sheet.eval(0,0));
-        System.out.println(sheet.eval(0,1));
-//        String ans = sheet.eval(0,0);
-//        System.out.println(ans);
-//        String ans1 = sheet.eval(0,1);
-//        System.out.println(ans1);
-
-    }
-
-    @Test
-    public void evalTest2() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"=5");
-        sheet.set(0,1,"=A0");
-        assertEquals("5.0", sheet.eval(0,0));  // Should return "5"
-        assertEquals("5.0", sheet.eval(0,1));  // Should also return "5"
-    }
-
-    @Test
-    public void evalTest3() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"=5");    // Cell A0 = 5
-        sheet.set(0,1,"=A0");   // Cell A1 = value of A0
-
-        String[] evals = {sheet.eval(0,0), sheet.eval(0,1)};
-
-        assertEquals("5.0", evals[0]);  // A0 should evaluate to 5
-        assertEquals("5.0", evals[1]);  // A1 should also evaluate to 5
-        System.out.println("A0 = " + evals[0]);
-        System.out.println("A1 = " + evals[1]);
-    }
-
-    @Test
-    public void isCoordTest() {
-        String[] test = {"A0", "A12", "B101", "5"};
-        boolean[] expected = {true, true, false, false};
-        for (int i = 0; i < test.length; i++) {
-            assertEquals(expected[i], isCoord(test[i]));
+        int value = 20;
+        Ex2Sheet sheet = new Ex2Sheet(value, value);
+        for (int i = 0; i < value; i++) {
+            sheet.set(0,i, String.valueOf(i));
+        }
+        String[] expected = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                "11", "12", "13", "14", "15", "16", "17", "18", "19"};
+        for (int i = 0; i < value; i++) {
+            assertEquals(expected[i], sheet.eval(0,i));
         }
     }
 
@@ -224,146 +148,50 @@ public class Ex2Test {
     }
 
     @Test
-    public void CellValue_Test() {
+    public void Ex2Sheet_set_Test(){
         Ex2Sheet sheet = new Ex2Sheet();
-        SCell cell1 = new SCell("=5", sheet);
-        SCell cell2 = new SCell("=A0", sheet);
-        sheet.set(0,0, cell1.getData());
-        sheet.set(0,1,cell2.getData());
-        double ans_Cell1 = cell1.computeForm(cell1.getData());
-        double ans_Cell2 = cell2.computeForm(cell2.getData());
-        String ans = "=A0";
-        String ans3 = "=A0+1";
-        double ans2 = cell2.computeForm(ans);
-        System.out.println(ans_Cell1);
-        System.out.println(ans_Cell2);
-        System.out.println(ans3);
-    }
-
-    @Test
-    public void new_computeForm_Test() {
-        Ex2Sheet sheet = new Ex2Sheet();
-        SCell cellNum = new SCell("=5", sheet);
-        SCell cellReference = new SCell("=A0", sheet);
-        SCell cellAll = new SCell("=1+A0", sheet);
-        int[] types = {cellNum.getType(), cellReference.getType(), cellAll.getType()};
-        for (int i = 0; i < types.length; i++) {
-            System.out.println(types[i]);
+        String[] values = {"=5", "=A0", "=1+A0", "=A1"};
+        double[] expected = {5, 5, 6, 5};
+        SCell cells[] = new SCell[4];
+        double actual = 0;
+        for (int i = 0; i < 4; i++) {
+            sheet.set(0,i,values[i]);
+            cells[i] = new SCell(sheet.get(0, i).getData(), sheet);
         }
-        sheet.set(0,0,cellNum.getData());
-        sheet.set(0,1,cellReference.getData());
-        sheet.set(0,2,cellAll.getData());
-        String onlyNumber = "=5";
-        String onlyReference = "=A0";
-        String numberAndReference = "=1+A0";
-        double number = cellNum.computeForm(cellNum.getData());
-        double reference = cellReference.computeForm(cellReference.getData());
-        double All = cellAll.computeForm(cellAll.getData());
-        System.out.println(number);
-        System.out.println(reference);
-        System.out.println(All);
-    }
-
-    @Test
-    public void cus_emek(){
-        Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"=5");
-        sheet.set(0,1,"=A0");
-        sheet.set(0,2,"=1+A0");
-        sheet.set(0,3,"=A");
-        SCell cell1 = new SCell(sheet.get(0,0).getData(), sheet);
-        SCell cell2 = new SCell(sheet.get(0,1).getData(), sheet);
-        SCell cell3 = new SCell(sheet.get(0,2).getData(), sheet);
-        SCell cell4 = new SCell(sheet.get(0,3).getData(), sheet);
-        cell1.setData(sheet.get(0,0).getData());
-        cell2.setData(sheet.get(0,1).getData());
-        cell3.setData(sheet.get(0,2).getData());
-        cell4.setData(sheet.get(0,3).getData());
-        double d1 = cell1.computeForm("=5");
-        double d2 = cell2.computeForm("=A0");
-        double d3 = cell3.computeForm("=1+A0");
-        double d4 = cell4.computeForm("=A");
-        double[] dd = {d1, d2, d3};
-        for (int i = 0; i < 3; i++) {
-            System.out.println(dd[i]);
+        for (int j = 0; j < 4; j++) {
+            actual = cells[j].computeForm(values[j]);
+            assertEquals(expected[j], actual);
         }
     }
 
     @Test
-    public void setDataFailedTest() {
+    public void testBasicOrder() {
         Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"=A");
-        SCell cell = new SCell(sheet.get(0,0).getData());
-        cell.setData(sheet.get(0,0).getData());
-        double dd = cell.computeForm("=A");
+        sheet.set(0, 0, "5");
+        sheet.set(0, 1, "text");
+        assertEquals(0, sheet.get(0, 0).getOrder());
+        assertEquals(0, sheet.get(0, 1).getOrder());
+        sheet.set(1, 0, "=A0");
+        assertEquals(1, sheet.get(1, 0).getOrder());
     }
 
     @Test
-    public void isFormTest1() {
-        String[] ans = {"=1+3", "=A0", "=4+5"};
-        for (int i = 0; i < ans.length; i++) {
-            assertTrue(isForm(ans[i]));
-        }
-    }
-
-    @Test
-    public void inputCellTest() {
-        Ex2Sheet table = new Ex2Sheet();
-        table.set(0,0,"=5");
-        table.set(0,1,"=A0");
-        table.set(0,2,"=1+A0");
-        int xx = 0;
-        int yy = 0;
-        CellEntry cord = new CellEntry(xx, yy);
-        CellEntry cord1 = new CellEntry(xx,yy+1);
-        CellEntry cord2 = new CellEntry(xx,yy+2);
-        if(table.isIn(xx,yy)) {
-            Cell cc = table.get(xx,yy);
-            String ww = cord+": "+cc.toString()+" : ";
-            if(Ex2Utils.Debug) {System.out.println(ww);}
-            String c = cc.getData();
-            String s1 = table.get(xx,yy).getData();
-            if(c==null) {
-                table.set(xx,yy,s1);
-            }
-            else {
-                table.set(xx, yy, c);
-                int[][] calc_d = table.depth();
-                if (calc_d[xx][yy] == Ex2Utils.ERR) {
-                    table.get(xx,yy).setType(Ex2Utils.ERR_CYCLE_FORM);
-                }
-            }
-            table.eval();
-            StdDrawEx2.resetXY();
-
-            System.out.println();
-        }
-    }
-
-    @Test
-    public void toStringTest() {
-        Ex2Sheet table = new Ex2Sheet();
-        SCell cell = new SCell("=5", table);
-        table.set(0,0,cell.toString());
-        System.out.println("cell is: " + cell.toString());
-    }
-
-    @Test
-    public void testDependencyDepth() {
+    public void testComplexOrder() {
         Ex2Sheet sheet = new Ex2Sheet();
-        sheet.set(0,0,"5");         // A0 = 5 (depth 0)
-        sheet.set(0,1,"=1+A0");     // A1 = 1+A0 (depth 1)
-        sheet.set(0,2,"=1+A1");     // A2 = 1+A1 (depth 2)
-        sheet.set(0,3,"=A3");       // A3 = A3 (should be ERR_CYCLE_FORM)
+        // Setup test data
+        sheet.set(0, 0, "10"); //A0 is a number, depth = 0
+        sheet.set(0, 1, "20"); //A1 is a form with no reference, depth = 1
+        sheet.set(1, 0, "=A0+A1"); //B0 is a form with two references, depth = 1 + max(A0,A1) = 1 + 1 = 2
+        sheet.set(1, 1, "=B0*2"); //B1 is a form with 1 reference, depth = 1 + depth(B0) = 1 + 1 = 3
+        sheet.set(2, 0, "=(B0+B1)/2"); //C0 depth = 1 +
 
-        int[][] depths = sheet.depth();
-        assertEquals(0, depths[0][0]);  // A0 depth should be 0
-        assertEquals(1, depths[0][1]);  // A1 depth should be 1
-        assertEquals(2, depths[0][2]);  // A2 depth should be 2
-        assertEquals(-1, depths[0][3]); // A3 depth should be -1 (cycle)
-
-        assertEquals(Ex2Utils.ERR_CYCLE_FORM, sheet.get(0,3).getType());
+        // Test orders
+        assertEquals(0, sheet.get(0, 0).getOrder());
+        assertEquals(0, sheet.get(0, 1).getOrder());
+        assertEquals(1, sheet.get(1, 0).getOrder());
+        assertEquals(1, sheet.get(1, 1).getOrder());
+        assertEquals(2, sheet.get(2, 0).getOrder());
     }
+}
 
-    }
 
