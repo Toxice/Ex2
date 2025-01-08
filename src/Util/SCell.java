@@ -190,19 +190,99 @@ public class SCell implements Cell {
         return count == 0;
     }
 
-    /**
-     * Evaluates a formula and returns its numeric result.
-     * Handles:
-     * - Simple numbers (e.g., "=5")
-     * - Cell references (e.g., "=A1")
-     * - Mathematical expressions (e.g., "=5+3*2")
-     * - Nested cell references (e.g., "=A1+B2*C3")
-     *
-     * @param text The formula to evaluate
-     * @return The numeric result of evaluating the formula
-     * @throws IllegalArgumentException if the formula is invalid or references contain non-numeric values
-     */
+//    /**
+//     * Evaluates a formula and returns its numeric result.
+//     * Handles:
+//     * - Simple numbers (e.g., "=5")
+//     * - Cell references (e.g., "=A1")
+//     * - Mathematical expressions (e.g., "=5+3*2")
+//     * - Nested cell references (e.g., "=A1+B2*C3")
+//     *
+//     * @param text The formula to evaluate
+//     * @return The numeric result of evaluating the formula
+//     * @throws IllegalArgumentException if the formula is invalid or references contain non-numeric values
+//     */
+//    public double computeForm(String text) {
+//        // If it's just a number after the equals sign, return it directly
+//        if (text.startsWith("=") && isNumber(text.substring(1))) {
+//            return Double.parseDouble(text.substring(1));
+//        }
+//
+//        // Process formula by replacing cell references with their actual values
+//        String processedFormula = text;
+//        if (text.startsWith("=")) {
+//            processedFormula = text.substring(1).trim();
+//        }
+//
+//        // If it's a single cell reference (like "A0")
+//        if (isCoordinate(processedFormula)) {
+//            Coordinate coord = Coordinate.parseCell(processedFormula);
+//            Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
+//
+//            // Get the raw data from the referenced cell
+//            String cellData = referencedCell.getData();
+//
+//            // If the referenced cell contains a number, return it
+//            if (isNumber(cellData)) {
+//                return Double.parseDouble(cellData);
+//            }
+//            // If the referenced cell contains a formula, evaluate it
+//            else if (cellData.startsWith("=")) {
+//                // Create a new SCell to evaluate the formula to avoid recursion
+//                SCell tempCell = new SCell(cellData, Sheet);
+//                return tempCell.computeForm(cellData);
+//            }
+//            throw new IllegalArgumentException("Referenced cell does not contain a numeric value");
+//        }
+//
+//        // For complex formulas containing cell references and operators
+//        StringBuilder processedExpr = new StringBuilder();
+//        StringBuilder currentToken = new StringBuilder();
+//
+//        for (int i = 0; i < processedFormula.length(); i++) {
+//            char c = processedFormula.charAt(i);
+//
+//            if (Character.isLetter(c)) {
+//                // Start of potential cell reference
+//                currentToken.append(c);
+//                while (i + 1 < processedFormula.length() && Character.isDigit(processedFormula.charAt(i + 1))) {
+//                    currentToken.append(processedFormula.charAt(++i));
+//                }
+//
+//                String token = currentToken.toString();
+//                if (isCoordinate(token)) {
+//                    Coordinate coord = Coordinate.parseCell(token);
+//                    Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
+//                    String cellValue = referencedCell.getData();
+//
+//                    if (isNumber(cellValue)) {
+//                        processedExpr.append(cellValue);
+//                    } else if (cellValue.startsWith("=")) {
+//                        // Create a new SCell to evaluate the formula
+//                        SCell tempCell = new SCell(cellValue, Sheet);
+//                        processedExpr.append(tempCell.computeForm(cellValue));
+//                    } else {
+//                        throw new IllegalArgumentException("Referenced cell does not contain a numeric value");
+//                    }
+//                } else {
+//                    processedExpr.append(token);
+//                }
+//                currentToken.setLength(0);
+//            } else {
+//                processedExpr.append(c);
+//            }
+//        }
+//
+//        // Evaluate the processed expression
+//        return evaluateExpression(processedExpr.toString());
+//    }
+
     public double computeForm(String text) {
+        // First check for cyclic reference
+        if (type == Ex2Utils.ERR_CYCLE_FORM) {
+            throw new IllegalArgumentException("Cyclic reference detected");
+        }
+
         // If it's just a number after the equals sign, return it directly
         if (text.startsWith("=") && isNumber(text.substring(1))) {
             return Double.parseDouble(text.substring(1));
@@ -214,26 +294,43 @@ public class SCell implements Cell {
             processedFormula = text.substring(1).trim();
         }
 
+        // Find current cell coordinates
+        CellEntry thisCell = null;
+        for (int x = 0; x < Sheet.width(); x++) {
+            for (int y = 0; y < Sheet.height(); y++) {
+                if (Sheet.get(x, y) == this) {
+                    thisCell = new CellEntry(x, y);
+                    break;
+                }
+            }
+            if (thisCell != null) break;
+        }
+
         // If it's a single cell reference (like "A0")
         if (isCoordinate(processedFormula)) {
             Coordinate coord = Coordinate.parseCell(processedFormula);
-            Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
 
-            // Get the raw data from the referenced cell
+            // Check for self-reference
+            if (thisCell != null &&
+                    coord.getX() == thisCell.getX() &&
+                    coord.getY() == thisCell.getY()) {
+                throw new IllegalArgumentException("Self-reference detected");
+            }
+
+            Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
             String cellData = referencedCell.getData();
 
-            // If the referenced cell contains a number, return it
             if (isNumber(cellData)) {
                 return Double.parseDouble(cellData);
-            }
-            // If the referenced cell contains a formula, evaluate it
-            else if (cellData.startsWith("=")) {
-                // Create a new SCell to evaluate the formula to avoid recursion
+            } else if (cellData.startsWith("=")) {
                 SCell tempCell = new SCell(cellData, Sheet);
                 return tempCell.computeForm(cellData);
             }
             throw new IllegalArgumentException("Referenced cell does not contain a numeric value");
         }
+
+        // Rest of the computeForm implementation remains the same...
+        // (Previous implementation for handling complex formulas)
 
         // For complex formulas containing cell references and operators
         StringBuilder processedExpr = new StringBuilder();
@@ -243,7 +340,6 @@ public class SCell implements Cell {
             char c = processedFormula.charAt(i);
 
             if (Character.isLetter(c)) {
-                // Start of potential cell reference
                 currentToken.append(c);
                 while (i + 1 < processedFormula.length() && Character.isDigit(processedFormula.charAt(i + 1))) {
                     currentToken.append(processedFormula.charAt(++i));
@@ -252,13 +348,20 @@ public class SCell implements Cell {
                 String token = currentToken.toString();
                 if (isCoordinate(token)) {
                     Coordinate coord = Coordinate.parseCell(token);
+
+                    // Check for self-reference in complex formulas
+                    if (thisCell != null &&
+                            coord.getX() == thisCell.getX() &&
+                            coord.getY() == thisCell.getY()) {
+                        throw new IllegalArgumentException("Self-reference detected");
+                    }
+
                     Cell referencedCell = Sheet.get(coord.getX(), coord.getY());
                     String cellValue = referencedCell.getData();
 
                     if (isNumber(cellValue)) {
                         processedExpr.append(cellValue);
                     } else if (cellValue.startsWith("=")) {
-                        // Create a new SCell to evaluate the formula
                         SCell tempCell = new SCell(cellValue, Sheet);
                         processedExpr.append(tempCell.computeForm(cellValue));
                     } else {
@@ -273,7 +376,6 @@ public class SCell implements Cell {
             }
         }
 
-        // Evaluate the processed expression
         return evaluateExpression(processedExpr.toString());
     }
 
@@ -432,44 +534,107 @@ public class SCell implements Cell {
 //        return order;
 //    }
 
-    /**
-     * Computes the natural order (dependency depth) of this cell.
-     * - Returns 0 for regular numbers/text (without "=")
-     * - Returns -1 for error cells
-     * - Returns 1 for formulas that only contain numbers (like "=5" or "=2+3")
-     * - For formulas with cell references, returns 1 + the maximum depth of referenced cells
-     *
-     * @return The dependency order of this cell
-     */
+//    /**
+//     * Computes the natural order (dependency depth) of this cell.
+//     * - Returns 0 for regular numbers/text (without "=")
+//     * - Returns -1 for error cells
+//     * - Returns 1 for formulas that only contain numbers (like "=5" or "=2+3")
+//     * - For formulas with cell references, returns 1 + the maximum depth of referenced cells
+//     *
+//     * @return The dependency order of this cell
+//     */
+//    @Override
+//    public int getOrder() {
+//        // If it's an error cell, return -1
+//        if (type == Ex2Utils.ERR_FORM_FORMAT) {
+//            return -2;
+//        }
+//
+//        if (type == Ex2Utils.ERR_CYCLE_FORM) {
+//            return -1;
+//        } // remove
+//
+//        // If it's a regular number or text (without "="), depth is 0
+//        if (!getData().startsWith("=")) {
+//            return 0;
+//        }
+//
+//        // At this point, we know it's a formula (starts with "=")
+//        List<CellEntry> dependencies = DependencyParser.parseDependencies(getData());
+//
+//        // If no dependencies (like "=5" or "=2+3"), return 1
+//        if (dependencies.isEmpty()) {
+//            return 1;
+//        }
+//
+//        // For formulas with cell references, find maximum depth of dependencies
+//        int maxDepth = 0;
+//        for (CellEntry dep : dependencies) {
+//            if (!dep.isValid()) continue;
+//            Cell depCell = Sheet.get(dep.getX(), dep.getY());
+//            maxDepth = Math.max(maxDepth, depCell.getOrder());
+//        }
+//
+//        // Return 1 + maximum depth of dependencies
+//        return 1 + maxDepth;
+//    }
+
     @Override
     public int getOrder() {
-        // If it's an error cell, return -1
-        if (type == Ex2Utils.ERR_CYCLE_FORM || type == Ex2Utils.ERR_FORM_FORMAT) {
+        // Handle error cases first
+        if (type == Ex2Utils.ERR_FORM_FORMAT) {
+            return -2;
+        }
+        if (type == Ex2Utils.ERR_CYCLE_FORM) {
             return -1;
         }
 
-        // If it's a regular number or text (without "="), depth is 0
+        // If it's not a formula, depth is 0
         if (!getData().startsWith("=")) {
             return 0;
         }
 
-        // At this point, we know it's a formula (starts with "=")
+        // Check for self-reference
+        CellEntry thisCell = null;
+        for (int x = 0; x < Sheet.width(); x++) {
+            for (int y = 0; y < Sheet.height(); y++) {
+                if (Sheet.get(x, y) == this) {
+                    thisCell = new CellEntry(x, y);
+                    break;
+                }
+            }
+            if (thisCell != null) break;
+        }
+
+        // Get dependencies and check for self-reference
         List<CellEntry> dependencies = DependencyParser.parseDependencies(getData());
 
-        // If no dependencies (like "=5" or "=2+3"), return 1
+        // If no dependencies (like "=5"), return 1
         if (dependencies.isEmpty()) {
             return 1;
         }
 
-        // For formulas with cell references, find maximum depth of dependencies
+        // Check for self-reference
+        if (thisCell != null) {
+            for (CellEntry dep : dependencies) {
+                if (dep.getX() == thisCell.getX() && dep.getY() == thisCell.getY()) {
+                    return -1; // Self-reference found
+                }
+            }
+        }
+
+        // Calculate maximum depth from dependencies
         int maxDepth = 0;
         for (CellEntry dep : dependencies) {
             if (!dep.isValid()) continue;
             Cell depCell = Sheet.get(dep.getX(), dep.getY());
-            maxDepth = Math.max(maxDepth, depCell.getOrder());
+            int depOrder = depCell.getOrder();
+            if (depOrder == -1) {
+                return -1; // Propagate cyclic reference error
+            }
+            maxDepth = Math.max(maxDepth, depOrder);
         }
 
-        // Return 1 + maximum depth of dependencies
         return 1 + maxDepth;
     }
 
@@ -483,11 +648,64 @@ public class SCell implements Cell {
         }
     }
 
-    /**
-     * Sets the data content of this cell and updates its type accordingly.
-     *
-     * @param s The new content for the cell
-     */
+
+//    /**
+//     * Sets the data content of this cell and updates its type accordingly.
+//     *
+//     * @param s The new content for the cell
+//     */
+//    @Override
+//    public void setData(String s) {
+//        line = s;
+//
+//        if (s == null || s.isEmpty()) {
+//            type = Ex2Utils.TEXT;
+//            return;
+//        }
+//
+//        if (s.startsWith("=")) {
+//            String formula = s.substring(1).trim();
+//            // Check for direct self-reference (e.g., "=A0" in cell A0)
+//            if (formula.equals(formula.toUpperCase())) { // ensure case-insensitive comparison
+//                if (isCoordinate(formula)) {
+//                    // If this is a coordinate, check if it refers to itself
+//                    Coordinate coord = Coordinate.parseCell(formula);
+//                    if (Sheet != null && coord != null) {
+//                        CellEntry currentCell = null;
+//                        for (int x = 0; x < Sheet.width(); x++) {
+//                            for (int y = 0; y < Sheet.height(); y++) {
+//                                if (Sheet.get(x, y) == this) {
+//                                    currentCell = new CellEntry(x, y);
+//                                    break;
+//                                }
+//                            }
+//                            if (currentCell != null) break;
+//                        }
+//                        if (currentCell != null && coord.getX() == currentCell.getX() &&
+//                                coord.getY() == currentCell.getY()) {
+//                            type = Ex2Utils.ERR_CYCLE_FORM;
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//
+//            if (SCell.isForm(s)) {
+//                type = Ex2Utils.FORM;
+//            } else {
+//                type = Ex2Utils.ERR_FORM_FORMAT;
+//            }
+//            return;
+//        }
+//
+//        if (SCell.isNumber(s)) {
+//            type = Ex2Utils.NUMBER;
+//            return;
+//        }
+//
+//        type = Ex2Utils.TEXT;
+//    }
+
     @Override
     public void setData(String s) {
         line = s;
@@ -498,32 +716,32 @@ public class SCell implements Cell {
         }
 
         if (s.startsWith("=")) {
-            String formula = s.substring(1).trim();
-            // Check for direct self-reference (e.g., "=A0" in cell A0)
-            if (formula.equals(formula.toUpperCase())) { // ensure case-insensitive comparison
-                if (isCoordinate(formula)) {
-                    // If this is a coordinate, check if it refers to itself
-                    Coordinate coord = Coordinate.parseCell(formula);
-                    if (Sheet != null && coord != null) {
-                        CellEntry currentCell = null;
-                        for (int x = 0; x < Sheet.width(); x++) {
-                            for (int y = 0; y < Sheet.height(); y++) {
-                                if (Sheet.get(x, y) == this) {
-                                    currentCell = new CellEntry(x, y);
-                                    break;
-                                }
-                            }
-                            if (currentCell != null) break;
-                        }
-                        if (currentCell != null && coord.getX() == currentCell.getX() &&
-                                coord.getY() == currentCell.getY()) {
-                            type = Ex2Utils.ERR_CYCLE_FORM;
-                            return;
-                        }
+            // Check for self-reference in the formula
+            List<CellEntry> dependencies = DependencyParser.parseDependencies(s);
+
+            // Find this cell's coordinates
+            CellEntry thisCell = null;
+            for (int x = 0; x < Sheet.width(); x++) {
+                for (int y = 0; y < Sheet.height(); y++) {
+                    if (Sheet.get(x, y) == this) {
+                        thisCell = new CellEntry(x, y);
+                        break;
+                    }
+                }
+                if (thisCell != null) break;
+            }
+
+            // Check if any dependency refers to this cell
+            if (thisCell != null) {
+                for (CellEntry dep : dependencies) {
+                    if (dep.getX() == thisCell.getX() && dep.getY() == thisCell.getY()) {
+                        type = Ex2Utils.ERR_CYCLE_FORM;
+                        return;
                     }
                 }
             }
 
+            // If no self-reference was found, proceed with normal type checking
             if (SCell.isForm(s)) {
                 type = Ex2Utils.FORM;
             } else {
@@ -559,8 +777,10 @@ public class SCell implements Cell {
             type = Ex2Utils.NUMBER;
         } else if (t == 3) {
             type = Ex2Utils.FORM;
-        } else {
+        } else if (t == -2){
             type = Ex2Utils.ERR_FORM_FORMAT;
+        } else {
+            type = Ex2Utils.ERR_CYCLE_FORM;
         }
     }
 

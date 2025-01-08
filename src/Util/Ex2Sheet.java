@@ -9,9 +9,6 @@ import java.util.Set;
 
 public class Ex2Sheet implements Sheet {
     private Cell[][] table;
-    // Add your code here
-
-    // ///////////////////
     public Ex2Sheet(int x, int y) {
         table = new SCell[x][y];
         for(int i=0;i<x;i=i+1) {
@@ -120,6 +117,27 @@ public class Ex2Sheet implements Sheet {
         eval();
     }
 
+    /**
+     * Evaluates (computes) all cells in the spreadsheet based on their dependency order.
+     * The evaluation process follows these steps:
+     *
+     * 1. Calculates dependency depths for all cells using the depth() method
+     * 2. Determines the maximum depth in the sheet
+     * 3. Resets any error states to allow re-evaluation
+     * 4. Groups cells by their depth levels
+     * 5. Evaluates cells in increasing depth order:
+     *    - Depth 0: Direct values (numbers/text)
+     *    - Depth 1: Simple formulas and direct cell references
+     *    - Depth 2+: Complex formulas with nested references
+     *
+     * Error handling:
+     * - If a cell evaluation fails, marks it as ERR_FORM_FORMAT
+     * - Propagates errors to dependent cells
+     * - Handles cyclic dependencies through ERR_CYCLE_FORM marking
+     *
+     * This method ensures that cells are evaluated in the correct order,
+     * preventing invalid intermediate states and maintaining data consistency.
+     */
     @Override
     public void eval() {
         int[][] dd = depth();
@@ -227,6 +245,12 @@ public class Ex2Sheet implements Sheet {
         }
     }
 
+    /**
+     * return true iff the given (x,y) is inside the table
+     * @param xx - integer, x-coordinate of the table (starts with 0).
+     * @param yy - integer, y-coordinate of the table (starts with 0).
+     * @return
+     */
     @Override
     public boolean isIn(int xx, int yy) {
         boolean ans = xx>=0 && yy>=0;
@@ -386,7 +410,6 @@ public class Ex2Sheet implements Sheet {
 
     @Override
     public void save(String fileName) throws IOException {
-        // Add your code here
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             // Write header
             writer.write("I2CS ArielU: SpreadSheet (Ex2) assignment\n");
@@ -403,7 +426,6 @@ public class Ex2Sheet implements Sheet {
                 }
             }
         }
-        /////////////////////
     }
 
     /**
@@ -416,13 +438,17 @@ public class Ex2Sheet implements Sheet {
      *
      * @param x integer, x-coordinate of the cell
      * @param y integer, y-coordinate of the cell
-     * @return The computed value as a String, or ERR_FORM/ERR_CYCLE in case of errors
+     * @return The computed value as a String, or appropriate error message (ERR_FORM/ERR_CYCLE)
      */
     @Override
     public String eval(int x, int y) {
         SCell cell = (SCell) get(x,y);
 
-        // First check for error type
+        // First check for error types
+        if (cell.getType() == Ex2Utils.ERR_CYCLE_FORM) {
+            return Ex2Utils.ERR_CYCLE;
+        }
+
         if (cell.getType() == Ex2Utils.ERR_FORM_FORMAT) {
             return Ex2Utils.ERR_FORM;
         }
@@ -433,11 +459,14 @@ public class Ex2Sheet implements Sheet {
                 double result = cell.computeForm(formula);
                 return String.valueOf(result);
             } catch (Exception e) {
+                if (e.getMessage() != null && e.getMessage().contains("Self-reference")) {
+                    cell.setType(Ex2Utils.ERR_CYCLE_FORM);
+                    return Ex2Utils.ERR_CYCLE;
+                }
                 cell.setType(Ex2Utils.ERR_FORM_FORMAT);
                 return Ex2Utils.ERR_FORM;
             }
         }
         return cell.getData();
     }
-
 }

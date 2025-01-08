@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="Finally, that as$ it working">
+    <list default="true" id="c8ac741d-a003-4f44-a330-bafc5597eb97" name="Changes" comment="At Last...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/CellEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/CellEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Coordinate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/DependencyParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/DependencyParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Ex2GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Sheet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Ex2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Ex2Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/SCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/SCell.java" afterDir="false" />
@@ -46,11 +42,13 @@
     "Application.Util.Ex2GUI.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.Ex2Test.CellValue_Test.executor": "Run",
+    "JUnit.Ex2Test.ERR_CYCLE_Test.executor": "Run",
     "JUnit.Ex2Test.PatternTest.executor": "Run",
     "JUnit.Ex2Test.computeForm.executor": "Run",
     "JUnit.Ex2Test.computeFormCell.executor": "Debug",
     "JUnit.Ex2Test.computeFormCellTest.executor": "Run",
     "JUnit.Ex2Test.computeFormTest.executor": "Run",
+    "JUnit.Ex2Test.computeForm_CellTest.executor": "Run",
     "JUnit.Ex2Test.coordinateTest.executor": "Run",
     "JUnit.Ex2Test.cus_emek.executor": "Run",
     "JUnit.Ex2Test.dependencyParserTest.executor": "Debug",
@@ -60,6 +58,7 @@
     "JUnit.Ex2Test.evalTest2.executor": "Debug",
     "JUnit.Ex2Test.evalTest3.executor": "Debug",
     "JUnit.Ex2Test.executor": "Run",
+    "JUnit.Ex2Test.fff.executor": "Run",
     "JUnit.Ex2Test.inputCellTest.executor": "Run",
     "JUnit.Ex2Test.inputCellsTest.executor": "Debug",
     "JUnit.Ex2Test.isCoordTest.executor": "Debug",
@@ -74,7 +73,7 @@
     "JUnit.Ex2Test.isTextTest.executor": "Run",
     "JUnit.Ex2Test.new_computeForm_Test.executor": "Debug",
     "JUnit.Ex2Test.parseCoordinateValueTest.executor": "Run",
-    "JUnit.Ex2Test.scanFormulaTest.executor": "Debug",
+    "JUnit.Ex2Test.scanFormulaTest.executor": "Run",
     "JUnit.Ex2Test.setCell_Depth_Test.executor": "Debug",
     "JUnit.Ex2Test.setDataFailedTest.executor": "Debug",
     "JUnit.Ex2Test.setDataTest.executor": "Debug",
@@ -112,7 +111,7 @@
       <recent name="D:\Ariel_Projects\Ex2_New\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Ex2Test">
+  <component name="RunManager" selected="JUnit.Ex2Test.testComplexOrder">
     <configuration name="Ex2GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Util.Ex2GUI" />
       <module name="Ex2_New" />
@@ -126,7 +125,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Ex2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Ex2Test.ERR_CYCLE_Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ex2_New" />
       <extension name="coverage">
         <pattern>
@@ -136,12 +135,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="Util" />
       <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="ERR_CYCLE_Test" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Ex2Test.testComplexFormulasDepth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Ex2Test.fff" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Ex2_New" />
       <extension name="coverage">
         <pattern>
@@ -151,7 +151,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="Util" />
       <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
-      <option name="METHOD_NAME" value="testComplexFormulasDepth" />
+      <option name="METHOD_NAME" value="fff" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Ex2Test.testBasicOrder" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Ex2_New" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Util" />
+      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
+      <option name="METHOD_NAME" value="testBasicOrder" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -173,29 +189,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Ex2Test.testDepthCalculations" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Ex2_New" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Util" />
-      <option name="MAIN_CLASS_NAME" value="Util.Ex2Test" />
-      <option name="METHOD_NAME" value="testDepthCalculations" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Ex2Test" />
-        <item itemvalue="JUnit.Ex2Test.testDepthCalculations" />
-        <item itemvalue="JUnit.Ex2Test.testComplexFormulasDepth" />
         <item itemvalue="JUnit.Ex2Test.testComplexOrder" />
+        <item itemvalue="JUnit.Ex2Test.testBasicOrder" />
+        <item itemvalue="JUnit.Ex2Test.ERR_CYCLE_Test" />
         <item itemvalue="Application.Ex2GUI" />
+        <item itemvalue="JUnit.Ex2Test.fff" />
       </list>
     </recent_temporary>
   </component>
@@ -400,7 +400,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736194391489</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="At Last...">
+      <option name="closed" value="true" />
+      <created>1736365794981</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1736365794982</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -438,20 +446,21 @@
     <MESSAGE value="Ahh finally!" />
     <MESSAGE value="Load and Save" />
     <MESSAGE value="Finally, that as$ it working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finally, that as$ it working" />
+    <MESSAGE value="At Last..." />
+    <option name="LAST_COMMIT_MESSAGE" value="At Last..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Ex2Sheet.java</url>
-          <line>439</line>
-          <option name="timeStamp" value="382" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/SCell.java</url>
           <line>38</line>
           <option name="timeStamp" value="415" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Util/Ex2Test.java</url>
+          <line>241</line>
+          <option name="timeStamp" value="458" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.StackOverflowError" package="java.lang" />
