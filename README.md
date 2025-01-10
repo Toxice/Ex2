@@ -17,13 +17,18 @@ GUI: A functional interface that looks better than my handwriting.
 I've thrown everything at it: invalid inputs, complex formulas, and my frustration too. If it breaks, let's hope it won't break.
 
 ## Some pictures
-
-:<a href="https://ibb.co/jZTGk5H"><img src="https://i.ibb.co/VptDYN3/111.png" alt="111" border="0"></a>
 <a href="https://ibb.co/h1YkBnp"><img src="https://i.ibb.co/mFNm9YQ/Untitled.png" alt="Untitled" border="0"></a>
+:<a href="https://ibb.co/jZTGk5H"><img src="https://i.ibb.co/VptDYN3/111.png" alt="111" border="0"></a>
 
 
 🦸‍♂️ Author
-## Written by a Mor Romano, with the help of lots of caffeine!
+Written by a Mor Romano, with the help of lots of caffeine!
 
+
+:laughing: Comic Pause:
+
+The Exact Moment My Mom Knew I will be a Programmer:
+
+![Meme_github](https://github.com/user-attachments/assets/d8f7115d-d157-478a-8fbf-3fc7c53c24a9)
 
 
