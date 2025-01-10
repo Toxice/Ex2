@@ -14,7 +14,7 @@ GUI: A functional interface that looks better than my handwriting.
 
 
 🧪 Testing
-We've thrown everything at it: invalid inputs, complex formulas, and our frustration. If it breaks, at least it did it with style.
+I've thrown everything at it: invalid inputs, complex formulas, and my frustration too. If it breaks, let's hope it won't break.
 
 ## Some pictures
 
